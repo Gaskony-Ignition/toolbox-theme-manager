@@ -1,0 +1,10 @@
+{
+  "gateway": "module-testing",
+  "projects": [
+    {
+      "name": "Toolbox_Theme_Manager",
+      "pageConfig": "com.inductiveautomation.perspective/page-config/config.json"
+    }
+  ],
+  "exceptions": []
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "glass-violet",
+    "label": "Glass Violet",
+    "dark": true,
+    "source_pack": "aurora-violet",
+    "family": "glass",
+    "pair": null
+  },
+  {
+    "id": "glass-green",
+    "label": "Glass Green",
+    "dark": true,
+    "source_pack": "aurora-teal",
+    "family": "glass",
+    "pair": null
+  },
+  {
+    "id": "leather-dark",
+    "label": "Leather Dark",
+    "dark": true,
+    "source_pack": "leather-night-tan",
+    "family": "leather",
+    "pair": "leather-light"
+  },
+  {
+    "id": "leather-light",
+    "label": "Leather Light",
+    "dark": false,
+    "source_pack": "leather-parchment-tan",
+    "family": "leather",
+    "pair": "leather-dark"
+  },
+  {
+    "id": "finance-ledger",
+    "label": "Finance Ledger",
+    "dark": false,
+    "source_pack": "finance-ledger",
+    "family": "finance",
+    "pair": "newsprint-dark"
+  },
+  {
+    "id": "newsprint-dark",
+    "label": "Newsprint Dark",
+    "dark": true,
+    "source_pack": "newsprint-night",
+    "family": "finance",
+    "pair": "finance-ledger"
+  },
+  {
+    "id": "nord-dark",
+    "label": "Nord Dark",
+    "dark": true,
+    "source_pack": "nord-dark-frost",
+    "family": "nord",
+    "pair": "nord-light"
+  },
+  {
+    "id": "nord-light",
+    "label": "Nord Light",
+    "dark": false,
+    "source_pack": "nord-light-frost",
+    "family": "nord",
+    "pair": "nord-dark"
+  },
+  {
+    "id": "industrial-dark",
+    "label": "Industrial Dark",
+    "dark": true,
+    "source_pack": "industrial-control-cyan",
+    "family": "industrial",
+    "pair": "industrial-light"
+  },
+  {
+    "id": "industrial-light",
+    "label": "Industrial Light",
+    "dark": false,
+    "source_pack": "industrial-day-cyan",
+    "family": "industrial",
+    "pair": "industrial-dark"
+  }
+]

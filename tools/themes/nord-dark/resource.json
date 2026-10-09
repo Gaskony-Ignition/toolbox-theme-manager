@@ -1,0 +1,13 @@
+{
+  "scope": "G",
+  "description": "Nord Dark theme (from packs/nord-dark-frost.json). See README.md.",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "config.json",
+    "index.css",
+    "variables.css",
+    "globals.css"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "scope": "G",
+  "description": "Glass Green theme (from packs/aurora-teal.json, tweaked -- see mapping.TWEAKS). See README.md.",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "config.json",
+    "index.css",
+    "variables.css",
+    "globals.css"
+  ]
+}

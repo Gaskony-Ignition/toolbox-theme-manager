@@ -1,0 +1,10 @@
+{
+  "custom": {},
+  "props": {
+    "appBar": {
+      "togglePosition": "hidden"
+    },
+    "theme": "dark"
+  },
+  "propConfig": {}
+}

@@ -1,0 +1,484 @@
+{
+  "custom": {
+    "name": "",
+    "zipName": "",
+    "state": {
+      "ok": false,
+      "token": "",
+      "id": "",
+      "preview": "",
+      "details": "",
+      "findings": "",
+      "verdict": "Pick a .zip, or drop one on the box."
+    }
+  },
+  "params": {},
+  "props": {
+    "defaultSize": {
+      "width": 680,
+      "height": 600
+    }
+  },
+  "root": {
+    "type": "ia.container.flex",
+    "meta": {
+      "name": "root"
+    },
+    "position": {
+      "grow": 0,
+      "shrink": 0,
+      "basis": "auto"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "12px",
+        "padding": "16px",
+        "height": "100%",
+        "backgroundColor": "var(--containerRoot)"
+      }
+    },
+    "children": [
+      {
+        "type": "ia.display.label",
+        "meta": {
+          "name": "intro"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "text": "A zip holding one theme: its index.css and the .css files that imports. Checked before anything is written. Anything that fetches from elsewhere, runs code or leaves its own folder is refused; low contrast and other quality problems are listed for you to decide.",
+          "style": {
+            "fontSize": "12.5px",
+            "color": "var(--neutral-70)",
+            "lineHeight": "1.55",
+            "maxWidth": "880px"
+          }
+        }
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "top"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "style": {
+            "gap": "14px"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.input.fileupload",
+            "meta": {
+              "name": "upload"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {
+              "supportedFileTypes": [
+                "zip"
+              ],
+              "fileSizeLimit": 2,
+              "maxUploads": 1,
+              "style": {
+                "height": "166px"
+              }
+            },
+            "events": {
+              "component": {
+                "onFileReceived": {
+                  "type": "script",
+                  "scope": "G",
+                  "config": {
+                    "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tname = (self.view.custom.name or '').strip() or None\n\t\tdata = themepack.import_bytes(event.file.getBytes())\n\t\tself.view.custom.zipName = event.file.name\n\t\treport = themepack.stage_import(data, event.file.name, name)\n\t\tself.view.custom.state = themepack.import_view(report)\n\t\tif not name and report.get('id'):\n\t\t\tself.view.custom.name = report['id']\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "name_col"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "220px"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "gap": "6px"
+              }
+            },
+            "children": [
+              {
+                "type": "ia.display.label",
+                "meta": {
+                  "name": "name_l"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "text": "Install as",
+                  "style": {
+                    "fontSize": "12px",
+                    "color": "var(--neutral-70)"
+                  }
+                }
+              },
+              {
+                "type": "ia.input.text-field",
+                "meta": {
+                  "name": "name"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "32px"
+                },
+                "props": {
+                  "placeholder": "theme id, e.g. ocean-dark",
+                  "style": {
+                    "height": "32px"
+                  }
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "type": "property",
+                      "config": {
+                        "path": "view.custom.name",
+                        "bidirectional": true
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "name_row"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "row",
+                  "style": {
+                    "gap": "8px"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.input.button",
+                    "meta": {
+                      "name": "recheck_btn"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "text": "Check again",
+                      "style": {
+                        "height": "32px",
+                        "whiteSpace": "nowrap",
+                        "backgroundColor": "var(--containerBackground)",
+                        "color": "var(--label)",
+                        "borderStyle": "solid",
+                        "borderWidth": "1px",
+                        "borderColor": "var(--border)"
+                      }
+                    },
+                    "events": {
+                      "component": {
+                        "onActionPerformed": {
+                          "config": {
+                            "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tif not self.view.custom.state.token:\n\t\t\treturn\n\t\treport = themepack.recheck_import(self.view.custom.state.token,\n\t\t\tself.view.custom.zipName, (self.view.custom.name or '').strip() or None)\n\t\tself.view.custom.state = themepack.import_view(report)\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ia.display.label",
+        "meta": {
+          "name": "verdict"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "text": "",
+          "style": {
+            "fontSize": "14px",
+            "color": "var(--label)",
+            "fontWeight": 600
+          }
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "property",
+              "config": {
+                "path": "view.custom.state.verdict"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "mid"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "alignItems": "center",
+          "style": {
+            "gap": "12px"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.display.image",
+            "meta": {
+              "name": "preview"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "170px"
+            },
+            "props": {
+              "fit": {
+                "mode": "fill"
+              },
+              "style": {
+                "height": "51px",
+                "borderRadius": "3px"
+              }
+            },
+            "propConfig": {
+              "props.source": {
+                "binding": {
+                  "type": "property",
+                  "config": {
+                    "path": "view.custom.state.preview"
+                  }
+                }
+              },
+              "position.display": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "len({view.custom.state.preview}) > 0"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "details"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {
+              "text": "",
+              "style": {
+                "fontSize": "12px",
+                "color": "var(--neutral-70)",
+                "lineHeight": "1.55",
+                "maxWidth": "880px"
+              }
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "type": "property",
+                  "config": {
+                    "path": "view.custom.state.details"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ia.display.label",
+        "meta": {
+          "name": "findings"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "style": {
+            "fontSize": "12px",
+            "lineHeight": "1.5",
+            "whiteSpace": "pre-wrap",
+            "color": "var(--label)"
+          }
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "property",
+              "config": {
+                "path": "view.custom.state.findings"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "gap"
+        },
+        "position": {
+          "grow": 1,
+          "shrink": 1,
+          "basis": "0px"
+        },
+        "props": {}
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "buttons"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "justify": "flex-end",
+          "style": {
+            "gap": "8px"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.input.button",
+            "meta": {
+              "name": "close_btn"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Close",
+              "style": {
+                "height": "32px",
+                "whiteSpace": "nowrap",
+                "backgroundColor": "var(--containerBackground)",
+                "color": "var(--label)",
+                "borderStyle": "solid",
+                "borderWidth": "1px",
+                "borderColor": "var(--border)"
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tsystem.perspective.closePopup('theme-manager-import')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.input.button",
+            "meta": {
+              "name": "install_btn"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Install",
+              "style": {
+                "height": "32px",
+                "whiteSpace": "nowrap"
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tthemepack.install_import(self.view.custom.state.token,\n\t\t\tself.view.custom.zipName, (self.view.custom.name or '').strip() or None)\n\t\tsystem.perspective.sendMessage('themesChanged', scope='page')\n\t\tsystem.perspective.closePopup('theme-manager-import')\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "propConfig": {
+              "props.enabled": {
+                "binding": {
+                  "type": "property",
+                  "config": {
+                    "path": "view.custom.state.ok"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

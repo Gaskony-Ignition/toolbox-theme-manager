@@ -1,0 +1,119 @@
+{
+  "_comment": [
+    "Ignition's OWN theme palettes, captured by insight/capture_stock.py.",
+    "Not in this repo: light and dark live inside the Perspective module,",
+    "and the four variants are gateway config resources, so a build machine",
+    "with no gateway cannot read them. Used ONLY to draw the 'what every",
+    "gateway starts with' previews -- nothing is installed from this file",
+    "and no theme depends on it. Re-run the script to refresh.",
+    "Captured from http://gateway.example.com:8088"
+  ],
+  "order": [
+    "light",
+    "dark",
+    "light-cool",
+    "light-warm",
+    "dark-cool",
+    "dark-warm"
+  ],
+  "labels": {
+    "light": "Ignition light",
+    "dark": "Ignition dark",
+    "light-cool": "Light cool",
+    "light-warm": "Light warm",
+    "dark-cool": "Dark cool",
+    "dark-warm": "Dark warm"
+  },
+  "palettes": {
+    "light": {
+      "page": "#FAFAFA",
+      "sidebar": "#D8D8D8",
+      "card": "#F4F4F4",
+      "text": "#323232",
+      "muted": "#767676",
+      "chromeFg": "#323232",
+      "accent": "#0C7BB3",
+      "onAccent": "#ffffff",
+      "border": "#A1A1A1",
+      "headBg": "#D8D8D8",
+      "headFg": "#323232",
+      "rowBg": "#FAFAFA",
+      "cellFg": "#323232"
+    },
+    "dark": {
+      "page": "#161616",
+      "sidebar": "#515151",
+      "card": "#323232",
+      "text": "#F4F4F4",
+      "muted": "#A1A1A1",
+      "chromeFg": "#F4F4F4",
+      "accent": "#229AD6",
+      "onAccent": "#ffffff",
+      "border": "#767676",
+      "headBg": "#515151",
+      "headFg": "#F4F4F4",
+      "rowBg": "#161616",
+      "cellFg": "#F4F4F4"
+    },
+    "light-cool": {
+      "page": "#F2F4F8",
+      "sidebar": "#C1C7CD",
+      "card": "#DDE1E6",
+      "text": "#21272A",
+      "muted": "#697077",
+      "chromeFg": "#21272A",
+      "accent": "#0C7BB3",
+      "onAccent": "#ffffff",
+      "border": "#878D96",
+      "headBg": "#C1C7CD",
+      "headFg": "#21272A",
+      "rowBg": "#F2F4F8",
+      "cellFg": "#21272A"
+    },
+    "light-warm": {
+      "page": "#F7F3F2",
+      "sidebar": "#CAC5C4",
+      "card": "#E5E0DF",
+      "text": "#272525",
+      "muted": "#736F6F",
+      "chromeFg": "#272525",
+      "accent": "#0C7BB3",
+      "onAccent": "#ffffff",
+      "border": "#8F8B8B",
+      "headBg": "#CAC5C4",
+      "headFg": "#272525",
+      "rowBg": "#F7F3F2",
+      "cellFg": "#272525"
+    },
+    "dark-cool": {
+      "page": "#121619",
+      "sidebar": "#343A3F",
+      "card": "#21272A",
+      "text": "#DDE1E6",
+      "muted": "#878D96",
+      "chromeFg": "#DDE1E6",
+      "accent": "#229AD6",
+      "onAccent": "#ffffff",
+      "border": "#697077",
+      "headBg": "#343A3F",
+      "headFg": "#DDE1E6",
+      "rowBg": "#121619",
+      "cellFg": "#DDE1E6"
+    },
+    "dark-warm": {
+      "page": "#171414",
+      "sidebar": "#3C3838",
+      "card": "#272525",
+      "text": "#E5E0DF",
+      "muted": "#8F8B8B",
+      "chromeFg": "#E5E0DF",
+      "accent": "#229AD6",
+      "onAccent": "#ffffff",
+      "border": "#736F6F",
+      "headBg": "#3C3838",
+      "headFg": "#E5E0DF",
+      "rowBg": "#171414",
+      "cellFg": "#E5E0DF"
+    }
+  }
+}

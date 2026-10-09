@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "/": {
+      "title": "Toolbox Theme Manager",
+      "viewPath": "Installer"
+    },
+    "/editor": {
+      "title": "Customise",
+      "viewPath": "Editor"
+    }
+  }
+}

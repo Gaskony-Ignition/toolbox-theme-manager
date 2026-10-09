@@ -1,0 +1,13 @@
+{
+  "scope": "G",
+  "description": "Finance Ledger theme (from packs/finance-ledger.json). See README.md.",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "config.json",
+    "index.css",
+    "variables.css",
+    "globals.css"
+  ]
+}

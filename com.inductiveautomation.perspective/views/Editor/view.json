@@ -1,0 +1,4254 @@
+{
+  "custom": {
+    "theme": "",
+    "file": "variables.css",
+    "key": "",
+    "filter": "",
+    "text": "",
+    "status": "",
+    "nudge": 0,
+    "kind": "",
+    "tokens": [],
+    "about": "",
+    "swatches": [],
+    "sel_name": "",
+    "sel_value": "",
+    "sel_ok": "",
+    "warn": "",
+    "startwarn": "",
+    "undo_name": "",
+    "undo_value": "",
+    "raw": false,
+    "making": "",
+    "new_name": "",
+    "new_base": ""
+  },
+  "propConfig": {
+    "custom.theme": {
+      "binding": {
+        "type": "expr",
+        "config": {
+          "expression": "1"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\tfor r in themepack.list_themes():\n\t\tif r['ours']:\n\t\t\treturn r['id']\n\trows = themepack.list_themes()\n\treturn rows[0]['id'] if rows else ''"
+          }
+        ]
+      }
+    },
+    "custom.key": {
+      "binding": {
+        "type": "expr",
+        "config": {
+          "expression": "{view.custom.theme} + '|' + {view.custom.file} + '|' + {view.custom.nudge} + '|' + {view.custom.filter}"
+        }
+      }
+    },
+    "custom.kind": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.key"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\ttheme = (value + '|').split('|')[0]\n\tif not theme:\n\t\treturn ''\n\treturn themepack.theme_kind(theme)"
+          }
+        ]
+      }
+    },
+    "custom.tokens": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.key"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\tbits = (value + '|||').split('|')\n\ttheme = bits[0]\n\t# The filter rides in the key, so typing re-reads the list. 150\n\t# values is ten screens of scrolling to reach one token.\n\tneedle = bits[3].strip().lower()\n\tif not theme:\n\t\treturn []\n\ttry:\n\t\trows = themepack.all_tokens(theme)\n\texcept Exception:\n\t\treturn []\n\tif needle:\n\t\trows = [r for r in rows\n\t\tif needle in r['name'].lower()\n\t\tor needle in (r.get('what') or '').lower()\n\t\tor needle in (r.get('group') or '').lower()\n\t\tor needle in (r['value'] or '').lower()]\n\tout = []\n\tlast = None\n\tfor r in rows:\n\t\tgroup = r['group']\n\t\tout.append({'group': group if group != last else '',\n\t\t'name': r['name'],\n\t\t'what': r.get('what', ''),\n\t\t'swatch': r['swatch'],\n\t\t'value': r['value']})\n\t\tlast = group\n\treturn out"
+          }
+        ]
+      }
+    },
+    "custom.swatches": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.key"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\t# Always SWATCH_COUNT entries, never a short list: each chip binds to a\n\t# fixed index, so [] puts all sixteen bindings in error and draws the\n\t# palette as sixteen red boxes.\n\tempty = [''] * 16\n\ttheme = (value + '|||').split('|')[0]\n\tif not theme:\n\t\treturn empty\n\ttry:\n\t\treturn themepack.swatches(theme) or empty\n\texcept Exception:\n\t\treturn empty"
+          }
+        ]
+      }
+    },
+    "custom.text": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.key"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\ttheme, filename = (value + '|').split('|')[:2]\n\tif not theme or not filename:\n\t\treturn ''\n\ttry:\n\t\treturn themepack.read_file(theme, filename)['text']\n\texcept Exception as e:\n\t\treturn str(e)"
+          }
+        ]
+      }
+    },
+    "custom.about": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.key"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\ttheme = (value + '|').split('|')[0]\n\tif not theme:\n\t\treturn []\n\ttry:\n\t\treturn themepack.about_text(theme)\n\texcept Exception:\n\t\treturn ''"
+          }
+        ]
+      }
+    },
+    "custom.startwarn": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.new_base"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\tif not value:\n\t\treturn ''\n\ttry:\n\t\treturn themepack.start_warning(value)\n\texcept Exception:\n\t\treturn ''"
+          }
+        ]
+      }
+    },
+    "custom.sel_ok": {
+      "binding": {
+        "type": "property",
+        "config": {
+          "path": "view.custom.sel_value"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\t# The colour to paint the chip, or nothing. Never the raw value:\n\t# CSS ignores what it cannot parse, so an invalid one left the\n\t# chip showing the PREVIOUS colour and reading as success.\n\treturn value if themepack.looks_like_colour(value) else ''"
+          }
+        ]
+      }
+    },
+    "custom.warn": {
+      "binding": {
+        "type": "expr",
+        "config": {
+          "expression": "{view.custom.sel_name} + '|' + {view.custom.sel_value}"
+        },
+        "transforms": [
+          {
+            "type": "script",
+            "code": "\timport themepack\n\tname, new = (value + '|').split('|')[:2]\n\tif not name or not new:\n\t\treturn ''\n\ttheme = self.view.custom.theme\n\ttry:\n\t\told = ''\n\t\tfor row in themepack.all_tokens(theme):\n\t\t\tif row['name'] == name:\n\t\t\t\told = row['value']\n\t\treturn themepack.value_problem(name, old, new)\n\texcept Exception:\n\t\treturn ''"
+          }
+        ]
+      }
+    }
+  },
+  "params": {},
+  "root": {
+    "type": "ia.container.flex",
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "padding": "14px 18px 16px",
+        "gap": "10px",
+        "height": "100%",
+        "overflow": "hidden",
+        "backgroundColor": "var(--containerRoot)"
+      }
+    },
+    "children": [
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "tabs"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "alignItems": "flex-end",
+          "style": {
+            "gap": "2px",
+            "marginBottom": "6px",
+            "borderBottomStyle": "solid",
+            "borderBottomWidth": "1px",
+            "borderBottomColor": "var(--border)"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "brand"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Toolbox Theme Manager  2.0.0",
+              "style": {
+                "fontSize": "13.5px",
+                "fontWeight": 600,
+                "whiteSpace": "nowrap",
+                "color": "var(--label)",
+                "padding": "9px 18px 8px 2px",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "transparent"
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "tab_home",
+              "tabIndex": 0
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Installer",
+              "style": {
+                "fontSize": "13px",
+                "padding": "9px 16px 8px",
+                "cursor": "pointer",
+                "whiteSpace": "nowrap",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "transparent",
+                "color": "var(--neutral-70)",
+                "fontWeight": 600
+              }
+            },
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.navigate(page='/')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                },
+                "onKeyDown": {
+                  "config": {
+                    "script": "\tif event.key in ('Enter', ' '):\n\t\tsystem.perspective.navigate(page='/')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "tab_editor"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Customise",
+              "style": {
+                "fontSize": "13px",
+                "padding": "9px 16px 8px",
+                "cursor": "default",
+                "whiteSpace": "nowrap",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "var(--callToAction)",
+                "color": "var(--label)",
+                "fontWeight": 600
+              }
+            }
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "spacer"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {}
+          },
+          {
+            "type": "ia.display.view",
+            "meta": {
+              "name": "theme_switcher"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "230px"
+            },
+            "props": {
+              "path": "ThemeDropdown",
+              "params": {
+                "refresh": 0
+              },
+              "style": {
+                "minHeight": "34px",
+                "marginBottom": "4px"
+              }
+            },
+            "propConfig": {
+              "props.params.refresh": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "{view.custom.nudge}"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ia.display.label",
+        "meta": {
+          "name": "sub"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "text": "Make a theme of your own: copy one of the ten, then change its colours here. The ten themselves are generated from the repo and Install overwrites them, so they are read-only on this page -- a copy is yours and nothing overwrites it.",
+          "style": {
+            "fontSize": "12.5px",
+            "color": "var(--neutral-70)",
+            "lineHeight": "1.55",
+            "maxWidth": "880px"
+          }
+        }
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "themebar"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "alignItems": "center",
+          "wrap": "wrap",
+          "style": {
+            "gap": "9px",
+            "rowGap": "8px",
+            "padding": "10px 12px",
+            "borderRadius": "4px",
+            "backgroundColor": "var(--container)",
+            "borderStyle": "solid",
+            "borderWidth": "1px",
+            "borderColor": "var(--border)"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "cap"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Editing theme",
+              "style": {
+                "fontSize": "12px",
+                "color": "var(--neutral-70)",
+                "whiteSpace": "nowrap"
+              }
+            }
+          },
+          {
+            "type": "ia.input.dropdown",
+            "meta": {
+              "name": "theme"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "225px"
+            },
+            "props": {
+              "allowClearing": false,
+              "showSearch": true,
+              "style": {
+                "height": "32px"
+              }
+            },
+            "propConfig": {
+              "props.options": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "{view.custom.nudge}"
+                  },
+                  "transforms": [
+                    {
+                      "type": "script",
+                      "code": "\timport themepack\n\t# Say what each one IS. The label was '(not ours)', which is true\n\t# of a theme you just made and reads as a disclaimer about it.\n\tsuffix = {'user': '  (yours)', 'stock': \"  (Ignition's)\"}\n\tout = []\n\tfor r in themepack.list_themes():\n\t\tkind = themepack.theme_kind(r['id'])\n\t\tout.append({'value': r['id'],\n\t'label': r['id'] + suffix.get(kind, '')})\n\treturn out"
+                    }
+                  ]
+                }
+              },
+              "props.value": {
+                "binding": {
+                  "type": "property",
+                  "config": {
+                    "path": "view.custom.theme",
+                    "bidirectional": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "kind"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 1,
+              "basis": "auto"
+            },
+            "props": {
+              "style": {
+                "fontSize": "12px",
+                "color": "var(--neutral-70)"
+              }
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "type": "property",
+                  "config": {
+                    "path": "view.custom.key"
+                  },
+                  "transforms": [
+                    {
+                      "type": "script",
+                      "code": "\timport themepack\n\ttheme = (value + '|').split('|')[0]\n\tif not theme:\n\t\treturn ''\n\tkind = themepack.theme_kind(theme)\n\t# base_of() answers from the built-in tables, so for a theme made\n\t# here it falls through to 'light' -- and called every copy of a\n\t# dark theme light.\n\tbase = (themepack.user_base_of(theme) if kind == 'user'\n\telse themepack.base_of(theme))\n\t# Plain ASCII, and a sentence rather than dash-separated fragments.\n\t# A non-ASCII character in a Jython 2 str literal is BYTES, not a code\n\t# point: the separator here arrived on the page as mojibake.\n\twords = {\n\t\t'packaged': '%s is one of the ten pre-packaged themes, built on %s. Install on the first page puts it back.',\n\t\t'stock': \"%s is one of Ignition's own, built on %s. Editing it changes every project using it.\",\n\t\t'user': '%s is yours, built on %s. Nothing on the Installer page overwrites it.',\n\t}\n\t# The NAME leads: the badge always says which theme it describes,\n\t# so after a create -- when the picker is the only other thing\n\t# naming it -- the page still names it somewhere.\n\ttext = words.get(kind, kind)\n\tif '%s' in text:\n\t\ttext = text % (theme, base or 'a stock theme')\n\treturn text"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "gap"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {}
+          },
+          {
+            "type": "ia.input.button",
+            "meta": {
+              "name": "btn_new"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Make a theme...",
+              "style": {
+                "height": "32px",
+                "whiteSpace": "nowrap",
+                "backgroundColor": "var(--containerBackground)",
+                "color": "var(--label)",
+                "borderStyle": "solid",
+                "borderWidth": "1px",
+                "borderColor": "var(--border)"
+              }
+            },
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\t# One door. It opens pre-set to the theme you are looking at,\n\t# which is the answer nine times out of ten.\n\tself.view.custom.making = 'make'\n\tself.view.custom.new_base = self.view.custom.theme\n\tself.view.custom.new_name = 'my-' + (self.view.custom.theme or 'theme')\n\tself.view.custom.status = ''"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "btn_delete_wrap"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "direction": "row",
+              "style": {}
+            },
+            "propConfig": {
+              "meta.visible": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "{view.custom.kind} = 'user'"
+                  }
+                }
+              },
+              "props.style.display": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "if({view.custom.kind} = 'user', 'flex', 'none')"
+                  }
+                }
+              }
+            },
+            "children": [
+              {
+                "type": "ia.input.button",
+                "meta": {
+                  "name": "btn_delete"
+                },
+                "position": {
+                  "grow": 1,
+                  "shrink": 1,
+                  "basis": "auto"
+                },
+                "props": {
+                  "text": "Delete this theme",
+                  "style": {
+                    "height": "32px",
+                    "whiteSpace": "nowrap",
+                    "backgroundColor": "var(--containerBackground)",
+                    "color": "var(--label)",
+                    "borderStyle": "solid",
+                    "borderWidth": "1px",
+                    "borderColor": "var(--border)"
+                  }
+                },
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\timport themepack\n\ttheme = self.view.custom.theme\n\ttry:\n\t\tif themepack.delete_theme(theme):\n\t\t\tself.view.custom.status = 'Deleted %s' % theme\n\t\telse:\n\t\t\tself.view.custom.status = 'There was no %s to delete' % theme\n\t\t# Land on another theme rather than on an empty picker: the\n\t\t# dropdown's default only evaluates once, so clearing it leaves\n\t\t# 'Select...' and an editor with nothing in it.\n\t\trows = themepack.list_themes()\n\t\tmine = [r['id'] for r in rows if r['ours']]\n\t\tself.view.custom.theme = (mine or [r['id'] for r in rows] or [''])[0]\n\t\tself.view.custom.file = 'variables.css'\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "make_wrap"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "style": {}
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "{view.custom.making} != ''"
+              }
+            }
+          },
+          "props.style.display": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "if({view.custom.making} != '', 'flex', 'none')"
+              }
+            }
+          }
+        },
+        "children": [
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "make"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "auto"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "gap": "7px",
+                "padding": "11px 12px",
+                "borderRadius": "4px",
+                "backgroundColor": "var(--containerNested)",
+                "borderStyle": "solid",
+                "borderWidth": "1px",
+                "borderColor": "var(--callToAction)"
+              }
+            },
+            "children": [
+              {
+                "type": "ia.display.label",
+                "meta": {
+                  "name": "hint"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "text": "Your theme starts as a copy of whatever you pick, files and all, and nothing on the Installer page overwrites it.",
+                  "style": {
+                    "fontSize": "12.5px",
+                    "lineHeight": "1.5",
+                    "color": "var(--label)"
+                  }
+                }
+              },
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "row"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "row",
+                  "alignItems": "center",
+                  "wrap": "wrap",
+                  "style": {
+                    "gap": "9px",
+                    "rowGap": "8px"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.display.label",
+                    "meta": {
+                      "name": "cap"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "text": "Call it",
+                      "style": {
+                        "fontSize": "12px",
+                        "color": "var(--neutral-70)",
+                        "whiteSpace": "nowrap"
+                      }
+                    }
+                  },
+                  {
+                    "type": "ia.input.text-field",
+                    "meta": {
+                      "name": "new_name"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "190px"
+                    },
+                    "props": {
+                      "deferUpdates": false,
+                      "placeholder": "ocean-dark",
+                      "style": {
+                        "height": "32px",
+                        "fontFamily": "'DejaVu Sans Mono', 'Liberation Mono', Consolas, monospace"
+                      }
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "type": "property",
+                          "config": {
+                            "path": "view.custom.new_name",
+                            "bidirectional": true
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "ia.display.label",
+                    "meta": {
+                      "name": "cap2"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "text": "starting from",
+                      "style": {
+                        "fontSize": "12px",
+                        "color": "var(--neutral-70)",
+                        "whiteSpace": "nowrap"
+                      }
+                    }
+                  },
+                  {
+                    "type": "ia.input.dropdown",
+                    "meta": {
+                      "name": "new_base"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 1,
+                      "basis": "260px"
+                    },
+                    "props": {
+                      "allowClearing": false,
+                      "showSearch": true,
+                      "style": {
+                        "height": "32px"
+                      }
+                    },
+                    "propConfig": {
+                      "props.options": {
+                        "binding": {
+                          "type": "expr",
+                          "config": {
+                            "expression": "{view.custom.nudge}"
+                          },
+                          "transforms": [
+                            {
+                              "type": "script",
+                              "code": "\timport themepack\n\treturn [{'value': r['id'], 'label': r['label']}\n\tfor r in themepack.start_points()]"
+                            }
+                          ]
+                        }
+                      },
+                      "props.value": {
+                        "binding": {
+                          "type": "property",
+                          "config": {
+                            "path": "view.custom.new_base",
+                            "bidirectional": true
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "gap"
+                    },
+                    "position": {
+                      "grow": 1,
+                      "shrink": 1,
+                      "basis": "0px"
+                    },
+                    "props": {}
+                  },
+                  {
+                    "type": "ia.input.button",
+                    "meta": {
+                      "name": "btn_cancel"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "text": "Cancel",
+                      "style": {
+                        "height": "32px",
+                        "whiteSpace": "nowrap",
+                        "backgroundColor": "var(--containerBackground)",
+                        "color": "var(--label)",
+                        "borderStyle": "solid",
+                        "borderWidth": "1px",
+                        "borderColor": "var(--border)"
+                      }
+                    },
+                    "events": {
+                      "component": {
+                        "onActionPerformed": {
+                          "config": {
+                            "script": "\tself.view.custom.making = ''\n\tself.view.custom.new_name = ''\n\tself.view.custom.status = ''"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "ia.input.button",
+                    "meta": {
+                      "name": "btn_create"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "text": "Make it",
+                      "style": {
+                        "height": "32px",
+                        "whiteSpace": "nowrap"
+                      }
+                    },
+                    "events": {
+                      "component": {
+                        "onActionPerformed": {
+                          "config": {
+                            "script": "\timport themepack\n\tname = (self.view.custom.new_name or '').strip()\n\ttry:\n\t\t# make_theme copies one of ours, or builds on a bare Ignition\n\t\t# theme, depending on what was chosen -- one action, because\n\t\t# two buttons made them look like comparable alternatives.\n\t\tthemepack.make_theme(name, self.view.custom.new_base)\n\t\tself.view.custom.new_name = ''\n\t\tself.view.custom.making = ''\n\t\t# nudge FIRST: it is what re-reads the theme list, and a\n\t\t# selection the options do not contain yet shows as blank.\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\t\tself.view.custom.theme = name\n\t\tself.view.custom.file = 'variables.css'\n\t\tself.view.custom.status = ('Created %s from %s -- it looks exactly like it until you change something'\n\t\t% (name, self.view.custom.new_base))\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "startwarn_wrap"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "row",
+                  "style": {}
+                },
+                "propConfig": {
+                  "meta.visible": {
+                    "binding": {
+                      "type": "expr",
+                      "config": {
+                        "expression": "{view.custom.startwarn} != ''"
+                      }
+                    }
+                  },
+                  "props.style.display": {
+                    "binding": {
+                      "type": "expr",
+                      "config": {
+                        "expression": "if({view.custom.startwarn} != '', 'flex', 'none')"
+                      }
+                    }
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.display.label",
+                    "meta": {
+                      "name": "startwarn"
+                    },
+                    "position": {
+                      "grow": 1,
+                      "shrink": 1,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "style": {
+                        "fontSize": "12px",
+                        "lineHeight": "1.45",
+                        "color": "var(--callToAction)"
+                      }
+                    },
+                    "propConfig": {
+                      "props.text": {
+                        "binding": {
+                          "type": "property",
+                          "config": {
+                            "path": "view.custom.startwarn"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "locked_wrap"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "style": {}
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "{view.custom.kind} != 'user'"
+              }
+            }
+          },
+          "props.style.display": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "if({view.custom.kind} != 'user', 'flex', 'none')"
+              }
+            }
+          }
+        },
+        "children": [
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "locked"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "auto"
+            },
+            "props": {
+              "direction": "row",
+              "alignItems": "center",
+              "wrap": "wrap",
+              "style": {
+                "gap": "12px",
+                "rowGap": "8px",
+                "padding": "12px 14px",
+                "borderRadius": "4px",
+                "backgroundColor": "var(--containerNested)",
+                "borderStyle": "solid",
+                "borderWidth": "1px",
+                "borderColor": "var(--border)"
+              }
+            },
+            "children": [
+              {
+                "type": "ia.display.label",
+                "meta": {
+                  "name": "why"
+                },
+                "position": {
+                  "grow": 1,
+                  "shrink": 1,
+                  "basis": "0px"
+                },
+                "props": {
+                  "style": {
+                    "fontSize": "12.5px",
+                    "lineHeight": "1.5",
+                    "color": "var(--label)"
+                  }
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "type": "property",
+                      "config": {
+                        "path": "view.custom.key"
+                      },
+                      "transforms": [
+                        {
+                          "type": "script",
+                          "code": "\timport themepack\n\ttheme = (value + '|').split('|')[0]\n\tif not theme:\n\t\treturn 'There is no theme selected.'\n\treturn themepack.why_not_editable(theme)"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "type": "ia.input.button",
+                "meta": {
+                  "name": "btn_copyme"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "text": "Make my own copy",
+                  "style": {
+                    "height": "32px",
+                    "whiteSpace": "nowrap"
+                  }
+                },
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\t# One door. It opens pre-set to the theme you are looking at,\n\t# which is the answer nine times out of ten.\n\tself.view.custom.making = 'make'\n\tself.view.custom.new_base = self.view.custom.theme\n\tself.view.custom.new_name = 'my-' + (self.view.custom.theme or 'theme')\n\tself.view.custom.status = ''"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ia.display.label",
+        "meta": {
+          "name": "status"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "style": {
+            "fontSize": "12px",
+            "minHeight": "15px",
+            "color": "var(--callToAction)"
+          }
+        },
+        "propConfig": {
+          "props.text": {
+            "binding": {
+              "type": "property",
+              "config": {
+                "path": "view.custom.status"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "panes"
+        },
+        "position": {
+          "grow": 1,
+          "shrink": 1,
+          "basis": "0px"
+        },
+        "props": {
+          "direction": "row",
+          "style": {
+            "gap": "10px",
+            "minHeight": "0px"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "colours_wrap"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {
+              "direction": "row",
+              "style": {}
+            },
+            "propConfig": {
+              "meta.visible": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "{view.custom.kind} != '' && !{view.custom.raw}"
+                  }
+                }
+              },
+              "props.style.display": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "if({view.custom.kind} != '' && !{view.custom.raw}, 'flex', 'none')"
+                  }
+                }
+              }
+            },
+            "children": [
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "colours"
+                },
+                "position": {
+                  "grow": 1,
+                  "shrink": 1,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "gap": "0px",
+                    "minHeight": "0px",
+                    "borderRadius": "4px",
+                    "backgroundColor": "var(--container)",
+                    "borderStyle": "solid",
+                    "borderWidth": "1px",
+                    "borderColor": "var(--border)",
+                    "overflow": "hidden",
+                    "minWidth": "560px"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "head"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "3px",
+                        "padding": "9px 11px 8px",
+                        "borderBottomStyle": "solid",
+                        "borderBottomWidth": "1px",
+                        "borderBottomColor": "var(--border)"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "h"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "This theme's values",
+                          "style": {
+                            "fontSize": "11px",
+                            "fontWeight": 600,
+                            "letterSpacing": "0.06em",
+                            "textTransform": "uppercase",
+                            "color": "var(--label)"
+                          }
+                        }
+                      },
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "hint"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "Mostly colours, and a few sizes, grouped by what they affect. Click one, change it, Save -- each save writes the file and runs the scan that makes the gateway use it.",
+                          "style": {
+                            "fontSize": "11.5px",
+                            "lineHeight": "1.45",
+                            "color": "var(--neutral-70)"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "body"
+                    },
+                    "position": {
+                      "grow": 1,
+                      "shrink": 1,
+                      "basis": "0px"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "0px",
+                        "minHeight": "0px",
+                        "padding": "0px"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.container.flex",
+                        "meta": {
+                          "name": "find"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "direction": "row",
+                          "alignItems": "center",
+                          "style": {
+                            "gap": "9px",
+                            "padding": "8px 10px",
+                            "borderBottomStyle": "solid",
+                            "borderBottomWidth": "1px",
+                            "borderBottomColor": "var(--border)"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "ia.display.label",
+                            "meta": {
+                              "name": "findcap"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "text": "Find",
+                              "style": {
+                                "fontSize": "12px",
+                                "color": "var(--neutral-70)",
+                                "whiteSpace": "nowrap"
+                              }
+                            }
+                          },
+                          {
+                            "type": "ia.input.text-field",
+                            "meta": {
+                              "name": "filter"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 1,
+                              "basis": "260px"
+                            },
+                            "props": {
+                              "deferUpdates": false,
+                              "placeholder": "accent, button, #ffffff, table...",
+                              "style": {
+                                "height": "30px"
+                              }
+                            },
+                            "propConfig": {
+                              "props.text": {
+                                "binding": {
+                                  "type": "property",
+                                  "config": {
+                                    "path": "view.custom.filter",
+                                    "bidirectional": true
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "ia.display.label",
+                            "meta": {
+                              "name": "findhint"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "text": "name, description, group or value",
+                              "style": {
+                                "fontSize": "12px",
+                                "color": "var(--neutral-70)",
+                                "whiteSpace": "nowrap"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "ia.display.table",
+                        "meta": {
+                          "name": "tokens"
+                        },
+                        "position": {
+                          "grow": 1,
+                          "shrink": 1,
+                          "basis": "0px"
+                        },
+                        "props": {
+                          "pager": {
+                            "top": false,
+                            "bottom": false
+                          },
+                          "columns": [
+                            {
+                              "field": "group",
+                              "header": {
+                                "title": "Affects"
+                              },
+                              "width": 150,
+                              "strictWidth": true
+                            },
+                            {
+                              "field": "name",
+                              "header": {
+                                "title": "Token"
+                              },
+                              "width": 210,
+                              "strictWidth": true
+                            },
+                            {
+                              "field": "what",
+                              "header": {
+                                "title": "What it does"
+                              }
+                            },
+                            {
+                              "field": "swatch",
+                              "header": {
+                                "title": "Colour"
+                              },
+                              "width": 58,
+                              "strictWidth": true
+                            },
+                            {
+                              "field": "value",
+                              "header": {
+                                "title": "Value"
+                              },
+                              "width": 130,
+                              "strictWidth": true
+                            }
+                          ],
+                          "style": {}
+                        },
+                        "propConfig": {
+                          "props.data": {
+                            "binding": {
+                              "type": "property",
+                              "config": {
+                                "path": "view.custom.tokens"
+                              }
+                            }
+                          }
+                        },
+                        "events": {
+                          "component": {
+                            "onRowClick": {
+                              "config": {
+                                "script": "\tdata = event.value or {}\n\tself.view.custom.sel_name = data.get('name', '')\n\tself.view.custom.sel_value = data.get('value', '')\n\tself.view.custom.status = ''"
+                              },
+                              "scope": "G",
+                              "type": "script"
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "ia.container.flex",
+                        "meta": {
+                          "name": "editblock_wrap"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "direction": "row",
+                          "style": {}
+                        },
+                        "propConfig": {
+                          "meta.visible": {
+                            "binding": {
+                              "type": "expr",
+                              "config": {
+                                "expression": "{view.custom.kind} = 'user'"
+                              }
+                            }
+                          },
+                          "props.style.display": {
+                            "binding": {
+                              "type": "expr",
+                              "config": {
+                                "expression": "if({view.custom.kind} = 'user', 'flex', 'none')"
+                              }
+                            }
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "ia.container.flex",
+                            "meta": {
+                              "name": "editblock"
+                            },
+                            "position": {
+                              "grow": 1,
+                              "shrink": 1,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "direction": "column",
+                              "style": {
+                                "borderTopStyle": "solid",
+                                "borderTopWidth": "1px",
+                                "borderTopColor": "var(--border)"
+                              }
+                            },
+                            "children": [
+                              {
+                                "type": "ia.container.flex",
+                                "meta": {
+                                  "name": "edit"
+                                },
+                                "position": {
+                                  "grow": 0,
+                                  "shrink": 0,
+                                  "basis": "auto"
+                                },
+                                "props": {
+                                  "direction": "row",
+                                  "alignItems": "center",
+                                  "wrap": "wrap",
+                                  "style": {
+                                    "gap": "9px",
+                                    "rowGap": "8px",
+                                    "padding": "9px 10px 0px"
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "type": "ia.display.label",
+                                    "meta": {
+                                      "name": "sel"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 1,
+                                      "basis": "auto"
+                                    },
+                                    "props": {
+                                      "style": {
+                                        "fontSize": "12.5px",
+                                        "fontWeight": 600,
+                                        "color": "var(--label)",
+                                        "minWidth": "180px",
+                                        "fontFamily": "'DejaVu Sans Mono', 'Liberation Mono', Consolas, monospace"
+                                      }
+                                    },
+                                    "propConfig": {
+                                      "props.text": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.sel_name} = '', '-- pick a value above --', {view.custom.sel_name})"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "ia.input.text-field",
+                                    "meta": {
+                                      "name": "val"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "170px"
+                                    },
+                                    "props": {
+                                      "deferUpdates": false,
+                                      "placeholder": "#3b4252",
+                                      "style": {
+                                        "height": "32px",
+                                        "fontFamily": "'DejaVu Sans Mono', 'Liberation Mono', Consolas, monospace"
+                                      }
+                                    },
+                                    "propConfig": {
+                                      "props.text": {
+                                        "binding": {
+                                          "type": "property",
+                                          "config": {
+                                            "path": "view.custom.sel_value",
+                                            "bidirectional": true
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "ia.display.label",
+                                    "meta": {
+                                      "name": "chip"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "auto"
+                                    },
+                                    "props": {
+                                      "text": "",
+                                      "style": {
+                                        "width": "32px",
+                                        "height": "32px",
+                                        "borderRadius": "3px",
+                                        "borderStyle": "solid",
+                                        "borderWidth": "1px",
+                                        "borderColor": "var(--border)"
+                                      }
+                                    },
+                                    "propConfig": {
+                                      "props.style.backgroundColor": {
+                                        "binding": {
+                                          "type": "property",
+                                          "config": {
+                                            "path": "view.custom.sel_ok"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "warn_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 1,
+                                      "shrink": 1,
+                                      "basis": "0px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.warn} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.warn} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "warn"
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "style": {
+                                            "fontSize": "12px",
+                                            "lineHeight": "1.4",
+                                            "color": "var(--callToAction)"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.warn"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "gap"
+                                    },
+                                    "position": {
+                                      "grow": 1,
+                                      "shrink": 1,
+                                      "basis": "0px"
+                                    },
+                                    "props": {}
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "btn_undo_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "auto"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.undo_name} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.undo_name} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.input.button",
+                                        "meta": {
+                                          "name": "btn_undo"
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "height": "32px",
+                                            "whiteSpace": "nowrap",
+                                            "backgroundColor": "var(--containerBackground)",
+                                            "color": "var(--label)",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)"
+                                          }
+                                        },
+                                        "events": {
+                                          "component": {
+                                            "onActionPerformed": {
+                                              "config": {
+                                                "script": "\timport themepack\n\tname = self.view.custom.undo_name\n\twas = self.view.custom.undo_value\n\tif not name:\n\t\treturn\n\ttry:\n\t\tthemepack.set_any_token(self.view.custom.theme, name, was)\n\t\tself.view.custom.status = 'Put %s back to %s' % (name, was)\n\t\tself.view.custom.sel_name = name\n\t\tself.view.custom.sel_value = was\n\t\t# One level, and it is spent. Two Undos in a row putting the\n\t\t# same value back twice would be a button that lies.\n\t\tself.view.custom.undo_name = ''\n\t\tself.view.custom.undo_value = ''\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.text": {
+                                            "binding": {
+                                              "type": "expr",
+                                              "config": {
+                                                "expression": "'Undo ' + {view.custom.undo_name}"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.input.button",
+                                    "meta": {
+                                      "name": "btn_save_token"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "auto"
+                                    },
+                                    "props": {
+                                      "text": "Save",
+                                      "style": {
+                                        "height": "32px",
+                                        "whiteSpace": "nowrap"
+                                      }
+                                    },
+                                    "events": {
+                                      "component": {
+                                        "onActionPerformed": {
+                                          "config": {
+                                            "script": "\timport themepack\n\tname = self.view.custom.sel_name\n\tif not name:\n\t\tself.view.custom.status = 'Pick a value in the list first'\n\t\treturn\n\tvalue = self.view.custom.sel_value\n\ttry:\n\t\t# set_any_token finds the file: --st-* live in globals.css and\n\t\t# Ignition's own names in variables.css, and the page never showed\n\t\t# the user which is which. It also refuses a value that would\n\t\t# stop the token working, which is why this can fail loudly.\n\t\tresult = themepack.set_any_token(self.view.custom.theme,\n\t\tname, value)\n\t\t# Remember what it replaced. Nobody remembers the hex they\n\t\t# overwrote, and there was no way back from a wrong save.\n\t\tself.view.custom.undo_name = name\n\t\tself.view.custom.undo_value = result.get('was', '')\n\t\t# Report the VALUE, not just the name: 'Saved --st-accent' is\n\t\t# equally true of a save that wrote back what was already there.\n\t\tself.view.custom.status = 'Saved %s = %s' % (name, value)\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                                          },
+                                          "scope": "G",
+                                          "type": "script"
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "ia.container.flex",
+                                "meta": {
+                                  "name": "palette"
+                                },
+                                "position": {
+                                  "grow": 0,
+                                  "shrink": 0,
+                                  "basis": "auto"
+                                },
+                                "props": {
+                                  "direction": "row",
+                                  "alignItems": "center",
+                                  "wrap": "wrap",
+                                  "style": {
+                                    "gap": "6px",
+                                    "rowGap": "6px",
+                                    "padding": "8px 10px 9px"
+                                  }
+                                },
+                                "children": [
+                                  {
+                                    "type": "ia.display.label",
+                                    "meta": {
+                                      "name": "palcap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "auto"
+                                    },
+                                    "props": {
+                                      "text": "Already in this theme",
+                                      "style": {
+                                        "fontSize": "12px",
+                                        "color": "var(--neutral-70)",
+                                        "whiteSpace": "nowrap"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw0_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[0]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[0]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw0",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[0]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[0]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 0 and colours[0]:\n\t\tself.view.custom.sel_value = colours[0]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 0 and colours[0]:\n\t\t\tself.view.custom.sel_value = colours[0]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw1_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[1]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[1]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw1",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[1]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[1]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 1 and colours[1]:\n\t\tself.view.custom.sel_value = colours[1]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 1 and colours[1]:\n\t\t\tself.view.custom.sel_value = colours[1]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw2_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[2]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[2]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw2",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[2]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[2]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 2 and colours[2]:\n\t\tself.view.custom.sel_value = colours[2]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 2 and colours[2]:\n\t\t\tself.view.custom.sel_value = colours[2]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw3_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[3]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[3]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw3",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[3]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[3]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 3 and colours[3]:\n\t\tself.view.custom.sel_value = colours[3]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 3 and colours[3]:\n\t\t\tself.view.custom.sel_value = colours[3]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw4_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[4]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[4]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw4",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[4]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[4]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 4 and colours[4]:\n\t\tself.view.custom.sel_value = colours[4]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 4 and colours[4]:\n\t\t\tself.view.custom.sel_value = colours[4]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw5_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[5]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[5]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw5",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[5]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[5]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 5 and colours[5]:\n\t\tself.view.custom.sel_value = colours[5]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 5 and colours[5]:\n\t\t\tself.view.custom.sel_value = colours[5]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw6_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[6]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[6]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw6",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[6]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[6]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 6 and colours[6]:\n\t\tself.view.custom.sel_value = colours[6]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 6 and colours[6]:\n\t\t\tself.view.custom.sel_value = colours[6]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw7_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[7]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[7]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw7",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[7]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[7]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 7 and colours[7]:\n\t\tself.view.custom.sel_value = colours[7]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 7 and colours[7]:\n\t\t\tself.view.custom.sel_value = colours[7]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw8_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[8]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[8]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw8",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[8]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[8]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 8 and colours[8]:\n\t\tself.view.custom.sel_value = colours[8]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 8 and colours[8]:\n\t\t\tself.view.custom.sel_value = colours[8]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw9_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[9]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[9]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw9",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[9]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[9]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 9 and colours[9]:\n\t\tself.view.custom.sel_value = colours[9]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 9 and colours[9]:\n\t\t\tself.view.custom.sel_value = colours[9]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw10_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[10]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[10]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw10",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[10]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[10]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 10 and colours[10]:\n\t\tself.view.custom.sel_value = colours[10]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 10 and colours[10]:\n\t\t\tself.view.custom.sel_value = colours[10]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw11_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[11]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[11]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw11",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[11]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[11]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 11 and colours[11]:\n\t\tself.view.custom.sel_value = colours[11]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 11 and colours[11]:\n\t\t\tself.view.custom.sel_value = colours[11]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw12_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[12]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[12]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw12",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[12]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[12]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 12 and colours[12]:\n\t\tself.view.custom.sel_value = colours[12]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 12 and colours[12]:\n\t\t\tself.view.custom.sel_value = colours[12]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw13_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[13]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[13]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw13",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[13]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[13]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 13 and colours[13]:\n\t\tself.view.custom.sel_value = colours[13]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 13 and colours[13]:\n\t\t\tself.view.custom.sel_value = colours[13]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw14_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[14]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[14]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw14",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[14]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[14]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 14 and colours[14]:\n\t\tself.view.custom.sel_value = colours[14]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 14 and colours[14]:\n\t\t\tself.view.custom.sel_value = colours[14]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "type": "ia.container.flex",
+                                    "meta": {
+                                      "name": "sw15_wrap"
+                                    },
+                                    "position": {
+                                      "grow": 0,
+                                      "shrink": 0,
+                                      "basis": "22px"
+                                    },
+                                    "props": {
+                                      "direction": "row",
+                                      "style": {}
+                                    },
+                                    "propConfig": {
+                                      "meta.visible": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "{view.custom.swatches[15]} != ''"
+                                          }
+                                        }
+                                      },
+                                      "props.style.display": {
+                                        "binding": {
+                                          "type": "expr",
+                                          "config": {
+                                            "expression": "if({view.custom.swatches[15]} != '', 'flex', 'none')"
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "children": [
+                                      {
+                                        "type": "ia.display.label",
+                                        "meta": {
+                                          "name": "sw15",
+                                          "tooltip": {
+                                            "enabled": true,
+                                            "text": ""
+                                          },
+                                          "tabIndex": 0
+                                        },
+                                        "position": {
+                                          "grow": 1,
+                                          "shrink": 1,
+                                          "basis": "auto"
+                                        },
+                                        "props": {
+                                          "text": "",
+                                          "style": {
+                                            "width": "100%",
+                                            "height": "22px",
+                                            "borderRadius": "3px",
+                                            "borderStyle": "solid",
+                                            "borderWidth": "1px",
+                                            "borderColor": "var(--border)",
+                                            "cursor": "pointer"
+                                          }
+                                        },
+                                        "propConfig": {
+                                          "props.style.backgroundColor": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[15]"
+                                              }
+                                            }
+                                          },
+                                          "meta.tooltip.text": {
+                                            "binding": {
+                                              "type": "property",
+                                              "config": {
+                                                "path": "view.custom.swatches[15]"
+                                              }
+                                            }
+                                          }
+                                        },
+                                        "events": {
+                                          "dom": {
+                                            "onClick": {
+                                              "config": {
+                                                "script": "\tcolours = self.view.custom.swatches or []\n\tif len(colours) > 15 and colours[15]:\n\t\tself.view.custom.sel_value = colours[15]\n\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            },
+                                            "onKeyDown": {
+                                              "config": {
+                                                "script": "\tif event.key in ('Enter', ' '):\n\t\tcolours = self.view.custom.swatches or []\n\t\tif len(colours) > 15 and colours[15]:\n\t\t\tself.view.custom.sel_value = colours[15]\n\t\t\tself.view.custom.status = ''"
+                                              },
+                                              "scope": "G",
+                                              "type": "script"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "rawpane_wrap"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {
+              "direction": "row",
+              "style": {}
+            },
+            "propConfig": {
+              "meta.visible": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "{view.custom.kind} = 'user' && {view.custom.raw}"
+                  }
+                }
+              },
+              "props.style.display": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "if({view.custom.kind} = 'user' && {view.custom.raw}, 'flex', 'none')"
+                  }
+                }
+              }
+            },
+            "children": [
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "rawpane"
+                },
+                "position": {
+                  "grow": 1,
+                  "shrink": 1,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "gap": "0px",
+                    "minHeight": "0px",
+                    "borderRadius": "4px",
+                    "backgroundColor": "var(--container)",
+                    "borderStyle": "solid",
+                    "borderWidth": "1px",
+                    "borderColor": "var(--border)",
+                    "overflow": "hidden"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "head"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "3px",
+                        "padding": "9px 11px 8px",
+                        "borderBottomStyle": "solid",
+                        "borderBottomWidth": "1px",
+                        "borderBottomColor": "var(--border)"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "h"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "Raw files",
+                          "style": {
+                            "fontSize": "11px",
+                            "fontWeight": 600,
+                            "letterSpacing": "0.06em",
+                            "textTransform": "uppercase",
+                            "color": "var(--label)"
+                          }
+                        }
+                      },
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "hint"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "The theme's files as they are on disk. For structural changes -- a rule of your own, an extra import -- rather than colours.",
+                          "style": {
+                            "fontSize": "11.5px",
+                            "lineHeight": "1.45",
+                            "color": "var(--neutral-70)"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "body"
+                    },
+                    "position": {
+                      "grow": 1,
+                      "shrink": 1,
+                      "basis": "0px"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "0px",
+                        "minHeight": "0px",
+                        "padding": "0px"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.container.flex",
+                        "meta": {
+                          "name": "fileactions"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "direction": "row",
+                          "alignItems": "center",
+                          "wrap": "wrap",
+                          "style": {
+                            "gap": "8px",
+                            "rowGap": "8px",
+                            "padding": "8px 10px",
+                            "borderBottomStyle": "solid",
+                            "borderBottomWidth": "1px",
+                            "borderBottomColor": "var(--border)"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "ia.input.dropdown",
+                            "meta": {
+                              "name": "file"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "190px"
+                            },
+                            "props": {
+                              "allowClearing": false,
+                              "showSearch": false,
+                              "style": {
+                                "height": "32px"
+                              }
+                            },
+                            "propConfig": {
+                              "props.options": {
+                                "binding": {
+                                  "type": "property",
+                                  "config": {
+                                    "path": "view.custom.key"
+                                  },
+                                  "transforms": [
+                                    {
+                                      "type": "script",
+                                      "code": "\timport themepack\n\ttheme = (value + '|').split('|')[0]\n\tif not theme:\n\t\treturn []\n\ttry:\n\t\trows = themepack.list_files(theme)\n\texcept Exception:\n\t\treturn []\n\treturn [{'value': r['name'], 'label': r['name']}\n\tfor r in rows if r['editable']]"
+                                    }
+                                  ]
+                                }
+                              },
+                              "props.value": {
+                                "binding": {
+                                  "type": "property",
+                                  "config": {
+                                    "path": "view.custom.file",
+                                    "bidirectional": true
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "ia.container.flex",
+                            "meta": {
+                              "name": "gap"
+                            },
+                            "position": {
+                              "grow": 1,
+                              "shrink": 1,
+                              "basis": "0px"
+                            },
+                            "props": {}
+                          },
+                          {
+                            "type": "ia.input.button",
+                            "meta": {
+                              "name": "btn_save"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "text": "Save file",
+                              "style": {
+                                "height": "32px",
+                                "whiteSpace": "nowrap"
+                              }
+                            },
+                            "events": {
+                              "component": {
+                                "onActionPerformed": {
+                                  "config": {
+                                    "script": "\timport themepack\n\ttheme = self.view.custom.theme\n\tfilename = self.view.custom.file\n\tif not filename:\n\t\tself.view.custom.status = 'Pick a file first'\n\t\treturn\n\ttry:\n\t\tresult = themepack.write_file(theme, filename,\n\t\tself.view.custom.text)\n\t\tself.view.custom.status = ('Saved %s (%d bytes) and scanned'\n\t\t% (filename, result['bytes']))\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                                  },
+                                  "scope": "G",
+                                  "type": "script"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "ia.input.button",
+                            "meta": {
+                              "name": "btn_scan"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "text": "Re-scan",
+                              "style": {
+                                "height": "32px",
+                                "whiteSpace": "nowrap",
+                                "backgroundColor": "var(--containerBackground)",
+                                "color": "var(--label)",
+                                "borderStyle": "solid",
+                                "borderWidth": "1px",
+                                "borderColor": "var(--border)"
+                              }
+                            },
+                            "events": {
+                              "component": {
+                                "onActionPerformed": {
+                                  "config": {
+                                    "script": "\timport themepack\n\ttry:\n\t\tthemepack.refresh()\n\t\t# Bump the key too, or the scan runs and every binding on this page\n\t\t# keeps showing what it read before it.\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\t\tself.view.custom.status = 'Scanned -- the gateway has re-read the themes'\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                                  },
+                                  "scope": "G",
+                                  "type": "script"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "ia.input.text-area",
+                        "meta": {
+                          "name": "raw"
+                        },
+                        "position": {
+                          "grow": 1,
+                          "shrink": 1,
+                          "basis": "0px"
+                        },
+                        "props": {
+                          "style": {
+                            "fontFamily": "'DejaVu Sans Mono', 'Liberation Mono', Consolas, monospace",
+                            "fontSize": "12.5px",
+                            "lineHeight": "1.55",
+                            "whiteSpace": "pre",
+                            "tabSize": "2",
+                            "border": "none",
+                            "borderRadius": "0px",
+                            "padding": "10px 12px",
+                            "backgroundColor": "var(--container)",
+                            "minHeight": "0",
+                            "overflow": "auto"
+                          }
+                        },
+                        "propConfig": {
+                          "props.text": {
+                            "binding": {
+                              "type": "property",
+                              "config": {
+                                "path": "view.custom.text",
+                                "bidirectional": true
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "previewcol"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "352px"
+            },
+            "props": {
+              "direction": "column",
+              "style": {
+                "gap": "10px",
+                "minHeight": "0px"
+              }
+            },
+            "children": [
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "preview"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "column",
+                  "style": {
+                    "gap": "0px",
+                    "minHeight": "0px",
+                    "borderRadius": "4px",
+                    "backgroundColor": "var(--container)",
+                    "borderStyle": "solid",
+                    "borderWidth": "1px",
+                    "borderColor": "var(--border)",
+                    "overflow": "hidden"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "head"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "3px",
+                        "padding": "9px 11px 8px",
+                        "borderBottomStyle": "solid",
+                        "borderBottomWidth": "1px",
+                        "borderBottomColor": "var(--border)"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "h"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "Preview",
+                          "style": {
+                            "fontSize": "11px",
+                            "fontWeight": 600,
+                            "letterSpacing": "0.06em",
+                            "textTransform": "uppercase",
+                            "color": "var(--label)"
+                          }
+                        }
+                      },
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "hint"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "This theme's own colours. Repaints on every save.",
+                          "style": {
+                            "fontSize": "11.5px",
+                            "lineHeight": "1.45",
+                            "color": "var(--neutral-70)"
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "body"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "0px",
+                        "minHeight": "0px",
+                        "padding": "0px"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.display.label",
+                        "meta": {
+                          "name": "shot"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 1,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "text": "",
+                          "style": {
+                            "aspectRatio": "200 / 60",
+                            "width": "auto",
+                            "height": "auto",
+                            "maxHeight": "96px",
+                            "margin": "8px",
+                            "backgroundRepeat": "no-repeat",
+                            "backgroundPosition": "center",
+                            "backgroundSize": "contain",
+                            "borderRadius": "3px"
+                          }
+                        },
+                        "propConfig": {
+                          "props.style.backgroundImage": {
+                            "binding": {
+                              "type": "property",
+                              "config": {
+                                "path": "view.custom.key"
+                              },
+                              "transforms": [
+                                {
+                                  "type": "script",
+                                  "code": "\timport themepack\n\ttheme = (value + '|').split('|')[0]\n\tif not theme:\n\t\treturn ''\n\ttry:\n\t\treturn 'url(%s)' % themepack.live_preview_uri(theme, 320, 96)\n\texcept Exception:\n\t\treturn ''"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "type": "ia.container.flex",
+                        "meta": {
+                          "name": "prefresh"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "direction": "row",
+                          "style": {
+                            "padding": "0 10px 10px",
+                            "gap": "8px"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "ia.input.button",
+                            "meta": {
+                              "name": "btn_refresh"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "text": "Refresh",
+                              "style": {
+                                "height": "32px",
+                                "whiteSpace": "nowrap",
+                                "backgroundColor": "var(--containerBackground)",
+                                "color": "var(--label)",
+                                "borderStyle": "solid",
+                                "borderWidth": "1px",
+                                "borderColor": "var(--border)"
+                              }
+                            },
+                            "events": {
+                              "component": {
+                                "onActionPerformed": {
+                                  "config": {
+                                    "script": "\timport themepack\n\ttry:\n\t\tthemepack.refresh()\n\t\t# Bump the key too, or the scan runs and every binding on this page\n\t\t# keeps showing what it read before it.\n\t\tself.view.custom.nudge = self.view.custom.nudge + 1\n\t\tself.view.custom.status = 'Scanned -- the gateway has re-read the themes'\n\texcept Exception as e:\n\t\tself.view.custom.status = str(e)"
+                                  },
+                                  "scope": "G",
+                                  "type": "script"
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "ia.container.flex",
+                "meta": {
+                  "name": "about_pane_wrap"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "direction": "row",
+                  "style": {}
+                },
+                "propConfig": {
+                  "meta.visible": {
+                    "binding": {
+                      "type": "expr",
+                      "config": {
+                        "expression": "{view.custom.kind} != ''"
+                      }
+                    }
+                  },
+                  "props.style.display": {
+                    "binding": {
+                      "type": "expr",
+                      "config": {
+                        "expression": "if({view.custom.kind} != '', 'flex', 'none')"
+                      }
+                    }
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ia.container.flex",
+                    "meta": {
+                      "name": "about_pane"
+                    },
+                    "position": {
+                      "grow": 1,
+                      "shrink": 1,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "direction": "column",
+                      "style": {
+                        "gap": "0px",
+                        "minHeight": "0px",
+                        "borderRadius": "4px",
+                        "backgroundColor": "var(--container)",
+                        "borderStyle": "solid",
+                        "borderWidth": "1px",
+                        "borderColor": "var(--border)",
+                        "overflow": "hidden"
+                      }
+                    },
+                    "children": [
+                      {
+                        "type": "ia.container.flex",
+                        "meta": {
+                          "name": "head"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "direction": "column",
+                          "style": {
+                            "gap": "3px",
+                            "padding": "9px 11px 8px",
+                            "borderBottomStyle": "solid",
+                            "borderBottomWidth": "1px",
+                            "borderBottomColor": "var(--border)"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "ia.display.label",
+                            "meta": {
+                              "name": "h"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "text": "About this theme",
+                              "style": {
+                                "fontSize": "11px",
+                                "fontWeight": 600,
+                                "letterSpacing": "0.06em",
+                                "textTransform": "uppercase",
+                                "color": "var(--label)"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "ia.container.flex",
+                        "meta": {
+                          "name": "body"
+                        },
+                        "position": {
+                          "grow": 0,
+                          "shrink": 0,
+                          "basis": "auto"
+                        },
+                        "props": {
+                          "direction": "column",
+                          "style": {
+                            "gap": "0px",
+                            "minHeight": "0px",
+                            "padding": "0px"
+                          }
+                        },
+                        "children": [
+                          {
+                            "type": "ia.display.label",
+                            "meta": {
+                              "name": "about"
+                            },
+                            "position": {
+                              "grow": 0,
+                              "shrink": 0,
+                              "basis": "auto"
+                            },
+                            "props": {
+                              "style": {
+                                "fontSize": "12px",
+                                "lineHeight": "1.5",
+                                "whiteSpace": "pre-line",
+                                "padding": "7px 11px 8px",
+                                "color": "var(--label)"
+                              }
+                            },
+                            "propConfig": {
+                              "props.text": {
+                                "binding": {
+                                  "type": "property",
+                                  "config": {
+                                    "path": "view.custom.about"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "advanced_wrap"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "style": {}
+        },
+        "propConfig": {
+          "meta.visible": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "{view.custom.kind} = 'user'"
+              }
+            }
+          },
+          "props.style.display": {
+            "binding": {
+              "type": "expr",
+              "config": {
+                "expression": "if({view.custom.kind} = 'user', 'flex', 'none')"
+              }
+            }
+          }
+        },
+        "children": [
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "advanced"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "auto"
+            },
+            "props": {
+              "direction": "row",
+              "alignItems": "center",
+              "style": {
+                "gap": "10px"
+              }
+            },
+            "children": [
+              {
+                "type": "ia.input.button",
+                "meta": {
+                  "name": "btn_raw"
+                },
+                "position": {
+                  "grow": 0,
+                  "shrink": 0,
+                  "basis": "auto"
+                },
+                "props": {
+                  "text": "",
+                  "style": {
+                    "height": "32px",
+                    "whiteSpace": "nowrap",
+                    "backgroundColor": "var(--containerBackground)",
+                    "color": "var(--label)",
+                    "borderStyle": "solid",
+                    "borderWidth": "1px",
+                    "borderColor": "var(--border)"
+                  }
+                },
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.view.custom.raw = not self.view.custom.raw\n\tself.view.custom.status = ''"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "type": "expr",
+                      "config": {
+                        "expression": "if({view.custom.raw}, 'Back to the colour list', 'Advanced: edit the files directly')"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "type": "ia.display.label",
+                "meta": {
+                  "name": "rawhint"
+                },
+                "position": {
+                  "grow": 1,
+                  "shrink": 1,
+                  "basis": "auto"
+                },
+                "props": {
+                  "text": "",
+                  "style": {
+                    "fontSize": "12px",
+                    "color": "var(--neutral-70)",
+                    "whiteSpace": "normal"
+                  }
+                },
+                "propConfig": {
+                  "props.text": {
+                    "binding": {
+                      "type": "expr",
+                      "config": {
+                        "expression": "if({view.custom.raw}, 'You are editing the file itself. Colours are easier to change in the list.', 'Colours are easier to change in the list above; this is for structural edits.')"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "scope": "G",
+  "description": "Industrial Dark theme (from packs/industrial-control-cyan.json). See README.md.",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "config.json",
+    "index.css",
+    "variables.css",
+    "globals.css"
+  ]
+}

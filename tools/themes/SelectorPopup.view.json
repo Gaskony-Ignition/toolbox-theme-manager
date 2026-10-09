@@ -1,0 +1,999 @@
+{
+  "custom": {
+    "gateway": {
+      "all": [],
+      "have": "",
+      "packCount": 0
+    }
+  },
+  "params": {},
+  "propConfig": {
+    "custom.gateway": {
+      "binding": {
+        "config": {
+          "expression": "1"
+        },
+        "transforms": [
+          {
+            "code": "\t# What this gateway ACTUALLY has. The 16 swatches below are a fixed,\n\t# hand-coloured grid, but whether each one is offered is decided here,\n\t# at open time, by asking the gateway -- a swatch for a theme that is\n\t# not installed would set session.props.theme to an id Perspective\n\t# cannot resolve.\n\t#\n\t# Deliberately self-contained: this view is a copy-me artefact, so it\n\t# must not depend on a script package existing in the host project.\n\tfrom java.lang import Throwable as JThrowable\n\t# light and dark live inside the Perspective module's own jar and never\n\t# appear as config resources, so the stock six are a fixed base rather\n\t# than something read from the gateway. Order is Ignition's own.\n\tSTOCK = [u\"light\", u\"light-warm\", u\"light-cool\",\n\t\tu\"dark\", u\"dark-warm\", u\"dark-cool\"]\n\t# the ten packs this repo ships -- only used to count the grid below\n\tPACK = [u\"glass-violet\", u\"glass-green\",\n\t\tu\"leather-light\", u\"leather-dark\",\n\t\tu\"finance-ledger\", u\"newsprint-dark\",\n\t\tu\"nord-light\", u\"nord-dark\",\n\t\tu\"industrial-light\", u\"industrial-dark\"]\n\textra = []\n\ttry:\n\t\tfor res in system.config.getResources(\n\t\t\t\tmoduleId=\"com.inductiveautomation.perspective\", typeId=\"themes\"):\n\t\t\tname = unicode(res.getName())\n\t\t\tif name not in STOCK and name not in extra:\n\t\t\t\textra.append(name)\n\texcept (JThrowable, Exception) as e:\n\t\t# a picker offering the stock six beats one offering nothing\n\t\tsystem.util.getLogger(\"ThemeSelector\").warn(\n\t\t\tu\"theme listing failed, offering the stock themes only: %s\" % e)\n\tnames = STOCK + sorted(extra)\n\treturn {\n\t\t# every theme on the gateway, whoever shipped it -- the dropdown\n\t\tu\"all\": [{u\"value\": n, u\"label\": n.replace(u\"-\", u\" \").capitalize()}\n\t\t\tfor n in names],\n\t\t# comma-DELIMITED, leading and trailing: the swatches test membership\n\t\t# with indexOf(..., \",<id>,\"), and without the delimiters \"nord-dark\"\n\t\t# would match inside \"nord-darker\"\n\t\tu\"have\": u\",\" + u\",\".join(names) + u\",\",\n\t\tu\"packCount\": len([n for n in PACK if n in names]),\n\t}\n",
+            "type": "script"
+          }
+        ],
+        "type": "expr"
+      }
+    }
+  },
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "meta": {
+          "name": "hint"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "props": {
+          "style": {
+            "color": "var(--label--disabled)",
+            "fontSize": "11px",
+            "lineHeight": 1.4
+          },
+          "text": "Applies to this session immediately. Reload the page to reset to the project default."
+        },
+        "type": "ia.display.label"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "customLabel"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.gateway.packCount} = 10, \"Custom \u00b7 10 themes\", \"Custom \u00b7 \" + toStr({view.custom.gateway.packCount}) + \" of 10 on this gateway\")"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "style": {
+                "color": "var(--label--disabled)",
+                "fontSize": "11px",
+                "fontWeight": "700",
+                "letterSpacing": "0.08em",
+                "lineHeight": 1.4,
+                "textTransform": "uppercase"
+              },
+              "text": "Custom"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "meta": {
+                  "name": "text"
+                },
+                "position": {
+                  "shrink": 0
+                },
+                "props": {
+                  "style": {
+                    "color": "var(--label--disabled)",
+                    "fontSize": "11px",
+                    "lineHeight": 1.4
+                  },
+                  "text": "None of them are installed on this gateway. Install them from the Theme Installer page, or pick from what the gateway does have, below."
+                },
+                "type": "ia.display.label"
+              }
+            ],
+            "meta": {
+              "name": "customEmpty"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.style.display": {
+                "binding": {
+                  "config": {
+                    "expression": "if({view.custom.gateway.packCount} = 0, \"block\", \"none\")"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "direction": "column"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'glass-violet'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "glass-violet"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",glass-violet,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#312a47",
+                    "border": "1px solid #5e596f",
+                    "borderLeft": "6px solid #8558ec",
+                    "borderRadius": "8px",
+                    "color": "#f5f3ff",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Glass Violet  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'glass-green'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "glass-green"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",glass-green,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#252c2a",
+                    "border": "1px solid #555a59",
+                    "borderLeft": "6px solid #2dd4bf",
+                    "borderRadius": "8px",
+                    "color": "#eefcf6",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Glass Green  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'leather-light'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "leather-light"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",leather-light,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#fdfdfc",
+                    "border": "1px solid #e6d6b8",
+                    "borderLeft": "6px solid #8a5a2b",
+                    "borderRadius": "8px",
+                    "color": "#2b2620",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Leather Light  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'leather-dark'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "leather-dark"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",leather-dark,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#241a13",
+                    "border": "1px solid #3d2c1e",
+                    "borderLeft": "6px solid #c08a4a",
+                    "borderRadius": "6px",
+                    "color": "#ece0cb",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Leather Dark  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'finance-ledger'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "finance-ledger"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",finance-ledger,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#ffffff",
+                    "border": "1px solid #d3dbd8",
+                    "borderLeft": "6px solid #0b3d5c",
+                    "borderRadius": "3px",
+                    "color": "#16232e",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Finance Ledger  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'newsprint-dark'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "newsprint-dark"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",newsprint-dark,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#2a2723",
+                    "border": "1px solid #3a3630",
+                    "borderLeft": "6px solid #b1554a",
+                    "borderRadius": "0",
+                    "color": "#e8e2d6",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Newsprint Dark  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'nord-light'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "nord-light"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",nord-light,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#ffffff",
+                    "border": "1px solid #d8dee9",
+                    "borderLeft": "6px solid #55749b",
+                    "borderRadius": "8px",
+                    "color": "#3b4252",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Nord Light  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'nord-dark'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "nord-dark"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",nord-dark,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#3b4452",
+                    "border": "1px solid #4c566a",
+                    "borderLeft": "6px solid #55749b",
+                    "borderRadius": "8px",
+                    "color": "#e5e9f0",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Nord Dark  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'industrial-light'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "industrial-light"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",industrial-light,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#ffffff",
+                    "border": "1px solid #b0b8c4",
+                    "borderLeft": "6px solid #33556e",
+                    "borderRadius": "2px",
+                    "color": "#1f2937",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Industrial Light  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'industrial-dark'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "industrial-dark"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "propConfig": {
+                  "props.style.display": {
+                    "binding": {
+                      "config": {
+                        "expression": "if(indexOf({view.custom.gateway.have}, \",industrial-dark,\") >= 0, \"flex\", \"none\")"
+                      },
+                      "type": "expr"
+                    }
+                  }
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#0f161e",
+                    "border": "1px solid #26333f",
+                    "borderLeft": "6px solid #2bb3d6",
+                    "borderRadius": "6px",
+                    "color": "#e8eff5",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Industrial Dark  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "customThemes"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "6px",
+                "width": "100%"
+              },
+              "wrap": "wrap"
+            },
+            "type": "ia.container.flex"
+          },
+          {
+            "meta": {
+              "name": "h-original"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "color": "var(--label--disabled)",
+                "fontSize": "11px",
+                "fontWeight": "700",
+                "letterSpacing": "0.08em",
+                "lineHeight": 1.4,
+                "textTransform": "uppercase"
+              },
+              "text": "Original \u00b7 6 themes"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "children": [
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'light'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "light"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#F4F4F4",
+                    "border": "1px solid #0C7BB3",
+                    "borderLeft": "6px solid #0C7BB3",
+                    "borderRadius": "4px",
+                    "color": "#323232",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Ignition Light  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'dark'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "dark"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#323232",
+                    "border": "1px solid #229AD6",
+                    "borderLeft": "6px solid #229AD6",
+                    "borderRadius": "4px",
+                    "color": "#F4F4F4",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Ignition Dark  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'light-cool'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "light-cool"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#DDE1E6",
+                    "border": "1px solid #0C7BB3",
+                    "borderLeft": "6px solid #0C7BB3",
+                    "borderRadius": "4px",
+                    "color": "#21272A",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Ignition Light Cool  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'dark-cool'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "dark-cool"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#21272A",
+                    "border": "1px solid #229AD6",
+                    "borderLeft": "6px solid #229AD6",
+                    "borderRadius": "4px",
+                    "color": "#DDE1E6",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Ignition Dark Cool  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'light-warm'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "light-warm"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#E5E0DF",
+                    "border": "1px solid #0C7BB3",
+                    "borderLeft": "6px solid #0C7BB3",
+                    "borderRadius": "4px",
+                    "color": "#272525",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Ignition Light Warm  \u00b7  light"
+                },
+                "type": "ia.input.button"
+              },
+              {
+                "events": {
+                  "component": {
+                    "onActionPerformed": {
+                      "config": {
+                        "script": "\tself.session.props.theme = 'dark-warm'\n"
+                      },
+                      "scope": "G",
+                      "type": "script"
+                    }
+                  }
+                },
+                "meta": {
+                  "name": "dark-warm"
+                },
+                "position": {
+                  "basis": "48%",
+                  "grow": 0,
+                  "shrink": 1
+                },
+                "props": {
+                  "style": {
+                    "backgroundColor": "#272525",
+                    "border": "1px solid #229AD6",
+                    "borderLeft": "6px solid #229AD6",
+                    "borderRadius": "4px",
+                    "color": "#E5E0DF",
+                    "cursor": "pointer",
+                    "fontSize": "13px",
+                    "fontWeight": "600",
+                    "height": "40px",
+                    "minHeight": "40px",
+                    "padding": "0 14px"
+                  },
+                  "text": "Ignition Dark Warm  \u00b7  dark"
+                },
+                "type": "ia.input.button"
+              }
+            ],
+            "meta": {
+              "name": "stock"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "direction": "row",
+              "style": {
+                "gap": "6px",
+                "width": "100%"
+              },
+              "wrap": "wrap"
+            },
+            "type": "ia.container.flex"
+          }
+        ],
+        "meta": {
+          "name": "rows"
+        },
+        "position": {
+          "basis": "0px",
+          "grow": 1,
+          "shrink": 1
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "gap": "8px",
+            "minHeight": "0",
+            "overflow": "auto",
+            "width": "100%"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "children": [
+          {
+            "meta": {
+              "name": "anyLabel"
+            },
+            "position": {
+              "shrink": 0
+            },
+            "props": {
+              "style": {
+                "color": "var(--label--disabled)",
+                "fontSize": "11px",
+                "fontWeight": "700",
+                "letterSpacing": "0.08em",
+                "lineHeight": 1.4,
+                "textTransform": "uppercase"
+              },
+              "text": "Any theme on this gateway"
+            },
+            "type": "ia.display.label"
+          },
+          {
+            "meta": {
+              "name": "Theme"
+            },
+            "position": {
+              "basis": "auto",
+              "grow": 0,
+              "shrink": 0
+            },
+            "propConfig": {
+              "props.options": {
+                "binding": {
+                  "config": {
+                    "path": "view.custom.gateway.all"
+                  },
+                  "type": "property"
+                }
+              },
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "session.props.theme"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "allowClearing": false,
+              "options": [],
+              "placeholder": "Theme",
+              "showSearch": false,
+              "style": {
+                "height": "34px"
+              }
+            },
+            "type": "ia.input.dropdown"
+          }
+        ],
+        "meta": {
+          "name": "any"
+        },
+        "position": {
+          "shrink": 0
+        },
+        "props": {
+          "direction": "column",
+          "style": {
+            "borderTop": "1px solid var(--border)",
+            "gap": "6px",
+            "paddingTop": "10px"
+          }
+        },
+        "type": "ia.container.flex"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column",
+      "style": {
+        "gap": "10px",
+        "height": "100%",
+        "minHeight": "0",
+        "padding": "16px",
+        "width": "100%"
+      }
+    },
+    "type": "ia.container.flex"
+  }
+}
