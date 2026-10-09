@@ -209,7 +209,7 @@
               "basis": "auto"
             },
             "props": {
-              "text": "Toolbox Theme Manager  2.0.0",
+              "text": "Toolbox Theme Manager  2.1.0",
               "style": {
                 "fontSize": "13.5px",
                 "fontWeight": 600,
@@ -288,6 +288,50 @@
                 "borderBottomColor": "var(--callToAction)",
                 "color": "var(--label)",
                 "fontWeight": 600
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "tab_import",
+              "tabIndex": 0
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Import",
+              "style": {
+                "fontSize": "13px",
+                "padding": "9px 16px 8px",
+                "cursor": "pointer",
+                "whiteSpace": "nowrap",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "transparent",
+                "color": "var(--neutral-70)",
+                "fontWeight": 600
+              }
+            },
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.navigate(page='/import')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                },
+                "onKeyDown": {
+                  "config": {
+                    "script": "\tif event.key in ('Enter', ' '):\n\t\tsystem.perspective.navigate(page='/import')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
               }
             }
           },

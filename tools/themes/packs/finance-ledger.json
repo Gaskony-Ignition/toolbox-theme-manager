@@ -1,0 +1,311 @@
+{
+  "id": "finance-ledger",
+  "label": "Finance Ledger",
+  "category": "Business",
+  "description": "Ledger discipline: ruled rows, tabular figures and a narrow, sober palette.",
+  "dark": false,
+  "density": "regular",
+  "tokens": {
+    "accent.alarm-high": "#9e2a2a",
+    "accent.alarm-low": "#2a5f7a",
+    "accent.alarm-med": "#a85b00",
+    "accent.alarm-urgent": "#6e1414",
+    "accent.danger": "#ffffff",
+    "accent.delta-down": "#9e2a2a",
+    "accent.delta-up": "#0f7a4a",
+    "accent.primary": "#0b3d5c",
+    "accent.progress": "#0f7a4a",
+    "border.alarm-banner": "#9e2a2a",
+    "border.alarm-banner-rule": "#e3bcbc",
+    "border.alarm-banner-rule-width": "1px",
+    "border.alarm-bar-width": "3px",
+    "border.badge-width": "1px",
+    "border.card": "#d3dbd8",
+    "border.card-header": "#16232e",
+    "border.card-header-width": "2px",
+    "border.chip": "#d3dbd8",
+    "border.chip-width": "1px",
+    "border.danger": "#9e2a2a",
+    "border.ghost": "#d3dbd8",
+    "border.input": "#d3dbd8",
+    "border.kpi-tile": "#d3dbd8",
+    "border.primary": "transparent",
+    "border.sidebar": "#d3dbd8",
+    "border.sidebar-width": "1px",
+    "border.status-alarm": "#e3bcbc",
+    "border.status-info": "#bcd4de",
+    "border.status-neutral": "#d3dbd8",
+    "border.status-ok": "#bfe0cd",
+    "border.status-warn": "#e7cda3",
+    "border.table-cell": "#d3dbd8",
+    "border.table-cell-width": "1px",
+    "border.table-header": "#16232e",
+    "border.table-header-width": "2px",
+    "border.topbar": "#d3dbd8",
+    "border.topbar-width": "1px",
+    "border.width": "1px",
+    "font.body": "\"Segoe UI\", ui-sans-serif, system-ui, -apple-system, Arial, sans-serif",
+    "opacity.alarm-low": ".55",
+    "radius.alarm-row": "3px",
+    "radius.badge": "3px",
+    "radius.card": "4px",
+    "radius.chip": "3px",
+    "radius.control": "3px",
+    "radius.nav": "3px",
+    "radius.pill": "3px",
+    "radius.progress": "3px",
+    "radius.readout": "3px",
+    "radius.tile": "4px",
+    "shadow.card": "0 1px 2px rgba(11, 23, 33, 0.08)",
+    "size.alarm-banner": "13px",
+    "size.alarm-pri": "10px",
+    "size.alarm-row": "12.5px",
+    "size.alarm-time": "11.5px",
+    "size.badge": "11px",
+    "size.body": "13.5px",
+    "size.brand": "16px",
+    "size.button": "13px",
+    "size.card-title": "14.5px",
+    "size.chip": "12px",
+    "size.h1": "18px",
+    "size.input": "13px",
+    "size.kpi-delta": "12px",
+    "size.kpi-label": "11px",
+    "size.kpi-unit": "12.5px",
+    "size.kpi-value": "26px",
+    "size.muted": "13px",
+    "size.nav-group": "10.5px",
+    "size.nav-item": "13px",
+    "size.pill": "11px",
+    "size.pill-text": "11px",
+    "size.readout-label": "11px",
+    "size.readout-unit": "12px",
+    "size.readout-value": "20px",
+    "size.table": "12.5px",
+    "size.table-header": "11px",
+    "size.toggle": "12.5px",
+    "space.alarm-banner": "9px 22px",
+    "space.alarm-row": "8px 10px",
+    "space.badge": "3px 10px",
+    "space.brand": "8px 8px 16px 8px",
+    "space.card": "16px",
+    "space.card-header-gap": "2px",
+    "space.card-header-pad": "9px",
+    "space.chip": "4px 11px",
+    "space.content": "22px",
+    "space.control": "8px 16px",
+    "space.input": "7px 11px",
+    "space.kpi-unit": "4px",
+    "space.nav-gap": "1px",
+    "space.nav-group": "12px 8px 4px 8px",
+    "space.nav-item": "8px 10px",
+    "space.pill": "3px 12px",
+    "space.readout": "8px 10px",
+    "space.sidebar": "16px 12px",
+    "space.table-cell": "5px 9px",
+    "space.table-header": "8px 9px",
+    "space.tile": "16px",
+    "space.topbar": "12px 22px",
+    "surface.alarm-banner": "#f6e3e3",
+    "surface.alarm-high": "#f6e3e3",
+    "surface.alarm-list": "transparent",
+    "surface.alarm-low": "#e6eff3",
+    "surface.alarm-med": "#f7ecdc",
+    "surface.alarm-urgent": "#f6e3e3",
+    "surface.card": "#ffffff",
+    "surface.card-header": "transparent",
+    "surface.chart": "transparent",
+    "surface.chip": "#eaf0ee",
+    "surface.content": "transparent",
+    "surface.gauge": "transparent",
+    "surface.ghost": "#ffffff",
+    "surface.input": "#ffffff",
+    "surface.kpi-tile": "#ffffff",
+    "surface.main": "transparent",
+    "surface.nav-active": "rgba(255, 255, 255, 0.14)",
+    "surface.page": "#eef1f0",
+    "surface.pill": "#e6f4ec",
+    "surface.pill-dot": "#0f7a4a",
+    "surface.progress-track": "#eaf0ee",
+    "surface.readout": "#eaf0ee",
+    "surface.readout-warn": "#f7ecdc",
+    "surface.sidebar": "#0b3d5c",
+    "surface.status-alarm": "#f6e3e3",
+    "surface.status-info": "#e6eff3",
+    "surface.status-neutral": "#eaf0ee",
+    "surface.status-ok": "#e6f4ec",
+    "surface.status-warn": "#f7ecdc",
+    "surface.table": "#ffffff",
+    "surface.table-body": "#ffffff",
+    "surface.table-header": "#eaf0ee",
+    "surface.table-row": "#ffffff",
+    "surface.toggle": "transparent",
+    "surface.topbar": "#ffffff",
+    "text.alarm-banner": "#6e1414",
+    "text.alarm-text": "#16232e",
+    "text.alarm-time": "#5b6b74",
+    "text.body": "#16232e",
+    "text.brand": "#ffffff",
+    "text.card-title": "#16232e",
+    "text.chip": "#375062",
+    "text.ghost": "#0b3d5c",
+    "text.heading": "#16232e",
+    "text.input": "#16232e",
+    "text.kpi-label": "#5b6b74",
+    "text.kpi-tile": "#16232e",
+    "text.kpi-unit": "#5b6b74",
+    "text.kpi-value": "#16232e",
+    "text.muted": "#5b6b74",
+    "text.nav-group": "#9fb4c2",
+    "text.nav-item": "#dbe6ec",
+    "text.nav-item-active": "#ffffff",
+    "text.on-danger": "#9e2a2a",
+    "text.on-primary": "#ffffff",
+    "text.pill": "#0f7a4a",
+    "text.pill-text": "#0f7a4a",
+    "text.readout-label": "#5b6b74",
+    "text.readout-label-warn": "#5b6b74",
+    "text.readout-unit": "#5b6b74",
+    "text.readout-unit-warn": "#9a5100",
+    "text.readout-value": "#16232e",
+    "text.readout-value-warn": "#a85b00",
+    "text.status-alarm": "#9e2a2a",
+    "text.status-info": "#2a5f7a",
+    "text.status-neutral": "#5b6b74",
+    "text.status-ok": "#0f7a4a",
+    "text.status-warn": "#9a5100",
+    "text.table-cell": "#16232e",
+    "text.table-header": "#16232e",
+    "text.toggle": "#16232e",
+    "tracking.alarm-pri": "0.03em",
+    "tracking.badge": "0.01em",
+    "tracking.brand": "0.01em",
+    "tracking.kpi-label": "0.05em",
+    "tracking.nav-group": "0.08em",
+    "tracking.pill": "0.03em",
+    "tracking.table-header": "0.04em",
+    "transform.kpi-label": "uppercase",
+    "transform.pill": "uppercase",
+    "transform.table-header": "uppercase",
+    "weight.alarm-banner": "600",
+    "weight.alarm-pri": "800",
+    "weight.badge": "700",
+    "weight.brand": "700",
+    "weight.button": "600",
+    "weight.card-title": "700",
+    "weight.chip": "600",
+    "weight.h1": "700",
+    "weight.kpi-delta": "700",
+    "weight.kpi-label": "700",
+    "weight.kpi-unit": "600",
+    "weight.kpi-value": "700",
+    "weight.nav-group": "700",
+    "weight.nav-item": "500",
+    "weight.nav-item-active": "700",
+    "weight.pill": "700",
+    "weight.pill-text": "700",
+    "weight.readout-unit": "600",
+    "weight.readout-value": "700",
+    "weight.table-header": "700"
+  },
+  "overrides": {
+    "text/brand": {
+      "borderBottomWidth": "1px",
+      "borderBottomStyle": "solid",
+      "borderBottomColor": "rgba(255,255,255,.18)",
+      "marginBottom": "6px",
+      "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif"
+    },
+    "text/h1": {
+      "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif",
+      "letterSpacing": null
+    },
+    "text/card-title": {
+      "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif"
+    },
+    "nav/item-active": {
+      "boxShadow": "inset 3px 0 0 #0f7a4a"
+    },
+    "buttons/primary": {
+      "boxShadow": null
+    },
+    "status/badge-ok": {
+      "textTransform": null
+    },
+    "status/badge-warn": {
+      "textTransform": null
+    },
+    "status/badge-alarm": {
+      "textTransform": null
+    },
+    "status/badge-info": {
+      "textTransform": null
+    },
+    "status/badge-neutral": {
+      "textTransform": null
+    },
+    "status/pill": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null
+    },
+    "kpi/tile": {
+      "borderTopWidth": "3px",
+      "borderTopStyle": "solid",
+      "borderTopColor": "#0b3d5c",
+      "boxShadow": null
+    },
+    "kpi/value": {
+      "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif",
+      "fontVariantNumeric": "tabular-nums"
+    },
+    "progress/fill": {
+      "borderRadius": "999px"
+    },
+    "readouts/value": {
+      "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif",
+      "fontVariantNumeric": "tabular-nums"
+    },
+    "readouts/value-warn": {
+      "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif",
+      "fontVariantNumeric": "tabular-nums"
+    },
+    "readouts/label": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "readouts/label-warn": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "tables/cell": {
+      "fontVariantNumeric": "tabular-nums"
+    }
+  },
+  "variants": {
+    "nav/item": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "rgba(255, 255, 255, 0.08)"
+        }
+      }
+    ],
+    "buttons/primary": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#082943"
+        }
+      }
+    ],
+    "buttons/ghost": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#eaf0ee"
+        }
+      }
+    ]
+  }
+}

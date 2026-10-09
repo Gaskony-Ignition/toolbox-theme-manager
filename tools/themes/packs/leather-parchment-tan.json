@@ -1,0 +1,319 @@
+{
+  "id": "leather-parchment-tan",
+  "label": "Leather Journal \u2014 Parchment Tan",
+  "category": "Character",
+  "description": "Warm paper and tan leather with a serif display face. Reads as a book rather than a dashboard -- Night for reading after dark, Day for the original warm-paper desk look, and Parchment for a genuinely light page in daylight.",
+  "dark": false,
+  "density": "regular",
+  "tokens": {
+    "accent.alarm-high": "#dc2626",
+    "accent.alarm-low": "#0ea5e9",
+    "accent.alarm-med": "#d97706",
+    "accent.alarm-urgent": "#b91c1c",
+    "accent.danger": "#a3352c",
+    "accent.delta-down": "#a3352c",
+    "accent.delta-up": "#3d6b3a",
+    "accent.primary": "#8a5a2b",
+    "accent.progress": "#8a5a2b",
+    "border.alarm-banner": "#a3352c",
+    "border.alarm-banner-rule": "#a3352c",
+    "border.alarm-banner-rule-width": "1px",
+    "border.alarm-bar-width": "3px",
+    "border.card": "#e6d6b8",
+    "border.danger": "#a3352c",
+    "border.ghost": "#e6d6b8",
+    "border.input": "#e6d6b8",
+    "border.kpi-tile": "#e6d6b8",
+    "border.primary": "#8a5a2b",
+    "border.sidebar": "#4b3524",
+    "border.sidebar-width": "1px",
+    "border.table-cell": "#e6d6b8",
+    "border.table-cell-width": "1px",
+    "border.table-header": "#e6d6b8",
+    "border.table-header-width": "1px",
+    "border.topbar": "#4b3524",
+    "border.topbar-width": "1px",
+    "border.width": "1px",
+    "font.body": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+    "opacity.alarm-low": ".55",
+    "radius.alarm-row": "8px",
+    "radius.badge": "999px",
+    "radius.card": "16px",
+    "radius.chip": "999px",
+    "radius.control": "8px",
+    "radius.nav": "8px",
+    "radius.pill": "999px",
+    "radius.progress": "999px",
+    "radius.readout": "8px",
+    "radius.tile": "16px",
+    "shadow.button": "0 1px 2px rgba(16, 24, 40, 0.06)",
+    "shadow.card": "0 1px 2px rgba(16, 24, 40, 0.06)",
+    "shadow.tile": "0 1px 2px rgba(16, 24, 40, 0.06)",
+    "size.alarm-banner": "13.5px",
+    "size.alarm-pri": "10.5px",
+    "size.alarm-row": "13px",
+    "size.alarm-time": "12px",
+    "size.badge": "11.5px",
+    "size.body": "14px",
+    "size.brand": "21px",
+    "size.button": "13.5px",
+    "size.card-title": "16px",
+    "size.chip": "12.5px",
+    "size.h1": "22px",
+    "size.input": "13.5px",
+    "size.kpi-delta": "12.5px",
+    "size.kpi-label": "12px",
+    "size.kpi-unit": "13px",
+    "size.kpi-value": "28px",
+    "size.muted": "13px",
+    "size.nav-group": "11px",
+    "size.nav-item": "14px",
+    "size.pill": "11.5px",
+    "size.pill-text": "11.5px",
+    "size.readout-label": "11.5px",
+    "size.readout-unit": "12.5px",
+    "size.readout-value": "22px",
+    "size.table": "13.5px",
+    "size.table-header": "11.5px",
+    "size.toggle": "13px",
+    "space.alarm-banner": "10px 24px",
+    "space.alarm-row": "8px 10px",
+    "space.badge": "3px 10px",
+    "space.brand": "8px 8px 16px 8px",
+    "space.card": "16px",
+    "space.card-header-gap": "2px",
+    "space.chip": "5px 12px",
+    "space.content": "24px",
+    "space.control": "8px 16px",
+    "space.input": "8px 12px",
+    "space.kpi-unit": "4px",
+    "space.nav-gap": "1px",
+    "space.nav-group": "12px 8px 4px 8px",
+    "space.nav-item": "8px 10px",
+    "space.pill": "3px 12px",
+    "space.readout": "8px 10px",
+    "space.sidebar": "16px 12px",
+    "space.table-cell": "5px 10px",
+    "space.table-header": "8px 10px",
+    "space.tile": "16px",
+    "space.topbar": "12px 24px",
+    "surface.alarm-banner": "#a3352c",
+    "surface.alarm-high": "#a35a25",
+    "surface.alarm-list": "#fdfaf2",
+    "surface.alarm-low": "#2f5d8a",
+    "surface.alarm-med": "#96690f",
+    "surface.alarm-urgent": "#a3352c",
+    "surface.card": "#fdfdfc",
+    "surface.card-header": "#f6efdf",
+    "surface.chart": "#fdfaf2",
+    "surface.chip": "rgba(138, 90, 43, 0.08)",
+    "surface.content": "#f6efdf",
+    "surface.gauge": "#fdfaf2",
+    "surface.ghost": "#ffffff",
+    "surface.input": "#fdfaf2",
+    "surface.kpi-tile": "#fdfaf2",
+    "surface.main": "#f6efdf",
+    "surface.nav-active": "rgba(138, 90, 43, 0.08)",
+    "surface.page": "#faf8f5",
+    "surface.pill": "rgba(138, 90, 43, 0.08)",
+    "surface.pill-dot": "#8a5a2b",
+    "surface.progress-track": "#e6d6b8",
+    "surface.readout": "#fdfaf2",
+    "surface.readout-warn": "#fdfaf2",
+    "surface.sidebar": "#2f2016",
+    "surface.status-alarm": "#a3352c",
+    "surface.status-info": "rgba(61,90,115,0.12)",
+    "surface.status-neutral": "#efe4cc",
+    "surface.status-ok": "#3d6b3a",
+    "surface.status-warn": "#96690f",
+    "surface.table": "#fdfaf2",
+    "surface.table-body": "#fdfaf2",
+    "surface.table-header": "#f6efdf",
+    "surface.table-row": "#fdfaf2",
+    "surface.toggle": "#8a5a2b",
+    "surface.topbar": "#efe4cb",
+    "text.alarm-banner": "#fdf6e8",
+    "text.alarm-text": "#2b2620",
+    "text.alarm-time": "#96856c",
+    "text.body": "#2b2620",
+    "text.brand": "#c39a52",
+    "text.card-title": "#2b2620",
+    "text.chip": "#8a5a2b",
+    "text.ghost": "#5a4d3c",
+    "text.heading": "#17130d",
+    "text.input": "#2b2620",
+    "text.kpi-label": "#5a4d3c",
+    "text.kpi-tile": "#2b2620",
+    "text.kpi-unit": "#96856c",
+    "text.kpi-value": "#17130d",
+    "text.muted": "#5a4d3c",
+    "text.nav-group": "#94836a",
+    "text.nav-item": "#c9b795",
+    "text.nav-item-active": "#c39a52",
+    "text.on-danger": "#fdf6e8",
+    "text.on-primary": "#fdf6e8",
+    "text.pill": "#8a5a2b",
+    "text.pill-text": "#8a5a2b",
+    "text.readout-label": "#5a4d3c",
+    "text.readout-label-warn": "#96690f",
+    "text.readout-unit": "#96856c",
+    "text.readout-unit-warn": "#96690f",
+    "text.readout-value": "#17130d",
+    "text.readout-value-warn": "#96690f",
+    "text.status-alarm": "#fdf6e8",
+    "text.status-info": "#3d5a73",
+    "text.status-neutral": "#5a4d3c",
+    "text.status-ok": "#fdf6e8",
+    "text.status-warn": "#fdf6e8",
+    "text.table-cell": "#2b2620",
+    "text.table-header": "#5a4d3c",
+    "text.toggle": "#fdf6e8",
+    "tracking.alarm-pri": "0.03em",
+    "tracking.badge": "0.01em",
+    "tracking.brand": "-0.01em",
+    "tracking.kpi-label": "0.04em",
+    "tracking.nav-group": "0.06em",
+    "tracking.pill": "0.02em",
+    "tracking.table-header": "0.03em",
+    "transform.kpi-label": "uppercase",
+    "transform.pill": "uppercase",
+    "transform.table-header": "uppercase",
+    "weight.alarm-banner": "500",
+    "weight.alarm-pri": "800",
+    "weight.badge": "700",
+    "weight.brand": "800",
+    "weight.button": "600",
+    "weight.card-title": "700",
+    "weight.chip": "600",
+    "weight.h1": "700",
+    "weight.kpi-delta": "700",
+    "weight.kpi-label": "600",
+    "weight.kpi-unit": "600",
+    "weight.kpi-value": "800",
+    "weight.nav-group": "700",
+    "weight.nav-item": "500",
+    "weight.nav-item-active": "600",
+    "weight.pill": "700",
+    "weight.pill-text": "700",
+    "weight.readout-unit": "600",
+    "weight.readout-value": "800",
+    "weight.table-header": "700"
+  },
+  "overrides": {
+    "containers/card-header": {
+      "borderBottomWidth": null,
+      "borderBottomStyle": null,
+      "borderBottomColor": null,
+      "paddingBottom": null
+    },
+    "text/h1": {
+      "letterSpacing": null,
+      "fontFamily": "\"Crimson Pro\", Georgia, \"Times New Roman\", serif"
+    },
+    "buttons/chip": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null
+    },
+    "inputs/toggle-label": {
+      "color": "#6d5c46"
+    },
+    "status/badge-ok": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null,
+      "textTransform": null
+    },
+    "status/badge-warn": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null,
+      "textTransform": null
+    },
+    "status/badge-alarm": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null,
+      "textTransform": null
+    },
+    "status/badge-info": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null,
+      "textTransform": null
+    },
+    "status/badge-neutral": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null,
+      "textTransform": null
+    },
+    "status/pill": {
+      "borderWidth": null,
+      "borderStyle": null,
+      "borderColor": null
+    },
+    "kpi/value": {
+      "letterSpacing": "-0.02em"
+    },
+    "readouts/label": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "readouts/label-warn": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "text/brand": {
+      "fontFamily": "\"Crimson Pro\", Georgia, \"Times New Roman\", serif"
+    },
+    "text/card-title": {
+      "fontFamily": "\"Crimson Pro\", Georgia, \"Times New Roman\", serif"
+    },
+    "alarms/pri-low": {
+      "color": "#54c3f5"
+    },
+    "alarms/pri-med": {
+      "color": "#fcd19f"
+    },
+    "alarms/pri-high": {
+      "color": "#f6c8c8"
+    },
+    "alarms/pri-urgent": {
+      "color": "#f1a5a5"
+    },
+    "containers/page": {
+      "backgroundImage": "radial-gradient(880px 620px at 88% -10%, rgba(255, 214, 158, 0.25) 0%, transparent 62%), repeating-linear-gradient(to bottom, transparent 0 30px, rgba(122, 92, 58, 0.05) 30px 31px)"
+    },
+    "nav/item-active": {
+      "boxShadow": "inset 3px 0 0 #8a5a2b"
+    }
+  },
+  "variants": {
+    "nav/item": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "rgba(138, 90, 43, 0.08)"
+        }
+      }
+    ],
+    "buttons/primary": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#9c6733"
+        }
+      }
+    ],
+    "buttons/ghost": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "rgba(138, 90, 43, 0.08)"
+        }
+      }
+    ]
+  },
+  "generated_from": "leather"
+}

@@ -1,0 +1,304 @@
+{
+  "id": "aurora-violet",
+  "label": "Glass Aurora \u2014 Violet",
+  "category": "Web",
+  "description": "Translucent panels over a gradient field. The showpiece pack, and the one that proves translucency works.",
+  "dark": true,
+  "density": "regular",
+  "tokens": {
+    "accent.alarm-high": "#f87171",
+    "accent.alarm-low": "#38bdf8",
+    "accent.alarm-med": "#fbbf24",
+    "accent.alarm-urgent": "#ef4444",
+    "accent.danger": "rgba(248,113,113,0.85)",
+    "accent.delta-down": "#f87171",
+    "accent.delta-up": "#34d399",
+    "accent.primary": "#8558ec",
+    "accent.progress": "#8b5cf6",
+    "border.alarm-banner": "#f87171",
+    "border.alarm-banner-rule": "rgba(248,113,113,0.4)",
+    "border.alarm-banner-rule-width": "1px",
+    "border.alarm-bar-width": "3px",
+    "border.badge-width": "1px",
+    "border.card": "rgba(255,255,255,0.22)",
+    "border.chip": "rgba(255,255,255,0.22)",
+    "border.chip-width": "1px",
+    "border.danger": "transparent",
+    "border.ghost": "rgba(255,255,255,0.22)",
+    "border.input": "rgba(255,255,255,0.22)",
+    "border.kpi-tile": "rgba(255,255,255,0.22)",
+    "border.pill": "rgba(52,211,153,.4)",
+    "border.pill-width": "1px",
+    "border.primary": "transparent",
+    "border.sidebar": "rgba(255,255,255,0.22)",
+    "border.sidebar-width": "1px",
+    "border.status-alarm": "rgba(248,113,113,.4)",
+    "border.status-info": "rgba(56,189,248,.4)",
+    "border.status-neutral": "rgba(255,255,255,0.22)",
+    "border.status-ok": "rgba(52,211,153,.4)",
+    "border.status-warn": "rgba(251,191,36,.4)",
+    "border.table-cell": "rgba(255,255,255,0.10)",
+    "border.table-cell-width": "1px",
+    "border.table-header": "rgba(255,255,255,0.22)",
+    "border.table-header-width": "1px",
+    "border.topbar": "rgba(255,255,255,0.22)",
+    "border.topbar-width": "1px",
+    "border.width": "1px",
+    "font.body": "ui-sans-serif, Inter, system-ui, \"Segoe UI\", sans-serif",
+    "opacity.alarm-low": ".5",
+    "radius.alarm-row": "8px",
+    "radius.badge": "999px",
+    "radius.card": "18px",
+    "radius.chip": "999px",
+    "radius.control": "8px",
+    "radius.nav": "8px",
+    "radius.pill": "999px",
+    "radius.progress": "999px",
+    "radius.readout": "8px",
+    "radius.tile": "18px",
+    "shadow.button": "0 4px 16px rgba(139,92,246,.45)",
+    "shadow.card": "0 8px 32px rgba(0,0,0,.35)",
+    "shadow.tile": "0 8px 32px rgba(0,0,0,.35)",
+    "size.alarm-banner": "13px",
+    "size.alarm-pri": "10.5px",
+    "size.alarm-row": "12.5px",
+    "size.alarm-time": "11.5px",
+    "size.badge": "11px",
+    "size.body": "13.5px",
+    "size.brand": "15px",
+    "size.button": "13px",
+    "size.card-title": "14px",
+    "size.chip": "12px",
+    "size.h1": "17px",
+    "size.input": "13px",
+    "size.kpi-delta": "12px",
+    "size.kpi-label": "11px",
+    "size.kpi-unit": "12.5px",
+    "size.kpi-value": "27px",
+    "size.muted": "13px",
+    "size.nav-group": "10.5px",
+    "size.nav-item": "13px",
+    "size.pill": "11px",
+    "size.pill-text": "11px",
+    "size.readout-label": "11.5px",
+    "size.readout-unit": "12.5px",
+    "size.readout-value": "22px",
+    "size.table": "13px",
+    "size.table-header": "11px",
+    "size.toggle": "13px",
+    "space.alarm-banner": "10px 24px",
+    "space.alarm-row": "8px 10px",
+    "space.badge": "3px 10px",
+    "space.brand": "8px 8px 16px 8px",
+    "space.card": "16px",
+    "space.card-header-gap": "2px",
+    "space.chip": "5px 12px",
+    "space.content": "24px",
+    "space.control": "8px 16px",
+    "space.input": "8px 12px",
+    "space.kpi-unit": "4px",
+    "space.nav-gap": "2px",
+    "space.nav-group": "12px 8px 6px 8px",
+    "space.nav-item": "8px 10px",
+    "space.pill": "3px 12px",
+    "space.readout": "8px 10px",
+    "space.sidebar": "16px 12px",
+    "space.table-cell": "5px 10px",
+    "space.table-header": "8px 10px",
+    "space.tile": "16px",
+    "space.topbar": "12px 24px",
+    "surface.alarm-banner": "rgba(248,113,113,0.22)",
+    "surface.alarm-high": "rgba(248,113,113,0.22)",
+    "surface.alarm-list": "transparent",
+    "surface.alarm-low": "rgba(56,189,248,0.20)",
+    "surface.alarm-med": "rgba(251,191,36,0.20)",
+    "surface.alarm-urgent": "rgba(248,113,113,0.22)",
+    "surface.card": "rgba(255,255,255,0.10)",
+    "surface.card-header": "transparent",
+    "surface.chart": "transparent",
+    "surface.chip": "rgba(255,255,255,0.16)",
+    "surface.content": "transparent",
+    "surface.gauge": "transparent",
+    "surface.ghost": "rgba(255,255,255,0.06)",
+    "surface.input": "rgba(255,255,255,0.08)",
+    "surface.kpi-tile": "rgba(255,255,255,0.10)",
+    "surface.main": "transparent",
+    "surface.nav-active": "rgba(139,92,246,0.28)",
+    "surface.page": "#1a1233",
+    "surface.pill": "rgba(52,211,153,0.20)",
+    "surface.pill-dot": "#34d399",
+    "surface.progress-track": "rgba(255,255,255,0.14)",
+    "surface.readout": "rgba(255,255,255,0.16)",
+    "surface.readout-warn": "rgba(251,191,36,0.20)",
+    "surface.sidebar": "rgba(255,255,255,0.06)",
+    "surface.status-alarm": "rgba(248,113,113,0.22)",
+    "surface.status-info": "rgba(56,189,248,0.20)",
+    "surface.status-neutral": "rgba(255,255,255,0.14)",
+    "surface.status-ok": "rgba(52,211,153,0.20)",
+    "surface.status-warn": "rgba(251,191,36,0.20)",
+    "surface.table": "rgb(49, 42, 71)",
+    "surface.table-body": "rgb(49, 42, 71)",
+    "surface.table-header": "rgb(63, 56, 84)",
+    "surface.table-row": "rgb(49, 42, 71)",
+    "surface.toggle": "transparent",
+    "surface.topbar": "rgba(255,255,255,0.05)",
+    "text.alarm-banner": "#ffe3e3",
+    "text.alarm-text": "#f5f3ff",
+    "text.alarm-time": "#c7c2e0",
+    "text.body": "#f5f3ff",
+    "text.brand": "#ffffff",
+    "text.card-title": "#ffffff",
+    "text.chip": "#f5f3ff",
+    "text.ghost": "#f5f3ff",
+    "text.heading": "#ffffff",
+    "text.input": "#f5f3ff",
+    "text.kpi-label": "#c7c2e0",
+    "text.kpi-tile": "#f5f3ff",
+    "text.kpi-unit": "#c7c2e0",
+    "text.kpi-value": "#ffffff",
+    "text.muted": "#c7c2e0",
+    "text.nav-group": "rgba(245,243,255,0.55)",
+    "text.nav-item": "#c7c2e0",
+    "text.nav-item-active": "#ffffff",
+    "text.on-danger": "#2a0a0a",
+    "text.on-primary": "#ffffff",
+    "text.pill": "#86efc9",
+    "text.pill-text": "#86efc9",
+    "text.readout-label": "#c7c2e0",
+    "text.readout-label-warn": "#c7c2e0",
+    "text.readout-unit": "#c7c2e0",
+    "text.readout-unit-warn": "#fbbf24",
+    "text.readout-value": "#ffffff",
+    "text.readout-value-warn": "#fbbf24",
+    "text.status-alarm": "#fca5a5",
+    "text.status-info": "#a5e4fb",
+    "text.status-neutral": "#c7c2e0",
+    "text.status-ok": "#86efc9",
+    "text.status-warn": "#fde08a",
+    "text.table-cell": "#f5f3ff",
+    "text.table-header": "#c7c2e0",
+    "text.toggle": "#f5f3ff",
+    "tracking.alarm-pri": "0.04em",
+    "tracking.kpi-label": "0.05em",
+    "tracking.nav-group": "0.08em",
+    "tracking.pill": "0.04em",
+    "tracking.table-header": "0.04em",
+    "transform.kpi-label": "uppercase",
+    "transform.pill": "uppercase",
+    "transform.table-header": "uppercase",
+    "weight.alarm-banner": "500",
+    "weight.alarm-pri": "800",
+    "weight.badge": "700",
+    "weight.brand": "700",
+    "weight.button": "600",
+    "weight.card-title": "700",
+    "weight.chip": "600",
+    "weight.h1": "700",
+    "weight.kpi-delta": "700",
+    "weight.kpi-label": "600",
+    "weight.kpi-unit": "600",
+    "weight.kpi-value": "800",
+    "weight.nav-group": "700",
+    "weight.nav-item": "500",
+    "weight.nav-item-active": "700",
+    "weight.pill": "700",
+    "weight.pill-text": "700",
+    "weight.readout-unit": "600",
+    "weight.readout-value": "800",
+    "weight.table-header": "700"
+  },
+  "overrides": {
+    "containers/card-header": {
+      "borderBottomWidth": null,
+      "borderBottomStyle": null,
+      "borderBottomColor": null,
+      "paddingBottom": null
+    },
+    "text/brand": {
+      "letterSpacing": null
+    },
+    "text/h1": {
+      "letterSpacing": null
+    },
+    "nav/item": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "transparent"
+    },
+    "nav/item-active": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "rgba(255,255,255,0.25)"
+    },
+    "buttons/danger": {
+      "fontWeight": "700"
+    },
+    "status/badge-ok": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "status/badge-warn": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "status/badge-alarm": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "status/badge-info": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "status/badge-neutral": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "alarms/pri-urgent": {
+      "color": "#fca5a5"
+    },
+    "readouts/label": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "readouts/label-warn": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "containers/page": {
+      "backgroundImage": "radial-gradient(1100px 700px at 8% -10%, #4c1d95 0%, transparent 55%), radial-gradient(900px 650px at 88% 8%, #1e3a8a 0%, transparent 55%), radial-gradient(1000px 700px at 30% 115%, #065f46 0%, transparent 55%), radial-gradient(800px 600px at 95% 100%, #831843 0%, transparent 55%)"
+    },
+    "buttons/primary": {
+      "backgroundImage": "linear-gradient(135deg, #8b5cf6, #6366f1)"
+    },
+    "progress/fill": {
+      "backgroundImage": "linear-gradient(90deg, #8b5cf6, #38bdf8)"
+    }
+  },
+  "variants": {
+    "nav/item": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "rgba(255,255,255,0.08)"
+        }
+      }
+    ],
+    "buttons/ghost": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "rgba(255,255,255,0.12)"
+        }
+      }
+    ],
+    "buttons/primary": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundImage": "linear-gradient(135deg, #7c3aed, #4f46e5)"
+        }
+      }
+    ]
+  },
+  "generated_from": "aurora"
+}

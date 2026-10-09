@@ -1,0 +1,421 @@
+{
+  "id": "industrial-control-cyan",
+  "label": "Industrial \u2014 Control Room Cyan",
+  "category": "Industrial",
+  "description": "Industrial control-room looks: low-luminance control desk, ISA-101 process-grey, high-contrast field tablet, and a red-preserving night-vision mode -- three accent palettes across four modes. Night deliberately narrows the palette's hue-distance between accents (red-preserving night-vision doctrine keeps every accent within a tight band near red) -- that's a decision, not palette drift.",
+  "dark": true,
+  "density": "regular",
+  "tokens": {
+    "accent.alarm-high": "#F6B93B",
+    "accent.alarm-low": "#354657",
+    "accent.alarm-med": "#E4D24B",
+    "accent.alarm-urgent": "#FF2E2E",
+    "accent.danger": "rgba(255, 77, 77, .12)",
+    "accent.delta-down": "#62A8FF",
+    "accent.delta-up": "#35D39A",
+    "accent.primary": "#2BB3D6",
+    "accent.progress": "#2BB3D6",
+    "border.alarm-banner": "#FF4D4D",
+    "border.alarm-banner-rule": "rgba(255, 77, 77, .5)",
+    "border.alarm-banner-rule-width": "1px",
+    "border.alarm-bar-width": "4px",
+    "border.badge-width": "1px",
+    "border.card": "#26333F",
+    "border.card-header": "#26333F",
+    "border.card-header-width": "1px",
+    "border.chip": "#26333F",
+    "border.chip-width": "1px",
+    "border.danger": "#FF4D4D",
+    "border.ghost": "transparent",
+    "border.input": "#354657",
+    "border.kpi-tile": "#26333F",
+    "border.pill": "rgba(53, 211, 154, .55)",
+    "border.pill-width": "1px",
+    "border.primary": "#2BB3D6",
+    "border.sidebar": "#26333F",
+    "border.sidebar-width": "1px",
+    "border.status-alarm": "#FF4D4D",
+    "border.status-info": "rgba(98, 168, 255, .55)",
+    "border.status-neutral": "#354657",
+    "border.status-ok": "rgba(53, 211, 154, .55)",
+    "border.status-warn": "rgba(246, 185, 59, .55)",
+    "border.table-cell": "#26333F",
+    "border.table-cell-width": "1px",
+    "border.table-header": "#354657",
+    "border.table-header-width": "1px",
+    "border.topbar": "#26333F",
+    "border.topbar-width": "1px",
+    "border.width": "1px",
+    "font.body": "\"Inter\", \"Roboto\", \"Segoe UI\", Helvetica, Arial, sans-serif",
+    "opacity.alarm-low": ".6",
+    "radius.alarm-row": "6px",
+    "radius.badge": "11px",
+    "radius.card": "6px",
+    "radius.chip": "13px",
+    "radius.control": "6px",
+    "radius.nav": "6px",
+    "radius.pill": "12px",
+    "radius.progress": "5px",
+    "radius.readout": "6px",
+    "radius.tile": "6px",
+    "shadow.button": "0 0 10px rgba(43, 179, 214, .30)",
+    "size.alarm-banner": "14px",
+    "size.alarm-pri": "10px",
+    "size.alarm-row": "13px",
+    "size.alarm-time": "12px",
+    "size.badge": "11px",
+    "size.body": "14px",
+    "size.brand": "15px",
+    "size.button": "13px",
+    "size.card-title": "15px",
+    "size.chip": "12px",
+    "size.h1": "18px",
+    "size.input": "13px",
+    "size.kpi-delta": "12px",
+    "size.kpi-label": "11px",
+    "size.kpi-unit": "14px",
+    "size.kpi-value": "34px",
+    "size.muted": "13px",
+    "size.nav-group": "10px",
+    "size.nav-item": "14px",
+    "size.pill": "11px",
+    "size.pill-text": "11px",
+    "size.readout-label": "10px",
+    "size.readout-unit": "13px",
+    "size.readout-value": "24px",
+    "size.table": "13px",
+    "size.table-header": "10px",
+    "size.toggle": "13px",
+    "space.alarm-banner": "10px 18px",
+    "space.alarm-row": "8px 12px",
+    "space.badge": "0 10px",
+    "space.brand": "2px 18px 16px",
+    "space.card": "14px 16px 16px",
+    "space.card-header-pad": "10px",
+    "space.chip": "0 12px",
+    "space.content": "14px",
+    "space.control": "0 16px",
+    "space.input": "0 11px",
+    "space.nav-group": "18px 18px 6px",
+    "space.nav-item": "10px 12px",
+    "space.pill": "0 11px",
+    "space.readout": "9px 12px",
+    "space.sidebar": "14px 0",
+    "space.table-cell": "0 12px",
+    "space.table-header": "0 12px",
+    "space.tile": "12px 16px",
+    "space.topbar": "0 18px",
+    "surface.alarm-banner": "#17202B",
+    "surface.alarm-high": "rgba(246, 185, 59, .11)",
+    "surface.alarm-list": "transparent",
+    "surface.alarm-low": "#17202B",
+    "surface.alarm-med": "rgba(228, 210, 75, .07)",
+    "surface.alarm-urgent": "rgba(255, 46, 46, .13)",
+    "surface.card": "#0F161E",
+    "surface.card-header": "transparent",
+    "surface.chart": "#070B10",
+    "surface.chip": "#17202B",
+    "surface.content": "transparent",
+    "surface.gauge": "transparent",
+    "surface.ghost": "transparent",
+    "surface.input": "#070B10",
+    "surface.kpi-tile": "#0F161E",
+    "surface.main": "transparent",
+    "surface.nav-active": "#2BB3D6",
+    "surface.page": "#070B10",
+    "surface.pill": "rgba(53, 211, 154, .12)",
+    "surface.pill-dot": "#35D39A",
+    "surface.progress-track": "#1E2935",
+    "surface.readout": "#17202B",
+    "surface.readout-warn": "rgba(246, 185, 59, .10)",
+    "surface.sidebar": "#0F161E",
+    "surface.status-alarm": "rgba(255, 46, 46, .18)",
+    "surface.status-info": "rgba(98, 168, 255, .14)",
+    "surface.status-neutral": "#1E2935",
+    "surface.status-ok": "rgba(53, 211, 154, .14)",
+    "surface.status-warn": "rgba(246, 185, 59, .14)",
+    "surface.table": "#0F161E",
+    "surface.table-body": "#0F161E",
+    "surface.table-header": "#17202B",
+    "surface.table-row": "#0F161E",
+    "surface.toggle": "transparent",
+    "surface.topbar": "#0F161E",
+    "text.alarm-banner": "#FFD9D9",
+    "text.alarm-text": "#E8EFF5",
+    "text.alarm-time": "#7E93A3",
+    "text.body": "#E8EFF5",
+    "text.brand": "#E8EFF5",
+    "text.card-title": "#E8EFF5",
+    "text.chip": "#B7C6D3",
+    "text.ghost": "#7E93A3",
+    "text.heading": "#E8EFF5",
+    "text.input": "#E8EFF5",
+    "text.kpi-label": "#7E93A3",
+    "text.kpi-tile": "#E8EFF5",
+    "text.kpi-unit": "#7E93A3",
+    "text.kpi-value": "#E8EFF5",
+    "text.muted": "#7E93A3",
+    "text.nav-group": "#7E93A3",
+    "text.nav-item": "#B7C6D3",
+    "text.nav-item-active": "#9FE6F8",
+    "text.on-danger": "#FF8A8A",
+    "text.on-primary": "#04141B",
+    "text.pill": "#35D39A",
+    "text.pill-text": "#35D39A",
+    "text.readout-label": "#7E93A3",
+    "text.readout-label-warn": "#F6B93B",
+    "text.readout-unit": "#7E93A3",
+    "text.readout-unit-warn": "#7E93A3",
+    "text.readout-value": "#E8EFF5",
+    "text.readout-value-warn": "#F6B93B",
+    "text.status-alarm": "#FF7A7A",
+    "text.status-info": "#62A8FF",
+    "text.status-neutral": "#7E93A3",
+    "text.status-ok": "#35D39A",
+    "text.status-warn": "#F6B93B",
+    "text.table-cell": "#E8EFF5",
+    "text.table-header": "#7E93A3",
+    "text.toggle": "#B7C6D3",
+    "tracking.alarm-pri": ".12em",
+    "tracking.badge": ".06em",
+    "tracking.brand": ".06em",
+    "tracking.h1": ".01em",
+    "tracking.kpi-label": ".14em",
+    "tracking.nav-group": ".16em",
+    "tracking.pill": ".08em",
+    "tracking.readout-label": ".12em",
+    "tracking.table-header": ".14em",
+    "transform.badge": "uppercase",
+    "transform.kpi-label": "uppercase",
+    "transform.pill": "uppercase",
+    "transform.readout-label": "uppercase",
+    "transform.table-header": "uppercase",
+    "weight.alarm-pri": "700",
+    "weight.badge": "700",
+    "weight.brand": "600",
+    "weight.button": "600",
+    "weight.card-title": "600",
+    "weight.chip": "500",
+    "weight.h1": "600",
+    "weight.kpi-delta": "600",
+    "weight.kpi-label": "600",
+    "weight.kpi-unit": "400",
+    "weight.kpi-value": "500",
+    "weight.nav-group": "600",
+    "weight.nav-item-active": "600",
+    "weight.pill": "700",
+    "weight.pill-text": "700",
+    "weight.readout-value": "500",
+    "weight.table-header": "700"
+  },
+  "overrides": {
+    "containers/page": {
+      "fontWeight": "400"
+    },
+    "containers/card": {
+      "boxShadow": null
+    },
+    "containers/card-header": {
+      "marginBottom": null
+    },
+    "containers/alarm-banner": {
+      "backgroundImage": "linear-gradient(90deg, rgba(255, 46, 46, .18), rgba(255, 46, 46, .04))",
+      "fontWeight": null
+    },
+    "containers/alarm-banner-text": {
+      "fontWeight": null
+    },
+    "text/brand": {
+      "borderBottomWidth": "1px",
+      "borderBottomStyle": "solid",
+      "borderBottomColor": "#26333F",
+      "textTransform": "uppercase"
+    },
+    "nav/item": {
+      "borderLeftWidth": "3px",
+      "borderLeftStyle": "solid",
+      "borderLeftColor": "transparent",
+      "margin": "2px 10px",
+      "marginBottom": null,
+      "fontWeight": null
+    },
+    "nav/item-active": {
+      "borderLeftWidth": "3px",
+      "borderLeftStyle": "solid",
+      "margin": "2px 10px",
+      "marginBottom": null,
+      "backgroundImage": "linear-gradient(90deg, rgba(43,179,214,.18), rgba(43,179,214,.04))",
+      "borderLeftColor": "#2BB3D6"
+    },
+    "tables/header": {
+      "whiteSpace": "nowrap"
+    },
+    "tables/cell": {
+      "color": "#B7C6D3",
+      "fontFamily": "\"Roboto Mono\", \"Consolas\", \"SF Mono\", monospace",
+      "fontSize": "13px"
+    },
+    "buttons/primary": {
+      "letterSpacing": ".03em"
+    },
+    "buttons/ghost": {
+      "letterSpacing": ".03em"
+    },
+    "buttons/danger": {
+      "letterSpacing": ".03em"
+    },
+    "inputs/field": {
+      "fontWeight": "400"
+    },
+    "inputs/dropdown": {
+      "fontWeight": "400"
+    },
+    "inputs/toggle": {
+      "cursor": "pointer"
+    },
+    "inputs/toggle-label": {
+      "cursor": "pointer"
+    },
+    "status/badge-ok": {
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-warn": {
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-alarm": {
+      "whiteSpace": "nowrap",
+      "boxShadow": "0 0 10px rgba(255, 46, 46, .45)"
+    },
+    "status/badge-info": {
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-neutral": {
+      "whiteSpace": "nowrap"
+    },
+    "kpi/tile": {
+      "boxShadow": null
+    },
+    "kpi/value": {
+      "fontFamily": "\"Roboto Mono\", \"Consolas\", \"SF Mono\", monospace",
+      "letterSpacing": "-.01em"
+    },
+    "kpi/unit": {
+      "marginLeft": null
+    },
+    "alarms/row-low": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#26333F",
+      "boxShadow": "none"
+    },
+    "alarms/row-med": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#26333F"
+    },
+    "alarms/row-high": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#26333F"
+    },
+    "alarms/row-urgent": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#26333F",
+      "boxShadow": "0 0 10px rgba(255, 46, 46, .45)"
+    },
+    "alarms/pri-low": {
+      "color": "#62A8FF"
+    },
+    "alarms/pri-urgent": {
+      "color": "#FF7A7A"
+    },
+    "alarms/text": {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "ellipsis"
+    },
+    "alarms/time": {
+      "fontFamily": "\"Roboto Mono\", \"Consolas\", \"SF Mono\", monospace"
+    },
+    "charts/frame": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#26333F",
+      "borderRadius": "6px"
+    },
+    "readouts/frame": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#26333F"
+    },
+    "readouts/frame-warn": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "rgba(246, 185, 59, .6)",
+      "boxShadow": "0 0 9px rgba(246, 185, 59, .32)"
+    },
+    "readouts/value": {
+      "fontFamily": "\"Roboto Mono\", \"Consolas\", \"SF Mono\", monospace"
+    },
+    "readouts/value-warn": {
+      "fontFamily": "\"Roboto Mono\", \"Consolas\", \"SF Mono\", monospace"
+    },
+    "readouts/unit": {
+      "fontWeight": null
+    },
+    "readouts/unit-warn": {
+      "fontWeight": null
+    },
+    "readouts/label": {
+      "marginTop": null,
+      "fontWeight": "600"
+    },
+    "readouts/label-warn": {
+      "marginTop": null,
+      "fontWeight": "600"
+    },
+    "progress/fill": {
+      "backgroundImage": "linear-gradient(90deg, #1B7B94, #2BB3D6)"
+    }
+  },
+  "variants": {
+    "nav/item": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#17202B",
+          "color": "#E8EFF5"
+        }
+      }
+    ],
+    "buttons/ghost": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#17202B",
+          "color": "#E8EFF5"
+        }
+      }
+    ],
+    "buttons/danger": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "rgba(255, 77, 77, .22)",
+          "boxShadow": "0 0 10px rgba(255, 46, 46, .45)"
+        }
+      }
+    ],
+    "buttons/primary": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#46C6E6"
+        }
+      }
+    ]
+  },
+  "generated_from": "industrial",
+  "default": true
+}

@@ -1,40 +1,65 @@
 # Toolbox Theme Manager
 
-A Perspective project that installs, removes, customises and imports gateway themes, one at a time or all at once.
+Ten Perspective gateway themes, and a Perspective project that installs, removes, customises and imports themes, one at a time or all at once.
 
 > **Not an Inductive Automation product, and not supported by Inductive Automation.** Independent work, largely built with AI tools and tested for one purpose on a limited subset of gateway versions and platforms. Take the ideas; fork and review it before it goes near production. Feedback is welcome in Issues; improvements are made where possible, but no support is guaranteed. [NOTICE.md](NOTICE.md) says more.
 
 ## Why this exists
 
-A Perspective theme is a gateway config resource: a folder of CSS under the gateway's data directory that every session on the gateway can wear. Putting one there normally means shell access and a config scan. This project does it from a page, carries ten ready-made themes from [ignition-themes](https://github.com/Gaskony-Ignition/project-themes), and takes a theme someone else made as a zip, checking it first, because a theme is CSS that every session on the gateway loads.
+Stock Ignition gives a Perspective session six themes, all variations on the same two. A theme is a gateway config resource: a folder of CSS under the gateway's data directory that restyles every stock component in every project, with no parent project or style classes. Putting one there normally means shell access and a config scan. This project carries ten themes and does the installing from a page. It also takes a theme someone else made as a zip and checks it first, because a theme is CSS that every session on the gateway loads.
 
 ## What it looks like
 
-![The Installer page with two themes selected](docs/images/installer.png)
+![The Installer tab with two themes ticked](docs/images/installer.png)
 
-The Installer page. Select rows and press Install selected or Remove selected to act on just those; Install all and Remove all still do the ten in one go. Ignition's own themes, themes made on Customise and imported themes are listed with them.
+The Installer tab. Install and Remove do all ten; tick themes in the table and use Install ticked or Remove ticked to act on just those. Ignition's own themes, themes made on Customise and imported themes are listed too.
 
 ![An imported theme that passed the checks](docs/images/import-checked.png)
 
-Importing a theme zip. It passed the safety checks, so Install is enabled, and the contrast pairs that fall under WCAG 2.1 AA are listed for the admin to weigh up.
+The Import tab with a theme zip that passed the safety checks. Install is enabled, and the contrast pairs under WCAG 2.1 AA are listed for the admin to weigh up.
 
 ![An imported theme that was refused](docs/images/import-refused.png)
 
 A zip that fetches a stylesheet from another server, sends a request to a tracking address and carries a script. Each reason is listed, Install stays disabled, and nothing has been written to the themes folder.
 
-![The Customise page](docs/images/customise.png)
+| Glass Violet | Newsprint Dark | Finance Ledger |
+|---|---|---|
+| ![Glass Violet](docs/images/glass-violet.png) | ![Newsprint Dark](docs/images/newsprint-dark.png) | ![Finance Ledger](docs/images/finance-ledger.png) |
+
+Three of the ten themes, each restyling the same stock components.
+
+![The Customise tab](docs/images/customise.png)
 
 Customise: copy one of the ten and change its colours, with a preview that repaints on every save.
 
+![Switcher popup](docs/images/switcher-popup.png)
+
+The copy-me swatch popup, listing the themes installed on the gateway it runs on.
+
 ## What it does
 
-| Action | What happens on the gateway |
+| Theme id | Label | Look | Mode |
+| --- | --- | --- | --- |
+| `glass-violet` | Glass Violet | translucent glass panels over a violet/blue/green/pink gradient field | dark |
+| `glass-green` | Glass Green | translucent glass over a near-black green/teal field, bright mint accent | dark |
+| `leather-dark` | Leather Dark | warm tan leather and dark paper | dark |
+| `leather-light` | Leather Light | warm tan leather and parchment | light |
+| `finance-ledger` | Finance Ledger | restrained ledger/spreadsheet look | light |
+| `newsprint-dark` | Newsprint Dark | newsprint greys and ink on a dark page | dark |
+| `nord-dark` | Nord Dark | the Nord palette, dark mode | dark |
+| `nord-light` | Nord Light | the Nord palette, light mode | light |
+| `industrial-dark` | Industrial Dark | industrial control-room cyan, dark mode | dark |
+| `industrial-light` | Industrial Light | industrial control-room cyan, day mode | light |
+
+Each theme sets 110 of the gateway's 120 built-in theme variables, declares `color-scheme` for its own mode so Chrome's auto dark mode does not repaint chart SVGs white, and publishes a 69-class `st/...` style-class contract a project can build on. Every theme meets WCAG 2.1 AA contrast for text, control edges and alarm rows, draws a 2px focus ring, and honours reduced motion; the build fails if one drops below. See [docs/THEMES-INTERNALS.md](docs/THEMES-INTERNALS.md).
+
+| Tab / action | What happens on the gateway |
 | --- | --- |
-| Install all / Install selected | Writes the chosen themes' files under `config/resources/core/com.inductiveautomation.perspective/themes/` and runs one config scan. No restart. Re-running repairs a damaged copy. |
-| Remove all / Remove selected | Deletes the chosen themes through `system.config.delete()`. Remove selected also deletes imported themes. Ignition's own themes and themes made on Customise are never touched. |
-| Update / Restore | Optional. Adds themed scrollbars and a `color-scheme` line to Ignition's four on-disk stock variants without changing their look, and takes them back off. |
-| Import | Checks a theme zip, shows the verdict and a preview, and installs it only if nothing was refused. |
+| Installer: Install / Remove | Writes or deletes all ten under `config/resources/core/com.inductiveautomation.perspective/themes/`, with one config scan. No restart. Re-running Install repairs a damaged copy. |
+| Installer: Install ticked / Remove ticked | The same for the ticked themes only. Remove ticked also deletes imported themes. Ignition's own themes and themes made on Customise are never touched. |
+| Installer: Update / Restore | Optional. Adds themed scrollbars and a `color-scheme` line to Ignition's four on-disk stock variants without changing their look, and takes them back off. |
 | Customise | Makes a theme of your own from one of the ten and edits its colours. |
+| Import | Checks a theme zip, shows the verdict and a preview, and installs it only if nothing was refused. |
 | Theme switcher | Two copy-me views, `SelectorPopup` and `ThemeDropdown`, that list whatever themes the gateway has. |
 
 ### What an import may contain
@@ -57,27 +82,27 @@ The upload is kept on the gateway, and Install checks that copy again, so what i
 
 1. Gateway web UI → **Config → Projects → Import**, pick `Toolbox_Theme_Manager-<version>.zip` from the latest release.
 2. Open `<gateway>/data/perspective/client/Toolbox_Theme_Manager`.
-3. Press **Install all**, or select rows and press **Install selected**. The status column changes to Installed a couple of seconds later.
-4. To bring in someone else's theme, press **Import...**, drop the zip on the box, read the findings, then press **Install**.
+3. Press **Install**, or tick themes and press **Install ticked**. The status column changes to Installed a couple of seconds later.
+4. To bring in someone else's theme, open the **Import** tab, drop the zip on the box, read the findings, then press **Install**.
 
 The project has no parent, no database and no tag provider, and runs on any 8.3 gateway. Deleting it leaves the themes in place; they are gateway config, not project resources.
+
+Without the project: unzip `toolbox-themes-<version>.zip` from the same release and run `./install.sh --data-dir <dir>`, `--docker <container>` or `--ssh <host> --data-dir <dir>`, then **Config → Platform → Overview → Scan File System**. A session picks a theme through `session.props.theme`.
 
 ---
 
 ## Building from source
 
-The project sits at the repo root and is generated; edit the generator, not the `view.json` files.
+The project sits at the repo root and is generated; edit the generators, not the `view.json` files.
 
 ```bash
-tools/vendor-themes.sh [path/to/ignition-themes]  # copy the ten themes into tools/themes/
-python3 tools/build_manager.py                    # regenerate the project
-python3 tools/test_import.py                      # import checks: 40 zips, good and bad
-tools/package.sh --release                        # dist/Toolbox_Theme_Manager-<VERSION>.zip
+python3 tools/themes/build_theme.py    # the ten themes, from tools/themes/packs/ -> tools/themes/out/
+python3 tools/build_manager.py         # the project, from tools/themes/out/
+python3 tools/test_import.py           # import checks: 40 zips, good and bad
+tools/package.sh --release             # dist/Toolbox_Theme_Manager-<VERSION>.zip and toolbox-themes-<VERSION>.zip
 ```
 
-`tools/build_manager.py` appends `tools/insight_code.py`, `tools/editor_code.py` and `tools/import_code.py` to the generated `themepack` script. A release needs `VERSION` to match the tag.
-
-Replaces the Theme Installer project from ignition-themes 1.17.x. A gateway with `Theme_Installer` on it can delete that project once this one is imported; the themes it installed stay where they are.
+`tools/build_manager.py` appends `tools/insight_code.py`, `tools/editor_code.py` and `tools/import_code.py` to the generated `themepack` script. `tools/package.sh` refuses to package if a theme misses WCAG 2.1 AA, and a release needs `VERSION` to match the tag. The themes were developed in the now-archived `project-themes` repo; a gateway with its `Theme_Installer` project can delete it once this one is imported.
 
 ## Licence
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Build dist/Toolbox_Theme_Manager.zip, a project export importable on any 8.3
-# gateway through Config -> Projects -> Import.
+# gateway through Config -> Projects -> Import, and dist/toolbox-themes.zip,
+# the ten theme folders with install.sh for installing without the project.
 #
 #   ./tools/package.sh                 as the repo stands
 #   ./tools/package.sh --release [VER] VER defaults to the tag HEAD is on and
@@ -68,6 +69,10 @@ if [[ -n "$VERSION" ]]; then
 	grep -q "v$VERSION\"" "$PROJJSON"
 fi
 
+# The ten themes must meet WCAG 2.1 AA, including each alarm severity's row.
+python3 tools/themes/tools/check_contrast.py >/dev/null || { echo "package.sh: a theme misses WCAG 2.1 AA contrast (run tools/themes/tools/check_contrast.py)" >&2; exit 1; }
+python3 tools/themes/tools/check_alarm_contrast.py >/dev/null || { echo "package.sh: an alarm row misses WCAG 2.1 AA contrast (run tools/themes/tools/check_alarm_contrast.py)" >&2; exit 1; }
+
 # Accessibility gate (a11y.json, REPO-STANDARD.md). Blocking; bypass deliberately
 # with --skip-a11y-check. The gate checks what is DEPLOYED, so this pushes the
 # current tree to module-testing (this host's local docker gateway named in
@@ -119,3 +124,15 @@ EXCLUDE=( -x '.git/*' '.gitignore' '.gitmodules' 'README.md' 'a11y.json' 'VERSIO
 ( cd "$HERE" && zip -qr "$HERE/dist/$ZIPNAME" . "${EXCLUDE[@]}" )
 
 echo "dist/$ZIPNAME ($(du -h "dist/$ZIPNAME" | cut -f1), $(unzip -l "dist/$ZIPNAME" | tail -1 | awk '{print $2}') files)"
+
+# The themes on their own, for install.sh: one top-level folder, so extracting
+# it never sprays files into the current directory.
+RAW="toolbox-themes${VERSION:+-$VERSION}"
+STAGE="$(mktemp -d)"
+mkdir "$STAGE/$RAW"
+cp -R tools/themes/out/. "$STAGE/$RAW/"
+cp tools/themes/install.sh tools/themes/RELEASE-README.md LICENSE "$STAGE/$RAW/"
+rm -f "dist/$RAW.zip"
+( cd "$STAGE" && zip -qr "$HERE/dist/$RAW.zip" "$RAW" )
+rm -rf "$STAGE"
+echo "dist/$RAW.zip ($(unzip -l "dist/$RAW.zip" | tail -1 | awk '{print $2}') files)"

@@ -7,6 +7,10 @@
     "/editor": {
       "title": "Customise",
       "viewPath": "Editor"
+    },
+    "/import": {
+      "title": "Import",
+      "viewPath": "Import"
     }
   }
 }

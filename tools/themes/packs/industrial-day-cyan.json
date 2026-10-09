@@ -1,0 +1,417 @@
+{
+  "id": "industrial-day-cyan",
+  "label": "Industrial \u2014 Day Cyan",
+  "category": "Industrial",
+  "description": "Industrial control-room looks: low-luminance control desk, ISA-101 process-grey, high-contrast field tablet, and a red-preserving night-vision mode -- three accent palettes across four modes. Night deliberately narrows the palette's hue-distance between accents (red-preserving night-vision doctrine keeps every accent within a tight band near red) -- that's a decision, not palette drift.",
+  "dark": false,
+  "density": "regular",
+  "tokens": {
+    "accent.alarm-high": "#D97706",
+    "accent.alarm-low": "#B0B8C4",
+    "accent.alarm-med": "#CA8A04",
+    "accent.alarm-urgent": "#DC2626",
+    "accent.danger": "#FFFFFF",
+    "accent.delta-down": "#374151",
+    "accent.delta-up": "#374151",
+    "accent.primary": "#33556E",
+    "accent.progress": "#33556E",
+    "border.alarm-banner": "#DC2626",
+    "border.alarm-banner-rule": "#DC2626",
+    "border.alarm-banner-rule-width": "1px",
+    "border.alarm-bar-width": "4px",
+    "border.badge-width": "1px",
+    "border.card": "#B0B8C4",
+    "border.card-header": "#B0B8C4",
+    "border.card-header-width": "1px",
+    "border.chip": "#D1D5DB",
+    "border.chip-width": "1px",
+    "border.danger": "#DC2626",
+    "border.ghost": "transparent",
+    "border.input": "#B0B8C4",
+    "border.kpi-tile": "#B0B8C4",
+    "border.pill": "#B0B8C4",
+    "border.pill-width": "1px",
+    "border.primary": "#33556E",
+    "border.sidebar": "#B0B8C4",
+    "border.sidebar-width": "1px",
+    "border.status-alarm": "#DC2626",
+    "border.status-info": "#2563EB",
+    "border.status-neutral": "#D1D5DB",
+    "border.status-ok": "#D1D5DB",
+    "border.status-warn": "#D97706",
+    "border.table-cell": "#D1D5DB",
+    "border.table-cell-width": "1px",
+    "border.table-header": "#B0B8C4",
+    "border.table-header-width": "1px",
+    "border.topbar": "#B0B8C4",
+    "border.topbar-width": "1px",
+    "border.width": "1px",
+    "font.body": "\"Roboto\", \"Segoe UI\", \"Helvetica Neue\", Arial, sans-serif",
+    "opacity.alarm-low": ".72",
+    "radius.alarm-row": "2px",
+    "radius.badge": "2px",
+    "radius.card": "2px",
+    "radius.chip": "11px",
+    "radius.control": "2px",
+    "radius.nav": "2px",
+    "radius.pill": "2px",
+    "radius.progress": "2px",
+    "radius.readout": "2px",
+    "radius.tile": "2px",
+    "size.alarm-banner": "13px",
+    "size.alarm-pri": "10px",
+    "size.alarm-row": "12px",
+    "size.alarm-time": "11px",
+    "size.badge": "11px",
+    "size.body": "13px",
+    "size.brand": "14px",
+    "size.button": "13px",
+    "size.card-title": "13px",
+    "size.chip": "11px",
+    "size.h1": "16px",
+    "size.input": "13px",
+    "size.kpi-delta": "11px",
+    "size.kpi-label": "10px",
+    "size.kpi-unit": "13px",
+    "size.kpi-value": "28px",
+    "size.muted": "12px",
+    "size.nav-group": "10px",
+    "size.nav-item": "13px",
+    "size.pill": "11px",
+    "size.pill-text": "11px",
+    "size.readout-label": "10px",
+    "size.readout-unit": "12px",
+    "size.readout-value": "19px",
+    "size.table": "12px",
+    "size.table-header": "10px",
+    "size.toggle": "12px",
+    "space.alarm-banner": "7px 14px",
+    "space.alarm-row": "5px 8px",
+    "space.badge": "0 7px",
+    "space.brand": "4px 14px 12px",
+    "space.card": "10px 12px 12px",
+    "space.chip": "0 9px",
+    "space.content": "12px",
+    "space.control": "0 12px",
+    "space.input": "0 8px",
+    "space.nav-group": "12px 14px 4px",
+    "space.nav-item": "6px 14px",
+    "space.pill": "0 8px",
+    "space.readout": "5px 8px",
+    "space.sidebar": "10px 0",
+    "space.table-cell": "4px 8px",
+    "space.table-header": "5px 8px",
+    "space.tile": "9px 12px",
+    "space.topbar": "0 14px",
+    "surface.alarm-banner": "#FEE2E2",
+    "surface.alarm-high": "#FEF3C7",
+    "surface.alarm-list": "transparent",
+    "surface.alarm-low": "#FFFFFF",
+    "surface.alarm-med": "#FEFCE8",
+    "surface.alarm-urgent": "#FEE2E2",
+    "surface.card": "#FFFFFF",
+    "surface.card-header": "#DDE1E7",
+    "surface.chart": "#FFFFFF",
+    "surface.chip": "#DDE1E7",
+    "surface.content": "transparent",
+    "surface.gauge": "transparent",
+    "surface.ghost": "transparent",
+    "surface.input": "#FFFFFF",
+    "surface.kpi-tile": "#FFFFFF",
+    "surface.main": "transparent",
+    "surface.nav-active": "#FFFFFF",
+    "surface.page": "#EEF0F3",
+    "surface.pill": "#FFFFFF",
+    "surface.pill-dot": "#16A34A",
+    "surface.progress-track": "#DDE1E7",
+    "surface.readout": "#FFFFFF",
+    "surface.readout-warn": "#FEF3C7",
+    "surface.sidebar": "#DDE1E7",
+    "surface.status-alarm": "#DC2626",
+    "surface.status-info": "#DBEAFE",
+    "surface.status-neutral": "#DDE1E7",
+    "surface.status-ok": "#FFFFFF",
+    "surface.status-warn": "#FEF3C7",
+    "surface.table": "#FFFFFF",
+    "surface.table-body": "#FFFFFF",
+    "surface.table-header": "#DDE1E7",
+    "surface.table-row": "#FFFFFF",
+    "surface.toggle": "transparent",
+    "surface.topbar": "#FFFFFF",
+    "text.alarm-banner": "#1F2937",
+    "text.alarm-text": "#1F2937",
+    "text.alarm-time": "#6B7280",
+    "text.body": "#1F2937",
+    "text.brand": "#1F2937",
+    "text.card-title": "#1F2937",
+    "text.chip": "#374151",
+    "text.ghost": "#33556E",
+    "text.heading": "#1F2937",
+    "text.input": "#1F2937",
+    "text.kpi-label": "#6B7280",
+    "text.kpi-tile": "#1F2937",
+    "text.kpi-unit": "#6B7280",
+    "text.kpi-value": "#1F2937",
+    "text.muted": "#666d7a",
+    "text.nav-group": "#6B7280",
+    "text.nav-item": "#374151",
+    "text.nav-item-active": "#1F2937",
+    "text.on-danger": "#DC2626",
+    "text.on-primary": "#FFFFFF",
+    "text.pill": "#374151",
+    "text.pill-text": "#374151",
+    "text.readout-label": "#6B7280",
+    "text.readout-label-warn": "#92400E",
+    "text.readout-unit": "#6B7280",
+    "text.readout-unit-warn": "#616873",
+    "text.readout-value": "#1F2937",
+    "text.readout-value-warn": "#92400E",
+    "text.status-alarm": "#FFFFFF",
+    "text.status-info": "#1E40AF",
+    "text.status-neutral": "#374151",
+    "text.status-ok": "#6B7280",
+    "text.status-warn": "#92400E",
+    "text.table-cell": "#1F2937",
+    "text.table-header": "#374151",
+    "text.toggle": "#374151",
+    "tracking.alarm-pri": ".06em",
+    "tracking.badge": ".02em",
+    "tracking.brand": ".02em",
+    "tracking.kpi-label": ".08em",
+    "tracking.nav-group": ".09em",
+    "tracking.readout-label": ".06em",
+    "tracking.table-header": ".07em",
+    "transform.kpi-label": "uppercase",
+    "transform.readout-label": "uppercase",
+    "transform.table-header": "uppercase",
+    "weight.alarm-pri": "600",
+    "weight.badge": "500",
+    "weight.brand": "500",
+    "weight.button": "500",
+    "weight.card-title": "500",
+    "weight.chip": "500",
+    "weight.h1": "500",
+    "weight.kpi-delta": "600",
+    "weight.kpi-label": "500",
+    "weight.kpi-unit": "400",
+    "weight.kpi-value": "500",
+    "weight.nav-group": "500",
+    "weight.nav-item-active": "500",
+    "weight.pill": "500",
+    "weight.pill-text": "500",
+    "weight.readout-value": "500",
+    "weight.table-header": "500"
+  },
+  "overrides": {
+    "containers/page": {
+      "fontWeight": "400"
+    },
+    "containers/card": {
+      "boxShadow": null
+    },
+    "containers/card-header": {
+      "margin": "-10px -12px 0",
+      "marginBottom": null,
+      "padding": "6px 12px",
+      "paddingBottom": null
+    },
+    "containers/alarm-banner": {
+      "fontWeight": null
+    },
+    "containers/alarm-banner-text": {
+      "fontWeight": null
+    },
+    "text/brand": {
+      "borderBottomWidth": "1px",
+      "borderBottomStyle": "solid",
+      "borderBottomColor": "#B0B8C4",
+      "marginBottom": "6px"
+    },
+    "text/h1": {
+      "letterSpacing": null
+    },
+    "nav/item": {
+      "borderLeftWidth": "3px",
+      "borderLeftStyle": "solid",
+      "borderLeftColor": "transparent",
+      "marginBottom": null,
+      "fontWeight": null
+    },
+    "nav/item-active": {
+      "borderLeftWidth": "3px",
+      "borderLeftStyle": "solid",
+      "marginBottom": null,
+      "borderLeftColor": "#33556E"
+    },
+    "tables/header": {
+      "whiteSpace": "nowrap"
+    },
+    "buttons/primary": {
+      "boxShadow": null
+    },
+    "inputs/field": {
+      "fontWeight": "400"
+    },
+    "inputs/dropdown": {
+      "fontWeight": "400"
+    },
+    "inputs/toggle": {
+      "cursor": "pointer"
+    },
+    "inputs/toggle-label": {
+      "cursor": "pointer"
+    },
+    "status/badge-ok": {
+      "textTransform": null,
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-warn": {
+      "textTransform": null,
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-alarm": {
+      "textTransform": null,
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-info": {
+      "textTransform": null,
+      "whiteSpace": "nowrap"
+    },
+    "status/badge-neutral": {
+      "textTransform": null,
+      "whiteSpace": "nowrap"
+    },
+    "status/pill": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "status/pill-text": {
+      "letterSpacing": null,
+      "textTransform": null
+    },
+    "kpi/tile": {
+      "boxShadow": null
+    },
+    "kpi/value": {
+      "fontFamily": "\"Roboto\", \"Segoe UI\", Arial, sans-serif"
+    },
+    "kpi/unit": {
+      "marginLeft": null
+    },
+    "alarms/row-low": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "alarms/row-med": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "alarms/row-high": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "alarms/row-urgent": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "alarms/pri-low": {
+      "color": "#1E40AF"
+    },
+    "alarms/pri-med": {
+      "color": "#854D0E"
+    },
+    "alarms/pri-high": {
+      "color": "#92400E"
+    },
+    "alarms/pri-urgent": {
+      "color": "#991B1B"
+    },
+    "alarms/text": {
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "ellipsis"
+    },
+    "charts/frame": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "progress/track": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "progress/fill": {
+      "borderRadius": "999px"
+    },
+    "readouts/frame": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D1D5DB"
+    },
+    "readouts/frame-warn": {
+      "borderWidth": "1px",
+      "borderStyle": "solid",
+      "borderColor": "#D97706"
+    },
+    "readouts/value": {
+      "fontFamily": "\"Roboto\", \"Segoe UI\", Arial, sans-serif"
+    },
+    "readouts/value-warn": {
+      "fontFamily": "\"Roboto\", \"Segoe UI\", Arial, sans-serif"
+    },
+    "readouts/unit": {
+      "fontWeight": null
+    },
+    "readouts/unit-warn": {
+      "fontWeight": null
+    },
+    "readouts/label": {
+      "marginTop": null
+    },
+    "readouts/label-warn": {
+      "marginTop": null
+    }
+  },
+  "variants": {
+    "nav/item": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#E7EAEF",
+          "color": "#1F2937"
+        }
+      }
+    ],
+    "buttons/ghost": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#E7EAEF"
+        }
+      }
+    ],
+    "buttons/danger": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#FEE2E2"
+        }
+      }
+    ],
+    "buttons/primary": [
+      {
+        "pseudo": "hover",
+        "style": {
+          "backgroundColor": "#274456",
+          "borderColor": "#274456"
+        }
+      }
+    ]
+  },
+  "generated_from": "industrial"
+}

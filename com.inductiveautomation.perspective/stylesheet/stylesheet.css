@@ -29,3 +29,17 @@ html {
 .app-bar {
   display: none !important;
 }
+
+/* The Installer's tick column is display-only (a row click toggles it),
+ * so Perspective draws it disabled. Draw it as a live checkbox. */
+.ia_table__cell[data-column-id="pick"] .ia_checkbox--disabled {
+  cursor: pointer;
+}
+.ia_table__cell[data-column-id="pick"] .ia_checkbox__uncheckedIcon--disabled {
+  fill: var(--checkbox--unchecked);
+  color: var(--checkbox--unchecked);
+}
+.ia_table__cell[data-column-id="pick"] .ia_checkbox__checkedIcon--disabled {
+  fill: var(--checkbox--checked);
+  color: var(--checkbox--checked);
+}

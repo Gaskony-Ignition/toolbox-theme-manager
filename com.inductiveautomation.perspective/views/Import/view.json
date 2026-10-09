@@ -2,6 +2,7 @@
   "custom": {
     "name": "",
     "zipName": "",
+    "done": 0,
     "state": {
       "ok": false,
       "token": "",
@@ -13,12 +14,6 @@
     }
   },
   "params": {},
-  "props": {
-    "defaultSize": {
-      "width": 680,
-      "height": 600
-    }
-  },
   "root": {
     "type": "ia.container.flex",
     "meta": {
@@ -33,12 +28,216 @@
       "direction": "column",
       "style": {
         "gap": "12px",
-        "padding": "16px",
+        "padding": "14px 18px 16px",
         "height": "100%",
         "backgroundColor": "var(--containerRoot)"
       }
     },
     "children": [
+      {
+        "type": "ia.container.flex",
+        "meta": {
+          "name": "tabs"
+        },
+        "position": {
+          "grow": 0,
+          "shrink": 0,
+          "basis": "auto"
+        },
+        "props": {
+          "direction": "row",
+          "alignItems": "flex-end",
+          "style": {
+            "gap": "2px",
+            "marginBottom": "6px",
+            "borderBottomStyle": "solid",
+            "borderBottomWidth": "1px",
+            "borderBottomColor": "var(--border)"
+          }
+        },
+        "children": [
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "brand"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Toolbox Theme Manager  2.1.0",
+              "style": {
+                "fontSize": "13.5px",
+                "fontWeight": 600,
+                "whiteSpace": "nowrap",
+                "color": "var(--label)",
+                "padding": "9px 18px 8px 2px",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "transparent"
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "tab_home",
+              "tabIndex": 0
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Installer",
+              "style": {
+                "fontSize": "13px",
+                "padding": "9px 16px 8px",
+                "cursor": "pointer",
+                "whiteSpace": "nowrap",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "transparent",
+                "color": "var(--neutral-70)",
+                "fontWeight": 600
+              }
+            },
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.navigate(page='/')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                },
+                "onKeyDown": {
+                  "config": {
+                    "script": "\tif event.key in ('Enter', ' '):\n\t\tsystem.perspective.navigate(page='/')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "tab_editor",
+              "tabIndex": 0
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Customise",
+              "style": {
+                "fontSize": "13px",
+                "padding": "9px 16px 8px",
+                "cursor": "pointer",
+                "whiteSpace": "nowrap",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "transparent",
+                "color": "var(--neutral-70)",
+                "fontWeight": 600
+              }
+            },
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\tsystem.perspective.navigate(page='/editor')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                },
+                "onKeyDown": {
+                  "config": {
+                    "script": "\tif event.key in ('Enter', ' '):\n\t\tsystem.perspective.navigate(page='/editor')"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            }
+          },
+          {
+            "type": "ia.display.label",
+            "meta": {
+              "name": "tab_import"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "auto"
+            },
+            "props": {
+              "text": "Import",
+              "style": {
+                "fontSize": "13px",
+                "padding": "9px 16px 8px",
+                "cursor": "default",
+                "whiteSpace": "nowrap",
+                "borderBottomStyle": "solid",
+                "borderBottomWidth": "2px",
+                "borderBottomColor": "var(--callToAction)",
+                "color": "var(--label)",
+                "fontWeight": 600
+              }
+            }
+          },
+          {
+            "type": "ia.container.flex",
+            "meta": {
+              "name": "spacer"
+            },
+            "position": {
+              "grow": 1,
+              "shrink": 1,
+              "basis": "0px"
+            },
+            "props": {}
+          },
+          {
+            "type": "ia.display.view",
+            "meta": {
+              "name": "theme_switcher"
+            },
+            "position": {
+              "grow": 0,
+              "shrink": 0,
+              "basis": "230px"
+            },
+            "props": {
+              "path": "ThemeDropdown",
+              "params": {
+                "refresh": 0
+              },
+              "style": {
+                "minHeight": "34px",
+                "marginBottom": "4px"
+              }
+            },
+            "propConfig": {
+              "props.params.refresh": {
+                "binding": {
+                  "type": "expr",
+                  "config": {
+                    "expression": "{view.custom.done}"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
       {
         "type": "ia.display.label",
         "meta": {
@@ -102,7 +301,7 @@
                   "type": "script",
                   "scope": "G",
                   "config": {
-                    "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tname = (self.view.custom.name or '').strip() or None\n\t\tdata = themepack.import_bytes(event.file.getBytes())\n\t\tself.view.custom.zipName = event.file.name\n\t\treport = themepack.stage_import(data, event.file.name, name)\n\t\tself.view.custom.state = themepack.import_view(report)\n\t\tif not name and report.get('id'):\n\t\t\tself.view.custom.name = report['id']\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
+                    "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tdata = themepack.import_bytes(event.file.getBytes())\n\t\tself.view.custom.zipName = event.file.name\n\t\treport = themepack.stage_import(data, event.file.name, None)\n\t\tself.view.custom.state = themepack.import_view(report)\n\t\tself.view.custom.name = report.get('id') or ''\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
                   }
                 }
               }
@@ -218,6 +417,45 @@
                           },
                           "scope": "G",
                           "type": "script"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "ia.input.button",
+                    "meta": {
+                      "name": "install_btn"
+                    },
+                    "position": {
+                      "grow": 0,
+                      "shrink": 0,
+                      "basis": "auto"
+                    },
+                    "props": {
+                      "text": "Install",
+                      "style": {
+                        "height": "32px",
+                        "whiteSpace": "nowrap"
+                      }
+                    },
+                    "events": {
+                      "component": {
+                        "onActionPerformed": {
+                          "config": {
+                            "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tthemepack.install_import(self.view.custom.state.token,\n\t\t\tself.view.custom.zipName, (self.view.custom.name or '').strip() or None)\n\t\ttheme = self.view.custom.state.id\n\t\tself.view.custom.state = {'ok': False, 'token': '', 'id': theme,\n\t\t\t'preview': self.view.custom.state.preview, 'details': '', 'findings': '',\n\t\t\t'verdict': \"Installed as '%s'. It is on the Installer tab and in every \"\n\t\t\t\t\"project's Theme menu.\" % theme}\n\t\tself.view.custom.name = ''\n\t\tself.view.custom.done += 1\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
+                          },
+                          "scope": "G",
+                          "type": "script"
+                        }
+                      }
+                    },
+                    "propConfig": {
+                      "props.enabled": {
+                        "binding": {
+                          "type": "property",
+                          "config": {
+                            "path": "view.custom.state.ok"
+                          }
                         }
                       }
                     }
@@ -373,111 +611,6 @@
             }
           }
         }
-      },
-      {
-        "type": "ia.container.flex",
-        "meta": {
-          "name": "gap"
-        },
-        "position": {
-          "grow": 1,
-          "shrink": 1,
-          "basis": "0px"
-        },
-        "props": {}
-      },
-      {
-        "type": "ia.container.flex",
-        "meta": {
-          "name": "buttons"
-        },
-        "position": {
-          "grow": 0,
-          "shrink": 0,
-          "basis": "auto"
-        },
-        "props": {
-          "direction": "row",
-          "justify": "flex-end",
-          "style": {
-            "gap": "8px"
-          }
-        },
-        "children": [
-          {
-            "type": "ia.input.button",
-            "meta": {
-              "name": "close_btn"
-            },
-            "position": {
-              "grow": 0,
-              "shrink": 0,
-              "basis": "auto"
-            },
-            "props": {
-              "text": "Close",
-              "style": {
-                "height": "32px",
-                "whiteSpace": "nowrap",
-                "backgroundColor": "var(--containerBackground)",
-                "color": "var(--label)",
-                "borderStyle": "solid",
-                "borderWidth": "1px",
-                "borderColor": "var(--border)"
-              }
-            },
-            "events": {
-              "component": {
-                "onActionPerformed": {
-                  "config": {
-                    "script": "\tsystem.perspective.closePopup('theme-manager-import')"
-                  },
-                  "scope": "G",
-                  "type": "script"
-                }
-              }
-            }
-          },
-          {
-            "type": "ia.input.button",
-            "meta": {
-              "name": "install_btn"
-            },
-            "position": {
-              "grow": 0,
-              "shrink": 0,
-              "basis": "auto"
-            },
-            "props": {
-              "text": "Install",
-              "style": {
-                "height": "32px",
-                "whiteSpace": "nowrap"
-              }
-            },
-            "events": {
-              "component": {
-                "onActionPerformed": {
-                  "config": {
-                    "script": "\tfrom java.lang import Throwable\n\timport themepack\n\ttry:\n\t\tthemepack.install_import(self.view.custom.state.token,\n\t\t\tself.view.custom.zipName, (self.view.custom.name or '').strip() or None)\n\t\tsystem.perspective.sendMessage('themesChanged', scope='page')\n\t\tsystem.perspective.closePopup('theme-manager-import')\n\texcept (Exception, Throwable) as e:\n\t\tself.view.custom.state = themepack.import_view(None, str(e))\n"
-                  },
-                  "scope": "G",
-                  "type": "script"
-                }
-              }
-            },
-            "propConfig": {
-              "props.enabled": {
-                "binding": {
-                  "type": "property",
-                  "config": {
-                    "path": "view.custom.state.ok"
-                  }
-                }
-              }
-            }
-          }
-        ]
       }
     ]
   }
