@@ -90,7 +90,7 @@
                     "fontSize": "11px",
                     "lineHeight": 1.4
                   },
-                  "text": "None of them are installed on this gateway. Install them from the Theme Installer page, or pick from what the gateway does have, below."
+                  "text": "None of them are installed on this gateway. Install them with the Toolbox Theme Manager project or install.sh, or pick from what the gateway does have, below."
                 },
                 "type": "ia.display.label"
               }
