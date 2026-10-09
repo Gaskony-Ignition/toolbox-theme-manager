@@ -1523,10 +1523,12 @@ def _action_card(name, title, body, buttons, note=None):
          "props": {"text": title,
                    "style": {"fontSize": "15px", "fontWeight": 600,
                              "color": "var(--label)"}}},
+        # Short bullets, one line each: the cards are read at a glance.
         {"type": "ia.display.label", "meta": {"name": "body"},
          "position": {"grow": 0, "shrink": 0, "basis": "auto"},
-         "props": {"text": body,
-                   "style": {"fontSize": "12.5px", "lineHeight": "1.5",
+         "props": {"text": "\n".join("\u2022  " + line for line in body),
+                   "style": {"fontSize": "12.5px", "lineHeight": "1.6",
+                             "whiteSpace": "pre-line",
                              "color": "var(--neutral-70)"}}},
     ]
     if note:
@@ -1633,50 +1635,34 @@ def _action_grid(themes):
                  _action_card(
                      "card_custom",
                      "The %d pre-packaged themes" % len(themes),
-                     "The ones this project carries. Writes them to this "
-                     "gateway as Perspective config resources and runs a scan, "
-                     "so they are in every project's Theme menu with no "
-                     "gateway restart -- a session already open picks them up "
-                     "when it reloads. Safe to re-run: it overwrites the "
-                     "gateway's copies, which is also how you repair them "
-                     "after an Ignition upgrade.",
+                     ["Adds them to every project's Theme menu",
+                      "No gateway restart; open sessions update on reload",
+                      "Install again to repair them after an upgrade",
+                      "Never touches Ignition's themes or your own"],
                      [_act_button("install_all_btn", "Install",
                                   scripts["install"], kind="primary"),
                       _act_button("remove_all_btn", "Remove",
-                                  scripts["remove"])],
-                     # Says PRE-PACKAGED, because a theme
-                     # made in the Editor is not one of them and must not read
-                     # as something Remove would take away. install()/
-                     # uninstall() already refuse any id outside THEMES, so
-                     # this is describing the guard, not promising it.
-                     note="Both buttons only ever touch these ten. A stock "
-                          "theme, or one you make yourself on the Customise "
-                          "page, is "
-                          "left alone."),
+                                  scripts["remove"])]),
                  _action_card(
                      "card_stock",
                      "Ignition's own themes",
-                     "Optional, and nothing above needs it. Update adds ONLY "
-                     "themed scrollbars and a colour-scheme declaration to the "
-                     "four on-disk stock variants -- their look does not "
-                     "change. Restore deletes exactly that and puts them back.",
+                     ["Optional; nothing else here needs it",
+                      "Update: themed scrollbars and colour scheme only",
+                      "Restore: puts them back exactly",
+                      "Light and Dark are never touched"],
                      [_act_button("update_stock_btn", "Update",
                                   scripts["update_stock"]),
                       _act_button("restore_stock_btn", "Restore",
-                                  scripts["restore_stock"])],
-                     note="Light and Dark live inside the Perspective module, "
-                          "so they are never touched at all."),
+                                  scripts["restore_stock"])]),
                  _action_card(
                      "card_try",
                      "Try one",
-                     "Opens the swatch popup, which repaints this session as "
-                     "you click. The Theme menu at the top right does the same "
-                     "from any page. Both are copy-me views: a project takes "
-                     "whichever it prefers and gets its own Theme button.",
+                     ["Swatch popup repaints this page as you click",
+                      "The Theme menu, top right, does the same",
+                      "Both are views to copy into your own projects",
+                      "Themes stay if you delete this project"],
                      [_act_button("theme_switcher_btn", "Theme switcher",
-                                  scripts["switcher"], kind="quiet")],
-                     note="This project is safe to delete once the themes are "
-                          "installed."),
+                                  scripts["switcher"], kind="quiet")]),
              ]},
         ],
     }

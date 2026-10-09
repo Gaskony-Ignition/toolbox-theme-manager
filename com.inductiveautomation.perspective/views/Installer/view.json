@@ -96,7 +96,7 @@
               "basis": "auto"
             },
             "props": {
-              "text": "Toolbox Theme Manager  2.1.0",
+              "text": "Toolbox Theme Manager  2.1.1",
               "style": {
                 "fontSize": "13.5px",
                 "fontWeight": 600,
@@ -358,31 +358,12 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "The ones this project carries. Writes them to this gateway as Perspective config resources and runs a scan, so they are in every project's Theme menu with no gateway restart -- a session already open picks them up when it reloads. Safe to re-run: it overwrites the gateway's copies, which is also how you repair them after an Ignition upgrade.",
+                      "text": "\u2022  Adds them to every project's Theme menu\n\u2022  No gateway restart; open sessions update on reload\n\u2022  Install again to repair them after an upgrade\n\u2022  Never touches Ignition's themes or your own",
                       "style": {
                         "fontSize": "12.5px",
-                        "lineHeight": "1.5",
+                        "lineHeight": "1.6",
+                        "whiteSpace": "pre-line",
                         "color": "var(--neutral-70)"
-                      }
-                    }
-                  },
-                  {
-                    "type": "ia.display.label",
-                    "meta": {
-                      "name": "note"
-                    },
-                    "position": {
-                      "grow": 0,
-                      "shrink": 0,
-                      "basis": "auto"
-                    },
-                    "props": {
-                      "text": "Both buttons only ever touch these ten. A stock theme, or one you make yourself on the Customise page, is left alone.",
-                      "style": {
-                        "fontSize": "12px",
-                        "lineHeight": "1.5",
-                        "color": "var(--neutral-70)",
-                        "fontStyle": "italic"
                       }
                     }
                   },
@@ -535,31 +516,12 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "Optional, and nothing above needs it. Update adds ONLY themed scrollbars and a colour-scheme declaration to the four on-disk stock variants -- their look does not change. Restore deletes exactly that and puts them back.",
+                      "text": "\u2022  Optional; nothing else here needs it\n\u2022  Update: themed scrollbars and colour scheme only\n\u2022  Restore: puts them back exactly\n\u2022  Light and Dark are never touched",
                       "style": {
                         "fontSize": "12.5px",
-                        "lineHeight": "1.5",
+                        "lineHeight": "1.6",
+                        "whiteSpace": "pre-line",
                         "color": "var(--neutral-70)"
-                      }
-                    }
-                  },
-                  {
-                    "type": "ia.display.label",
-                    "meta": {
-                      "name": "note"
-                    },
-                    "position": {
-                      "grow": 0,
-                      "shrink": 0,
-                      "basis": "auto"
-                    },
-                    "props": {
-                      "text": "Light and Dark live inside the Perspective module, so they are never touched at all.",
-                      "style": {
-                        "fontSize": "12px",
-                        "lineHeight": "1.5",
-                        "color": "var(--neutral-70)",
-                        "fontStyle": "italic"
                       }
                     }
                   },
@@ -714,31 +676,12 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "Opens the swatch popup, which repaints this session as you click. The Theme menu at the top right does the same from any page. Both are copy-me views: a project takes whichever it prefers and gets its own Theme button.",
+                      "text": "\u2022  Swatch popup repaints this page as you click\n\u2022  The Theme menu, top right, does the same\n\u2022  Both are views to copy into your own projects\n\u2022  Themes stay if you delete this project",
                       "style": {
                         "fontSize": "12.5px",
-                        "lineHeight": "1.5",
+                        "lineHeight": "1.6",
+                        "whiteSpace": "pre-line",
                         "color": "var(--neutral-70)"
-                      }
-                    }
-                  },
-                  {
-                    "type": "ia.display.label",
-                    "meta": {
-                      "name": "note"
-                    },
-                    "position": {
-                      "grow": 0,
-                      "shrink": 0,
-                      "basis": "auto"
-                    },
-                    "props": {
-                      "text": "This project is safe to delete once the themes are installed.",
-                      "style": {
-                        "fontSize": "12px",
-                        "lineHeight": "1.5",
-                        "color": "var(--neutral-70)",
-                        "fontStyle": "italic"
                       }
                     }
                   },
