@@ -58,8 +58,12 @@ if [[ -n "$VERSION" ]]; then
 	[[ "$(cat VERSION)" == "$VERSION" ]] || {
 		echo "package.sh --release: VERSION says $(cat VERSION), release is $VERSION" >&2; exit 2; }
 	python3 tools/test_import.py >/dev/null || { echo "package.sh: tools/test_import.py failed" >&2; exit 1; }
+	# Every build restamps resource.json timestamps, so those are not compared,
+	# and the committed copies go back before packaging.
 	python3 tools/build_manager.py >/dev/null
-	git diff --quiet HEAD || { echo "package.sh --release: the generated project is out of date; regenerate and commit" >&2; exit 2; }
+	_stale=0; git diff --quiet HEAD -- . ':!*resource.json' || _stale=1
+	git checkout -q -- .
+	[[ $_stale -eq 0 ]] || { echo "package.sh --release: the generated project is out of date; regenerate and commit" >&2; exit 2; }
 	grep -q "\"title\": \"Toolbox Theme Manager $VERSION\"" "$PROJJSON"
 	grep -q "v$VERSION\"" "$PROJJSON"
 fi
