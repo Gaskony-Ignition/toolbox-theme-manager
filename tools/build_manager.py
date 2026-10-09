@@ -1634,8 +1634,8 @@ def _action_grid(themes):
              "children": [
                  _action_card(
                      "card_custom",
-                     "The %d pre-packaged themes" % len(themes),
-                     ["Adds them to every project's Theme menu",
+                     "Pre-Packaged Themes",
+                     ["Install adds them to every project's Theme menu",
                       "No gateway restart; open sessions update on reload",
                       "Install again to repair them after an upgrade",
                       "Never touches Ignition's themes or your own"],
@@ -1646,10 +1646,9 @@ def _action_grid(themes):
                  _action_card(
                      "card_stock",
                      "Ignition's own themes",
-                     ["Optional; nothing else here needs it",
+                     ["Improvements to Stock Themes",
                       "Update: themed scrollbars and colour scheme only",
-                      "Restore: puts them back exactly",
-                      "Light and Dark are never touched"],
+                      "Restore: puts them back exactly"],
                      [_act_button("update_stock_btn", "Update",
                                   scripts["update_stock"]),
                       _act_button("restore_stock_btn", "Restore",
@@ -1657,7 +1656,7 @@ def _action_grid(themes):
                  _action_card(
                      "card_try",
                      "Try one",
-                     ["Swatch popup repaints this page as you click",
+                     ["Popup repaints this page as you click",
                       "The Theme menu, top right, does the same",
                       "Both are views to copy into your own projects",
                       "Themes stay if you delete this project"],

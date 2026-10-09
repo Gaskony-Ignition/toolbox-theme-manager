@@ -96,7 +96,7 @@
               "basis": "auto"
             },
             "props": {
-              "text": "Toolbox Theme Manager  2.1.1",
+              "text": "Toolbox Theme Manager  2.1.2",
               "style": {
                 "fontSize": "13.5px",
                 "fontWeight": 600,
@@ -339,7 +339,7 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "The 10 pre-packaged themes",
+                      "text": "Pre-Packaged Themes",
                       "style": {
                         "fontSize": "15px",
                         "fontWeight": 600,
@@ -358,7 +358,7 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "\u2022  Adds them to every project's Theme menu\n\u2022  No gateway restart; open sessions update on reload\n\u2022  Install again to repair them after an upgrade\n\u2022  Never touches Ignition's themes or your own",
+                      "text": "\u2022  Install adds them to every project's Theme menu\n\u2022  No gateway restart; open sessions update on reload\n\u2022  Install again to repair them after an upgrade\n\u2022  Never touches Ignition's themes or your own",
                       "style": {
                         "fontSize": "12.5px",
                         "lineHeight": "1.6",
@@ -516,7 +516,7 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "\u2022  Optional; nothing else here needs it\n\u2022  Update: themed scrollbars and colour scheme only\n\u2022  Restore: puts them back exactly\n\u2022  Light and Dark are never touched",
+                      "text": "\u2022  Improvements to Stock Themes\n\u2022  Update: themed scrollbars and colour scheme only\n\u2022  Restore: puts them back exactly",
                       "style": {
                         "fontSize": "12.5px",
                         "lineHeight": "1.6",
@@ -676,7 +676,7 @@
                       "basis": "auto"
                     },
                     "props": {
-                      "text": "\u2022  Swatch popup repaints this page as you click\n\u2022  The Theme menu, top right, does the same\n\u2022  Both are views to copy into your own projects\n\u2022  Themes stay if you delete this project",
+                      "text": "\u2022  Popup repaints this page as you click\n\u2022  The Theme menu, top right, does the same\n\u2022  Both are views to copy into your own projects\n\u2022  Themes stay if you delete this project",
                       "style": {
                         "fontSize": "12.5px",
                         "lineHeight": "1.6",
