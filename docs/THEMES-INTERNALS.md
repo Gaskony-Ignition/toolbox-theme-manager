@@ -26,12 +26,14 @@ classes:
 
 **Both list the gateway, not this repo.** Each asks
 `system.config.getResources(moduleId="com.inductiveautomation.perspective",
-typeId="themes")` when it opens, and adds Ignition's stock six as a fixed base
-(`light` and `dark` live inside the Perspective module's jar and never appear
-as resources). So a switcher copied onto a gateway that has none of these
-themes offers that gateway's own themes instead of writing an id Perspective
-cannot resolve, and a theme from anywhere else shows up without either file
-being edited.
+typeId="themes")` when it opens. That returns Ignition's six with the rest:
+`light` and `dark` come with the Perspective module and have no folder on
+disk, but are listed all the same. Each view keeps the six as a fixed base, so
+a failed listing still offers them, and skips them in what the gateway
+returns, so none is offered twice. A switcher copied onto a gateway that has
+none of these themes offers that gateway's own themes instead of writing an id
+Perspective cannot resolve, and a theme from anywhere else shows up without
+either file being edited.
 
 The popup's swatch colours are a fixed hand-verified list — a view binding
 cannot read a colour out of a theme's CSS — but a swatch is only *offered*
@@ -67,6 +69,20 @@ To use the popup in another project:
 
 That is it — the popup writes `session.props.theme` itself when a swatch is
 clicked; nothing else needs wiring up.
+
+**Ignition Dark and Ignition Light go by way of their Cool variants.** The
+Perspective client does not load a theme whose file name ends the current
+one's: from `industrial-dark.css` it never loads `dark.css`, nor `light.css`
+from `industrial-light.css`. Those two swatches set `dark-cool` (or
+`light-cool`) first and the theme they name 0.25 s later, unless another
+swatch was picked meanwhile. The gateway sends a page's changes at most every
+100 ms, so two writes closer together reach the client as one. Going by way of
+the Cool variant also mends a page that opened on a project default such as
+`industrial-dark` while its session was already on `dark`.
+
+The popup's own text uses `--neutral-70`, which meets WCAG 2.1 AA (4.5:1) on
+`--container` in all sixteen themes and stays lighter than `--label`.
+`--label--disabled` misses 4.5:1 at 11px in Ignition's three light themes.
 
 Both views are hand-authored and commit-tracked at
 `selector-popup/SelectorPopup.view.json` and
@@ -295,7 +311,9 @@ again. The release's `toolbox-themes-<version>.zip` carries the same files.
 ## Selecting a theme by hand
 
 Bind `session.props.theme` (session-wide) or call
-`system.perspective.setTheme()` (page only). `out/themes.json` lists each
+`system.perspective.setTheme()` (page only). To reach `dark` or `light` from a
+theme whose id ends `-dark` or `-light`, set `dark-cool` or `light-cool` first
+and the theme more than 100 ms later, as the switcher popup does. `out/themes.json` lists each
 theme's id, label and mode for building a picker.
 
 ## The glass-green tweak

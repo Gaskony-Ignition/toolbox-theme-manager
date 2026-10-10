@@ -60,7 +60,7 @@ Each theme sets 110 of the gateway's 120 built-in theme variables, declares `col
 | Installer: Update / Restore | Optional. Adds themed scrollbars and a `color-scheme` line to Ignition's four on-disk stock variants without changing their look, and takes them back off. |
 | Customise | Makes a theme of your own from one of the ten and edits its colours. |
 | Import | Checks a theme zip, shows the verdict and a preview, and installs it only if nothing was refused. |
-| Theme switcher | Two copy-me views, `SelectorPopup` and `ThemeDropdown`, that list whatever themes the gateway has. |
+| Theme switcher | Two copy-me views, `SelectorPopup` and `ThemeDropdown`, that list whatever themes the gateway has. The popup's text meets WCAG 2.1 AA in all sixteen themes, Ignition's six included. |
 
 ### What an import may contain
 
@@ -87,7 +87,7 @@ The upload is kept on the gateway, and Install checks that copy again, so what i
 
 The project has no parent, no database and no tag provider, and runs on any 8.3 gateway. Deleting it leaves the themes in place; they are gateway config, not project resources.
 
-Without the project: unzip `toolbox-themes-<version>.zip` from the same release and run `./install.sh --data-dir <dir>`, `--docker <container>` or `--ssh <host> --data-dir <dir>`, then **Config → Platform → Overview → Scan File System**. A session picks a theme through `session.props.theme`.
+Without the project: unzip `toolbox-themes-<version>.zip` from the same release and run `./install.sh --data-dir <dir>`, `--docker <container>` or `--ssh <host> --data-dir <dir>`, then **Config → Platform → Overview → Scan File System**. A session picks a theme through `session.props.theme`. To reach `dark` or `light` from a theme whose id ends `-dark` or `-light`, set `dark-cool` or `light-cool` first and the theme more than 100 ms later, as the switcher popup does: Perspective does not load `dark.css` while `industrial-dark.css` is loaded.
 
 ---
 

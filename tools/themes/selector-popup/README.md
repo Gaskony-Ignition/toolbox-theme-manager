@@ -15,10 +15,11 @@ copying either into a project drags nothing else in.
 
 Neither view offers a theme that is not on the gateway. Both call
 `system.config.getResources(moduleId="com.inductiveautomation.perspective",
-typeId="themes")` when they open, and both add Ignition's six stock themes as
-a fixed base (`light` and `dark` live inside the Perspective module's jar and
-never appear as config resources). A theme from anywhere else appears in both
-without either file being edited.
+typeId="themes")` when they open. Ignition's six stock themes are a fixed base
+in both, so a failed listing still offers them, and both skip them in what the
+gateway returns, which includes `light` and `dark` although neither has a
+folder on disk. A theme from anywhere else appears in both without either file
+being edited.
 
 The swatch grid's colours are a fixed, hand-verified list — a view binding
 cannot read a colour out of a theme's CSS — but a swatch is only offered when
@@ -50,4 +51,7 @@ system.perspective.openPopup(
 `width`/`height` are keys inside `position`, not top-level kwargs.
 
 Neither view needs a script package, a parent project, or any other prop
-wiring — each writes `session.props.theme` itself.
+wiring — each writes `session.props.theme` itself. The popup's Ignition Dark
+and Ignition Light swatches go by way of `dark-cool` and `light-cool`, 0.25 s
+apart: Perspective does not load `dark.css` while the page's theme file ends
+with it, as `industrial-dark.css` does.

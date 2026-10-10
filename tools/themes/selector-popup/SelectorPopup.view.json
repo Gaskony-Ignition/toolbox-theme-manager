@@ -15,7 +15,7 @@
         },
         "transforms": [
           {
-            "code": "\t# What this gateway ACTUALLY has. The 16 swatches below are a fixed,\n\t# hand-coloured grid, but whether each one is offered is decided here,\n\t# at open time, by asking the gateway -- a swatch for a theme that is\n\t# not installed would set session.props.theme to an id Perspective\n\t# cannot resolve.\n\t#\n\t# Deliberately self-contained: this view is a copy-me artefact, so it\n\t# must not depend on a script package existing in the host project.\n\tfrom java.lang import Throwable as JThrowable\n\t# light and dark live inside the Perspective module's own jar and never\n\t# appear as config resources, so the stock six are a fixed base rather\n\t# than something read from the gateway. Order is Ignition's own.\n\tSTOCK = [u\"light\", u\"light-warm\", u\"light-cool\",\n\t\tu\"dark\", u\"dark-warm\", u\"dark-cool\"]\n\t# the ten packs this repo ships -- only used to count the grid below\n\tPACK = [u\"glass-violet\", u\"glass-green\",\n\t\tu\"leather-light\", u\"leather-dark\",\n\t\tu\"finance-ledger\", u\"newsprint-dark\",\n\t\tu\"nord-light\", u\"nord-dark\",\n\t\tu\"industrial-light\", u\"industrial-dark\"]\n\textra = []\n\ttry:\n\t\tfor res in system.config.getResources(\n\t\t\t\tmoduleId=\"com.inductiveautomation.perspective\", typeId=\"themes\"):\n\t\t\tname = unicode(res.getName())\n\t\t\tif name not in STOCK and name not in extra:\n\t\t\t\textra.append(name)\n\texcept (JThrowable, Exception) as e:\n\t\t# a picker offering the stock six beats one offering nothing\n\t\tsystem.util.getLogger(\"ThemeSelector\").warn(\n\t\t\tu\"theme listing failed, offering the stock themes only: %s\" % e)\n\tnames = STOCK + sorted(extra)\n\treturn {\n\t\t# every theme on the gateway, whoever shipped it -- the dropdown\n\t\tu\"all\": [{u\"value\": n, u\"label\": n.replace(u\"-\", u\" \").capitalize()}\n\t\t\tfor n in names],\n\t\t# comma-DELIMITED, leading and trailing: the swatches test membership\n\t\t# with indexOf(..., \",<id>,\"), and without the delimiters \"nord-dark\"\n\t\t# would match inside \"nord-darker\"\n\t\tu\"have\": u\",\" + u\",\".join(names) + u\",\",\n\t\tu\"packCount\": len([n for n in PACK if n in names]),\n\t}\n",
+            "code": "\t# What this gateway ACTUALLY has. The 16 swatches below are a fixed,\n\t# hand-coloured grid, but whether each one is offered is decided here,\n\t# at open time, by asking the gateway -- a swatch for a theme that is\n\t# not installed would set session.props.theme to an id Perspective\n\t# cannot resolve.\n\t#\n\t# Deliberately self-contained: this view is a copy-me artefact, so it\n\t# must not depend on a script package existing in the host project.\n\tfrom java.lang import Throwable as JThrowable\n\t# The stock six are a fixed base, in Ignition's own order, so a failed\n\t# listing still offers them. light and dark have no folder on disk (they\n\t# come with the Perspective module) but the gateway lists them with the\n\t# rest, so the loop skips all six rather than offer one twice.\n\tSTOCK = [u\"light\", u\"light-warm\", u\"light-cool\",\n\t\tu\"dark\", u\"dark-warm\", u\"dark-cool\"]\n\t# the ten packs this repo ships -- only used to count the grid below\n\tPACK = [u\"glass-violet\", u\"glass-green\",\n\t\tu\"leather-light\", u\"leather-dark\",\n\t\tu\"finance-ledger\", u\"newsprint-dark\",\n\t\tu\"nord-light\", u\"nord-dark\",\n\t\tu\"industrial-light\", u\"industrial-dark\"]\n\textra = []\n\ttry:\n\t\tfor res in system.config.getResources(\n\t\t\t\tmoduleId=\"com.inductiveautomation.perspective\", typeId=\"themes\"):\n\t\t\tname = unicode(res.getName())\n\t\t\tif name not in STOCK and name not in extra:\n\t\t\t\textra.append(name)\n\texcept (JThrowable, Exception) as e:\n\t\t# a picker offering the stock six beats one offering nothing\n\t\tsystem.util.getLogger(\"ThemeSelector\").warn(\n\t\t\tu\"theme listing failed, offering the stock themes only: %s\" % e)\n\tnames = STOCK + sorted(extra)\n\treturn {\n\t\t# every theme on the gateway, whoever shipped it -- the dropdown\n\t\tu\"all\": [{u\"value\": n, u\"label\": n.replace(u\"-\", u\" \").capitalize()}\n\t\t\tfor n in names],\n\t\t# comma-DELIMITED, leading and trailing: the swatches test membership\n\t\t# with indexOf(..., \",<id>,\"), and without the delimiters \"nord-dark\"\n\t\t# would match inside \"nord-darker\"\n\t\tu\"have\": u\",\" + u\",\".join(names) + u\",\",\n\t\tu\"packCount\": len([n for n in PACK if n in names]),\n\t}\n",
             "type": "script"
           }
         ],
@@ -35,7 +35,7 @@
         },
         "props": {
           "style": {
-            "color": "var(--label--disabled)",
+            "color": "var(--neutral-70)",
             "fontSize": "11px",
             "lineHeight": 1.4
           },
@@ -64,7 +64,7 @@
             },
             "props": {
               "style": {
-                "color": "var(--label--disabled)",
+                "color": "var(--neutral-70)",
                 "fontSize": "11px",
                 "fontWeight": "700",
                 "letterSpacing": "0.08em",
@@ -86,7 +86,7 @@
                 },
                 "props": {
                   "style": {
-                    "color": "var(--label--disabled)",
+                    "color": "var(--neutral-70)",
                     "fontSize": "11px",
                     "lineHeight": 1.4
                   },
@@ -624,7 +624,7 @@
             },
             "props": {
               "style": {
-                "color": "var(--label--disabled)",
+                "color": "var(--neutral-70)",
                 "fontSize": "11px",
                 "fontWeight": "700",
                 "letterSpacing": "0.08em",
@@ -642,7 +642,7 @@
                   "component": {
                     "onActionPerformed": {
                       "config": {
-                        "script": "\tself.session.props.theme = 'light'\n"
+                        "script": "\t# Perspective never loads light.css while the page's theme file ends with it\n\t# (industrial-light.css): go by way of light-cool, further apart than the\n\t# gateway's 100 ms between updates, unless another pick lands meanwhile.\n\timport time\n\tself.session.props.theme = 'light-cool'\n\ttime.sleep(0.25)\n\tif self.session.props.theme == 'light-cool':\n\t\tself.session.props.theme = 'light'\n"
                       },
                       "scope": "G",
                       "type": "script"
@@ -680,7 +680,7 @@
                   "component": {
                     "onActionPerformed": {
                       "config": {
-                        "script": "\tself.session.props.theme = 'dark'\n"
+                        "script": "\t# Perspective never loads dark.css while the page's theme file ends with it\n\t# (industrial-dark.css): go by way of dark-cool, further apart than the\n\t# gateway's 100 ms between updates, unless another pick lands meanwhile.\n\timport time\n\tself.session.props.theme = 'dark-cool'\n\ttime.sleep(0.25)\n\tif self.session.props.theme == 'dark-cool':\n\t\tself.session.props.theme = 'dark'\n"
                       },
                       "scope": "G",
                       "type": "script"
@@ -913,7 +913,7 @@
             },
             "props": {
               "style": {
-                "color": "var(--label--disabled)",
+                "color": "var(--neutral-70)",
                 "fontSize": "11px",
                 "fontWeight": "700",
                 "letterSpacing": "0.08em",
