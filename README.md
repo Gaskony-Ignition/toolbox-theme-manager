@@ -60,7 +60,7 @@ Each theme sets 110 of the gateway's 120 built-in theme variables, declares `col
 | Installer: Update / Restore | Optional. Adds themed scrollbars and a `color-scheme` line to Ignition's four on-disk stock variants without changing their look, and takes them back off. |
 | Customise | Makes a theme of your own from one of the ten and edits its colours. |
 | Import | Checks a theme zip, shows the verdict and a preview, and installs it only if nothing was refused. |
-| Theme switcher | Two copy-me views, `SelectorPopup` and `ThemeDropdown`, that list whatever themes the gateway has. The popup's text meets WCAG 2.1 AA in all sixteen themes, Ignition's six included. |
+| Theme switcher | Two copy-me views, `SelectorPopup` (swatches in a popup) and `ThemeDropdown` (one dropdown); a project uses one or the other. Both list whatever themes the gateway has. The popup's text meets WCAG 2.1 AA in all sixteen themes, Ignition's six included. |
 
 ### What an import may contain
 

@@ -1,7 +1,8 @@
 # The theme switchers
 
 Two copy-me views, either of which lets a user change the theme of their own
-session. A project takes whichever suits it, or both:
+session. A project takes one or the other, depending on where it wants the
+selection to sit:
 
 | File | Project view | What it is |
 | ---- | ------------ | ---------- |
@@ -23,8 +24,9 @@ being edited.
 
 The swatch grid's colours are a fixed, hand-verified list — a view binding
 cannot read a colour out of a theme's CSS — but a swatch is only offered when
-the gateway has that theme; when none are, a line says so and points at the
-dropdown at its foot.
+the gateway has that theme; when none are, a line says so once the listing has
+loaded (not before, or it would show while the swatches load) and the stock six
+below it are still offered.
 
 ## Embedding either one
 
@@ -45,13 +47,13 @@ system.perspective.openPopup(
     resizable=False,
     overlayDismiss=True,
     viewportBound=True,
-    position={'width': 560, 'height': 590})
+    position={'width': 560, 'height': 510})
 ```
 
 `width`/`height` are keys inside `position`, not top-level kwargs.
 
 Neither view needs a script package, a parent project, or any other prop
-wiring — each writes `session.props.theme` itself. The popup's Ignition Dark
-and Ignition Light swatches go by way of `dark-cool` and `light-cool`, 0.25 s
-apart: Perspective does not load `dark.css` while the page's theme file ends
-with it, as `industrial-dark.css` does.
+wiring — each writes `session.props.theme` itself. Both set Ignition Dark and
+Ignition Light by way of `dark-cool` and `light-cool`, 0.25 s apart:
+Perspective does not load `dark.css` while the page's theme file ends with it,
+as `industrial-dark.css` does.

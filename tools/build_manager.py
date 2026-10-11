@@ -1466,10 +1466,10 @@ def _action_scripts():
     # day (10 custom + 6 stock swatches, two section labels, one hint line)
     # with zero internal scroll, confirmed the same way.
     #
-    # The popup has since grown an "Any theme on this gateway" dropdown below
-    # the grid -- a bordered section worth 62px -- and an empty-state line
-    # that only appears when no pack is installed, so the frame is 590,
-    # checked the same way at both viewport heights.
+    # The popup is the swatch grid alone. 510 holds the 10 custom + 6 stock
+    # swatches, two headings and the hint with the rows container not
+    # scrolling; the no-custom-themes line is shorter than the ten swatches it
+    # replaces.
     open_switcher_script = (
         "\tsystem.perspective.openPopup(\n"
         "\t\t'theme-installer-selector',\n"
@@ -1480,7 +1480,7 @@ def _action_scripts():
         "\t\tresizable=False,\n"
         "\t\toverlayDismiss=True,\n"
         "\t\tviewportBound=True,\n"
-        "\t\tposition={'width': 560, 'height': 590})"
+        "\t\tposition={'width': 560, 'height': 510})"
     )
 
     # view.custom.picked holds the ids ticked in the table; the table's

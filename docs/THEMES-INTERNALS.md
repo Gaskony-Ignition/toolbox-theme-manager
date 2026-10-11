@@ -16,7 +16,8 @@ to Ignition's four on-disk stock variants, as one `theme-additions.css` plus an
 
 This repo ships **two** in `tools/themes/selector-popup/`, either of which drops into any project to let
 a user change their own session's theme, with no parent project and no style
-classes:
+classes. A project uses one or the other, depending on where it wants the
+selection to sit:
 
 - **`views/ThemeDropdown`** — one 34px dropdown. Embed it with an Embedded
   View component (`props.path = "ThemeDropdown"`, about 260×34) and that is the
@@ -38,7 +39,7 @@ either file being edited.
 The popup's swatch colours are a fixed hand-verified list — a view binding
 cannot read a colour out of a theme's CSS — but a swatch is only *offered*
 when the gateway has that theme, the section heading counts what is there,
-and when none are, a line says so and points at the dropdown at its foot:
+and when none are, a line says so, once the listing has loaded:
 
 ![The switcher popup where no custom theme is installed](images/switcher-none.png)
 
@@ -60,7 +61,7 @@ To use the popup in another project:
        resizable=False,
        overlayDismiss=True,
        viewportBound=True,
-       position={'width': 560, 'height': 590})
+       position={'width': 560, 'height': 510})
    ```
    `width`/`height` are **not** top-level `openPopup` kwargs on this Ignition
    version — confirmed live and against IA's own scripting reference. They go
@@ -73,9 +74,9 @@ clicked; nothing else needs wiring up.
 **Ignition Dark and Ignition Light go by way of their Cool variants.** The
 Perspective client does not load a theme whose file name ends the current
 one's: from `industrial-dark.css` it never loads `dark.css`, nor `light.css`
-from `industrial-light.css`. Those two swatches set `dark-cool` (or
+from `industrial-light.css`. The popup's two swatches and the dropdown's Dark and Light options set `dark-cool` (or
 `light-cool`) first and the theme they name 0.25 s later, unless another
-swatch was picked meanwhile. The gateway sends a page's changes at most every
+pick was made meanwhile. The gateway sends a page's changes at most every
 100 ms, so two writes closer together reach the client as one. Going by way of
 the Cool variant also mends a page that opened on a project default such as
 `industrial-dark` while its session was already on `dark`.

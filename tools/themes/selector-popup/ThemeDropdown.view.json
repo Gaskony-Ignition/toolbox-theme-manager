@@ -65,7 +65,6 @@
           "props.value": {
             "binding": {
               "config": {
-                "bidirectional": true,
                 "path": "session.props.theme"
               },
               "type": "property"
@@ -81,7 +80,18 @@
             "height": "34px"
           }
         },
-        "type": "ia.input.dropdown"
+        "type": "ia.input.dropdown",
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\t# Perspective never loads dark.css while the page's theme file ends with it\n\t# (industrial-dark.css): go by way of the cool variant, further apart than\n\t# the gateway's 100 ms between updates, unless another pick lands meanwhile.\n\timport time\n\tpick = self.props.value\n\tif pick in (u'dark', u'light'):\n\t\thop = u'dark-cool' if pick == u'dark' else u'light-cool'\n\t\tself.session.props.theme = hop\n\t\ttime.sleep(0.25)\n\t\tif self.session.props.theme == hop:\n\t\t\tself.session.props.theme = pick\n\telse:\n\t\tself.session.props.theme = pick\n"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        }
       }
     ],
     "meta": {

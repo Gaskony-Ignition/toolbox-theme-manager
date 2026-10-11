@@ -1,8 +1,8 @@
 {
   "custom": {
     "gateway": {
-      "all": [],
       "have": "",
+      "loaded": false,
       "packCount": 0
     }
   },
@@ -15,7 +15,7 @@
         },
         "transforms": [
           {
-            "code": "\t# What this gateway ACTUALLY has. The 16 swatches below are a fixed,\n\t# hand-coloured grid, but whether each one is offered is decided here,\n\t# at open time, by asking the gateway -- a swatch for a theme that is\n\t# not installed would set session.props.theme to an id Perspective\n\t# cannot resolve.\n\t#\n\t# Deliberately self-contained: this view is a copy-me artefact, so it\n\t# must not depend on a script package existing in the host project.\n\tfrom java.lang import Throwable as JThrowable\n\t# The stock six are a fixed base, in Ignition's own order, so a failed\n\t# listing still offers them. light and dark have no folder on disk (they\n\t# come with the Perspective module) but the gateway lists them with the\n\t# rest, so the loop skips all six rather than offer one twice.\n\tSTOCK = [u\"light\", u\"light-warm\", u\"light-cool\",\n\t\tu\"dark\", u\"dark-warm\", u\"dark-cool\"]\n\t# the ten packs this repo ships -- only used to count the grid below\n\tPACK = [u\"glass-violet\", u\"glass-green\",\n\t\tu\"leather-light\", u\"leather-dark\",\n\t\tu\"finance-ledger\", u\"newsprint-dark\",\n\t\tu\"nord-light\", u\"nord-dark\",\n\t\tu\"industrial-light\", u\"industrial-dark\"]\n\textra = []\n\ttry:\n\t\tfor res in system.config.getResources(\n\t\t\t\tmoduleId=\"com.inductiveautomation.perspective\", typeId=\"themes\"):\n\t\t\tname = unicode(res.getName())\n\t\t\tif name not in STOCK and name not in extra:\n\t\t\t\textra.append(name)\n\texcept (JThrowable, Exception) as e:\n\t\t# a picker offering the stock six beats one offering nothing\n\t\tsystem.util.getLogger(\"ThemeSelector\").warn(\n\t\t\tu\"theme listing failed, offering the stock themes only: %s\" % e)\n\tnames = STOCK + sorted(extra)\n\treturn {\n\t\t# every theme on the gateway, whoever shipped it -- the dropdown\n\t\tu\"all\": [{u\"value\": n, u\"label\": n.replace(u\"-\", u\" \").capitalize()}\n\t\t\tfor n in names],\n\t\t# comma-DELIMITED, leading and trailing: the swatches test membership\n\t\t# with indexOf(..., \",<id>,\"), and without the delimiters \"nord-dark\"\n\t\t# would match inside \"nord-darker\"\n\t\tu\"have\": u\",\" + u\",\".join(names) + u\",\",\n\t\tu\"packCount\": len([n for n in PACK if n in names]),\n\t}\n",
+            "code": "\t# What this gateway ACTUALLY has. The 16 swatches below are a fixed,\n\t# hand-coloured grid, but whether each one is offered is decided here,\n\t# at open time, by asking the gateway -- a swatch for a theme that is\n\t# not installed would set session.props.theme to an id Perspective\n\t# cannot resolve.\n\t#\n\t# Deliberately self-contained: this view is a copy-me artefact, so it\n\t# must not depend on a script package existing in the host project.\n\tfrom java.lang import Throwable as JThrowable\n\t# The stock six are a fixed base, in Ignition's own order, so a failed\n\t# listing still offers them. light and dark have no folder on disk (they\n\t# come with the Perspective module) but the gateway lists them with the\n\t# rest, so the loop skips all six rather than offer one twice.\n\tSTOCK = [u\"light\", u\"light-warm\", u\"light-cool\",\n\t\tu\"dark\", u\"dark-warm\", u\"dark-cool\"]\n\t# the ten packs this repo ships -- only used to count the grid below\n\tPACK = [u\"glass-violet\", u\"glass-green\",\n\t\tu\"leather-light\", u\"leather-dark\",\n\t\tu\"finance-ledger\", u\"newsprint-dark\",\n\t\tu\"nord-light\", u\"nord-dark\",\n\t\tu\"industrial-light\", u\"industrial-dark\"]\n\textra = []\n\ttry:\n\t\tfor res in system.config.getResources(\n\t\t\t\tmoduleId=\"com.inductiveautomation.perspective\", typeId=\"themes\"):\n\t\t\tname = unicode(res.getName())\n\t\t\tif name not in STOCK and name not in extra:\n\t\t\t\textra.append(name)\n\texcept (JThrowable, Exception) as e:\n\t\t# a picker offering the stock six beats one offering nothing\n\t\tsystem.util.getLogger(\"ThemeSelector\").warn(\n\t\t\tu\"theme listing failed, offering the stock themes only: %s\" % e)\n\tnames = STOCK + sorted(extra)\n\treturn {\n\t\t# comma-DELIMITED, leading and trailing: the swatches test membership\n\t\t# with indexOf(..., \",<id>,\"), and without the delimiters \"nord-dark\"\n\t\t# would match inside \"nord-darker\"\n\t\tu\"have\": u\",\" + u\",\".join(names) + u\",\",\n\t\tu\"packCount\": len([n for n in PACK if n in names]),\n\t\t# until this is true packCount is only the default 0, which must not\n\t\t# read as \"none installed\"\n\t\tu\"loaded\": True,\n\t}\n",
             "type": "script"
           }
         ],
@@ -56,7 +56,7 @@
               "props.text": {
                 "binding": {
                   "config": {
-                    "expression": "if({view.custom.gateway.packCount} = 10, \"Custom \u00b7 10 themes\", \"Custom \u00b7 \" + toStr({view.custom.gateway.packCount}) + \" of 10 on this gateway\")"
+                    "expression": "if(!{view.custom.gateway.loaded}, \"Custom\", if({view.custom.gateway.packCount} = 10, \"Custom \u00b7 10 themes\", \"Custom \u00b7 \" + toStr({view.custom.gateway.packCount}) + \" of 10 on this gateway\"))"
                   },
                   "type": "expr"
                 }
@@ -90,7 +90,7 @@
                     "fontSize": "11px",
                     "lineHeight": 1.4
                   },
-                  "text": "None of them are installed on this gateway. Install them with the Toolbox Theme Manager project or install.sh, or pick from what the gateway does have, below."
+                  "text": "None of them are installed on this gateway. Install them with the Toolbox Theme Manager project or install.sh; Ignition's own themes are below."
                 },
                 "type": "ia.display.label"
               }
@@ -105,14 +105,17 @@
               "props.style.display": {
                 "binding": {
                   "config": {
-                    "expression": "if({view.custom.gateway.packCount} = 0, \"block\", \"none\")"
+                    "expression": "if({view.custom.gateway.loaded}, if({view.custom.gateway.packCount} = 0, \"block\", \"none\"), \"none\")"
                   },
                   "type": "expr"
                 }
               }
             },
             "props": {
-              "direction": "column"
+              "direction": "column",
+              "style": {
+                "display": "none"
+              }
             },
             "type": "ia.container.flex"
           },
@@ -160,7 +163,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Glass Violet  \u00b7  dark"
                 },
@@ -208,7 +212,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Glass Green  \u00b7  dark"
                 },
@@ -256,7 +261,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Leather Light  \u00b7  light"
                 },
@@ -304,7 +310,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Leather Dark  \u00b7  dark"
                 },
@@ -352,7 +359,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Finance Ledger  \u00b7  light"
                 },
@@ -400,7 +408,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Newsprint Dark  \u00b7  dark"
                 },
@@ -448,7 +457,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Nord Light  \u00b7  light"
                 },
@@ -496,7 +506,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Nord Dark  \u00b7  dark"
                 },
@@ -544,7 +555,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Industrial Light  \u00b7  light"
                 },
@@ -592,7 +604,8 @@
                     "fontWeight": "600",
                     "height": "40px",
                     "minHeight": "40px",
-                    "padding": "0 14px"
+                    "padding": "0 14px",
+                    "display": "none"
                   },
                   "text": "Industrial Dark  \u00b7  dark"
                 },
@@ -897,88 +910,21 @@
             "gap": "8px",
             "minHeight": "0",
             "overflow": "auto",
-            "width": "100%"
+            "width": "100%",
+            "display": "none"
           }
         },
-        "type": "ia.container.flex"
-      },
-      {
-        "children": [
-          {
-            "meta": {
-              "name": "anyLabel"
-            },
-            "position": {
-              "shrink": 0
-            },
-            "props": {
-              "style": {
-                "color": "var(--neutral-70)",
-                "fontSize": "11px",
-                "fontWeight": "700",
-                "letterSpacing": "0.08em",
-                "lineHeight": 1.4,
-                "textTransform": "uppercase"
+        "type": "ia.container.flex",
+        "propConfig": {
+          "props.style.display": {
+            "binding": {
+              "config": {
+                "expression": "if({view.custom.gateway.loaded}, \"flex\", \"none\")"
               },
-              "text": "Any theme on this gateway"
-            },
-            "type": "ia.display.label"
-          },
-          {
-            "meta": {
-              "name": "Theme"
-            },
-            "position": {
-              "basis": "auto",
-              "grow": 0,
-              "shrink": 0
-            },
-            "propConfig": {
-              "props.options": {
-                "binding": {
-                  "config": {
-                    "path": "view.custom.gateway.all"
-                  },
-                  "type": "property"
-                }
-              },
-              "props.value": {
-                "binding": {
-                  "config": {
-                    "bidirectional": true,
-                    "path": "session.props.theme"
-                  },
-                  "type": "property"
-                }
-              }
-            },
-            "props": {
-              "allowClearing": false,
-              "options": [],
-              "placeholder": "Theme",
-              "showSearch": false,
-              "style": {
-                "height": "34px"
-              }
-            },
-            "type": "ia.input.dropdown"
+              "type": "expr"
+            }
           }
-        ],
-        "meta": {
-          "name": "any"
-        },
-        "position": {
-          "shrink": 0
-        },
-        "props": {
-          "direction": "column",
-          "style": {
-            "borderTop": "1px solid var(--border)",
-            "gap": "6px",
-            "paddingTop": "10px"
-          }
-        },
-        "type": "ia.container.flex"
+        }
       }
     ],
     "meta": {
