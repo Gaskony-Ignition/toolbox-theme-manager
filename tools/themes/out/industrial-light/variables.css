@@ -17,12 +17,12 @@
   --input--disabled:                    #ffffff; /* ghost surface (the packs' own muted-control colour) flattened over the page; several packs declare surface.ghost as the keyword "transparent" (unparsable as a colour), which falls back to --input itself (ref:--input) */
   --label:                              #1f2937; /* body text colour (token:text.body) */
   --neutral-90:                         #1f2937; /* same derivation as --label (literal reuse) (token:text.body) */
-  --label--disabled:                    #666d7a; /* muted text colour (token:text.muted) */
+  --label--disabled:                    #5c6370; /* muted text colour (token:text.muted) */
   --neutral-100:                        #1f2937; /* heading ink (lightest/most emphatic text colour) (token:text.heading) */
   --icon:                               #1f2937; /* reuses body text colour -- neither pack declares a distinct icon ink (token:text.body) */
   --icon--hover:                        #33556e; /* accent colour on hover (token:accent.primary) */
   --icon--selected:                     #33556e; /* same as --icon--hover (literal reuse; no distinct selected-icon token) (ref:--icon--hover) */
-  --icon--disabled:                     rgba(102,109,122,0.6); /* muted text colour at reduced alpha (ref:--label--disabled) */
+  --icon--disabled:                     rgba(92,99,112,0.6); /* muted text colour at reduced alpha (ref:--label--disabled) */
   --callToAction:                       #33556e; /* primary accent colour (token:accent.primary) */
   --callToAction--hover:                #274456; /* the pack's own buttons/primary:hover colour when it declares a solid one, else its secondary accent, else --callToAction itself (variant:buttons/primary:hover:backgroundColor) */
   --callToAction--active:               #2b485e; /* --callToAction darkened 15% -- neither pack declares a distinct :active state (ref:--callToAction) */
@@ -63,13 +63,13 @@
   --symbolFill--default:                #ffffff; /* reuses --container (idle/neutral tone) (ref:--container) */
   --symbolFill--running:                #374151; /* reuses --success (ref:--success) */
   --symbolFill--faulted:                #d52222; /* reuses --error (ref:--error) */
-  --symbolFill--stopped:                #666d7a; /* reuses --label--disabled (muted ink) (ref:--label--disabled) */
+  --symbolFill--stopped:                #5c6370; /* reuses --label--disabled (muted ink) (ref:--label--disabled) */
   --symbolStroke--default:              #b0b8c4; /* reuses --containerBorder (ref:--containerBorder) */
   --symbolStroke--running:              #2c3441; /* --success darkened 20% for a visible outline against its own fill (ref:--success) */
   --symbolStroke--faulted:              #aa1b1b; /* --error darkened 20% for a visible outline against its own fill (ref:--error) */
-  --symbolStroke--stopped:              #525762; /* --label--disabled darkened 20% for a visible outline against its own fill (ref:--label--disabled) */
+  --symbolStroke--stopped:              #4a4f5a; /* --label--disabled darkened 20% for a visible outline against its own fill (ref:--label--disabled) */
   --pipeStroke:                         #b0b8c4; /* reuses --border (ref:--border) */
-  --pipePrimaryFill:                    #666d7a; /* reuses --label--disabled (muted ink -- an inactive/unqualified pipe) (ref:--label--disabled) */
+  --pipePrimaryFill:                    #5c6370; /* reuses --label--disabled (muted ink -- an inactive/unqualified pipe) (ref:--label--disabled) */
   --pipeSecondaryFill:                  #ffffff; /* reuses --containerNested (a differentiated neutral tone) (ref:--containerNested) */
   --pipeSelectStroke:                   #33556e; /* reuses --callToAction (selection highlight) (ref:--callToAction) */
   --tooltip-background-color:           #ffffff; /* reuses --containerNested (a raised-above-card tone) (ref:--containerNested) */

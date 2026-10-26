@@ -430,7 +430,7 @@
  "kpi/label": {
   "base": {
    "style": {
-    "color": "#6B7280",
+    "color": "#5c6370",
     "fontSize": "10px",
     "fontWeight": "500",
     "letterSpacing": ".08em",
@@ -460,7 +460,7 @@
  "kpi/unit": {
   "base": {
    "style": {
-    "color": "#6B7280",
+    "color": "#5c6370",
     "fontSize": "13px",
     "fontWeight": "400"
    }
@@ -564,7 +564,7 @@
  "readouts/label": {
   "base": {
    "style": {
-    "color": "#6B7280",
+    "color": "#5c6370",
     "fontSize": "10px",
     "letterSpacing": ".06em",
     "textTransform": "uppercase"
@@ -584,7 +584,7 @@
  "readouts/unit": {
   "base": {
    "style": {
-    "color": "#6B7280",
+    "color": "#5c6370",
     "fontSize": "12px"
    }
   }
@@ -676,7 +676,7 @@
     "borderRadius": "2px",
     "borderStyle": "solid",
     "borderWidth": "1px",
-    "color": "#6B7280",
+    "color": "#5c6370",
     "fontSize": "11px",
     "fontWeight": "500",
     "letterSpacing": ".02em",
@@ -824,7 +824,7 @@
  "text/muted": {
   "base": {
    "style": {
-    "color": "#666d7a",
+    "color": "#5c6370",
     "fontSize": "12px"
    }
   }
@@ -832,7 +832,7 @@
  "text/nav-group": {
   "base": {
    "style": {
-    "color": "#6B7280",
+    "color": "#5c6370",
     "fontSize": "10px",
     "fontWeight": "500",
     "letterSpacing": ".09em",

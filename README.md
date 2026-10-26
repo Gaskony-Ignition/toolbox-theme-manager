@@ -102,7 +102,7 @@ python3 tools/test_import.py           # import checks: 40 zips, good and bad
 tools/package.sh --release             # dist/Toolbox_Theme_Manager-<VERSION>.zip and toolbox-themes-<VERSION>.zip
 ```
 
-`tools/build_manager.py` appends `tools/insight_code.py`, `tools/editor_code.py` and `tools/import_code.py` to the generated `themepack` script. `tools/package.sh` refuses to package if a theme misses WCAG 2.1 AA, and a release needs `VERSION` to match the tag. The themes were developed in the now-archived `project-themes` repo; a gateway with its `Theme_Installer` project can delete it once this one is imported.
+`tools/build_manager.py` appends `tools/insight_code.py`, `tools/editor_code.py` and `tools/import_code.py` to the generated `themepack` script. `tools/package.sh` refuses to package if a theme misses WCAG 2.1 AA (text, alarm rows, and the muted-text classes on every surface they sit on), and a release needs `VERSION` to match the tag. The themes were developed in the now-archived `project-themes` repo; a gateway with its `Theme_Installer` project can delete it once this one is imported.
 
 ## Licence
 

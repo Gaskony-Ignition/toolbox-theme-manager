@@ -143,7 +143,7 @@
   --st-row-min: 36px;
   --st-sidebar-solid: #dde1e7;
   --st-tab-active: #1F2937;
-  --st-tab-inactive: #666d7a;
+  --st-tab-inactive: #5c6370;
   --st-tab-rule: #B0B8C4;
   --st-table-bg: #FFFFFF;
   --st-table-fg: #1F2937;
@@ -1053,7 +1053,7 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/kpi\/label.psc-st\/kpi\/label {
-  color: #6B7280;
+  color: #5c6370;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: .08em;
@@ -1074,7 +1074,7 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/kpi\/unit.psc-st\/kpi\/unit {
-  color: #6B7280;
+  color: #5c6370;
   font-size: 13px;
   font-weight: 400;
 }
@@ -1150,7 +1150,7 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/readouts\/label.psc-st\/readouts\/label {
-  color: #6B7280;
+  color: #5c6370;
   font-size: 10px;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -1164,7 +1164,7 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/readouts\/unit.psc-st\/readouts\/unit {
-  color: #6B7280;
+  color: #5c6370;
   font-size: 12px;
 }
 
@@ -1235,7 +1235,7 @@ button[class*="/buttons/danger"] {
   border-radius: 2px;
   border-style: solid;
   border-width: 1px;
-  color: #6B7280;
+  color: #5c6370;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: .02em;
@@ -1344,12 +1344,12 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/text\/muted.psc-st\/text\/muted {
-  color: #666d7a;
+  color: #5c6370;
   font-size: 12px;
 }
 
 .psc-st\/text\/nav-group.psc-st\/text\/nav-group {
-  color: #6B7280;
+  color: #5c6370;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: .09em;

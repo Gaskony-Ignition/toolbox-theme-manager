@@ -427,7 +427,7 @@
  "kpi/unit": {
   "base": {
    "style": {
-    "color": "#96856c",
+    "color": "#776955",
     "fontSize": "13px",
     "fontWeight": "600",
     "marginLeft": "4px"
@@ -538,7 +538,7 @@
  "readouts/unit": {
   "base": {
    "style": {
-    "color": "#96856c",
+    "color": "#776955",
     "fontSize": "12.5px",
     "fontWeight": "600"
    }
@@ -765,7 +765,7 @@
  "text/nav-group": {
   "base": {
    "style": {
-    "color": "#94836a",
+    "color": "#998971",
     "fontSize": "11px",
     "fontWeight": "700",
     "letterSpacing": "0.06em",

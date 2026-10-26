@@ -575,7 +575,7 @@
  "readouts/value-warn": {
   "base": {
    "style": {
-    "color": "#a85b00",
+    "color": "#a05700",
     "fontFamily": "Georgia, \"Times New Roman\", \"Segoe UI\", ui-serif, serif",
     "fontSize": "20px",
     "fontVariantNumeric": "tabular-nums",

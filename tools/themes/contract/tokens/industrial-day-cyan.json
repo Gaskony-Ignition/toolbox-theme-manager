@@ -34,7 +34,7 @@
  "--st-row-min": "36px",
  "--st-sidebar-solid": "#dde1e7",
  "--st-tab-active": "#1F2937",
- "--st-tab-inactive": "#666d7a",
+ "--st-tab-inactive": "#5c6370",
  "--st-tab-rule": "#B0B8C4",
  "--st-table-bg": "#FFFFFF",
  "--st-table-fg": "#1F2937",

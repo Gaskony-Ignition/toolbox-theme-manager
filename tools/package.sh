@@ -72,6 +72,7 @@ fi
 # The ten themes must meet WCAG 2.1 AA, including each alarm severity's row.
 python3 tools/themes/tools/check_contrast.py >/dev/null || { echo "package.sh: a theme misses WCAG 2.1 AA contrast (run tools/themes/tools/check_contrast.py)" >&2; exit 1; }
 python3 tools/themes/tools/check_alarm_contrast.py >/dev/null || { echo "package.sh: an alarm row misses WCAG 2.1 AA contrast (run tools/themes/tools/check_alarm_contrast.py)" >&2; exit 1; }
+python3 tools/themes/tools/check_muted_contrast.py >/dev/null || { echo "package.sh: a muted-text class misses WCAG 2.1 AA contrast (run tools/themes/tools/check_muted_contrast.py)" >&2; exit 1; }
 
 # Accessibility gate (a11y.json, REPO-STANDARD.md). Blocking; bypass deliberately
 # with --skip-a11y-check. The gate checks what is DEPLOYED, so this pushes the
