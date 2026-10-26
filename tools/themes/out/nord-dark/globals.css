@@ -902,14 +902,14 @@ button[class*="/buttons/danger"] {
   border-color: #bf616a;
   border-style: solid;
   border-width: 1px;
-  color: #c97980;
+  color: #ddabaf;
   font-size: 13.5px;
   font-weight: 500;
   padding: 10px 24px;
 }
 
 .psc-st\/containers\/alarm-banner-text.psc-st\/containers\/alarm-banner-text {
-  color: #c97980;
+  color: #ddabaf;
   font-size: 13.5px;
   font-weight: 500;
 }
@@ -1196,7 +1196,7 @@ button[class*="/buttons/danger"] {
 .psc-st\/status\/pill.psc-st\/status\/pill {
   background-color: #4f5b55;
   border-radius: 999px;
-  color: #a3be8c;
+  color: #c3d5b4;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -1210,7 +1210,7 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/status\/pill-text.psc-st\/status\/pill-text {
-  color: #a3be8c;
+  color: #c3d5b4;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;

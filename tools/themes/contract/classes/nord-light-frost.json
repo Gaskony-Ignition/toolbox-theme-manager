@@ -470,7 +470,7 @@
    "style": {
     "backgroundColor": "#dfe6ee",
     "borderRadius": "8px",
-    "color": "#55749b",
+    "color": "#4c688b",
     "cursor": "pointer",
     "fontSize": "13.5px",
     "fontWeight": "600",
@@ -639,7 +639,7 @@
    "style": {
     "backgroundColor": "#f6f8f4",
     "borderRadius": "999px",
-    "color": "#657657",
+    "color": "#617254",
     "fontSize": "11.5px",
     "fontWeight": "700",
     "letterSpacing": "0.02em",
@@ -659,7 +659,7 @@
  "status/pill-text": {
   "base": {
    "style": {
-    "color": "#657657",
+    "color": "#617254",
     "fontSize": "11.5px",
     "fontWeight": "700",
     "letterSpacing": "0.02em",

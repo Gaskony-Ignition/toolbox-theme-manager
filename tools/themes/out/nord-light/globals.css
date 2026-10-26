@@ -1075,7 +1075,7 @@ button[class*="/buttons/danger"] {
 .psc-st\/nav\/item-active.psc-st\/nav\/item-active {
   background-color: #dfe6ee;
   border-radius: 8px;
-  color: #55749b;
+  color: #4c688b;
   cursor: pointer;
   font-size: 13.5px;
   font-weight: 600;
@@ -1196,7 +1196,7 @@ button[class*="/buttons/danger"] {
 .psc-st\/status\/pill.psc-st\/status\/pill {
   background-color: #f6f8f4;
   border-radius: 999px;
-  color: #657657;
+  color: #617254;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -1210,7 +1210,7 @@ button[class*="/buttons/danger"] {
 }
 
 .psc-st\/status\/pill-text.psc-st\/status\/pill-text {
-  color: #657657;
+  color: #617254;
   font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 0.02em;

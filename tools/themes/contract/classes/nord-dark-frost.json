@@ -224,7 +224,7 @@
     "borderColor": "#bf616a",
     "borderStyle": "solid",
     "borderWidth": "1px",
-    "color": "#c97980",
+    "color": "#ddabaf",
     "fontSize": "13.5px",
     "fontWeight": "500",
     "padding": "10px 24px"
@@ -234,7 +234,7 @@
  "containers/alarm-banner-text": {
   "base": {
    "style": {
-    "color": "#c97980",
+    "color": "#ddabaf",
     "fontSize": "13.5px",
     "fontWeight": "500"
    }
@@ -639,7 +639,7 @@
    "style": {
     "backgroundColor": "#4f5b55",
     "borderRadius": "999px",
-    "color": "#a3be8c",
+    "color": "#c3d5b4",
     "fontSize": "11.5px",
     "fontWeight": "700",
     "letterSpacing": "0.02em",
@@ -659,7 +659,7 @@
  "status/pill-text": {
   "base": {
    "style": {
-    "color": "#a3be8c",
+    "color": "#c3d5b4",
     "fontSize": "11.5px",
     "fontWeight": "700",
     "letterSpacing": "0.02em",
